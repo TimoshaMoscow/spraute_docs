@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Частицы — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>✨ Частицы (Партиклы)</h1>
+                
+                <section class="doc-section">
+                    <h2>Базовые фигуры</h2>
+                    <pre><code># Спавн частиц в точке
+particle_spawn("minecraft:flame", x, y, z, 10, 0.5, 0.5, 0.5, 0.1)
+
+# Линия из частиц
+particle_line("minecraft:soul", 0, 64, 0, 10, 64, 10, 20, 0, 0, 0, 0)
+
+# Круг из частиц
+particle_circle("minecraft:soul_fire_flame", x, y, z, 3.0, 40, 0, 0, 0, 0)
+
+# Спираль частиц
+particle_spiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Параметры <code>dx, dy, dz</code> задают разброс (spread), параметр <code>speed</code> — скорость разлета. Если speed > 0, то dx, dy, dz работают как направление.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Постоянные эффекты</h2>
+                    <pre><code>async "magic_circle" {
+    while (true) {
+        particle_circle("minecraft:soul", x, y, z, 2.0, 20, 0, 0, 0, 0)
+        await time(1)
+    }
+}
+stop_task("magic_circle")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Привязка к костям NPC</h2>
+                    <pre><code># Непрерывный спавн частиц из кости NPC (на клиенте)
+particle_start_bone("fire_hands", knight, "right_hand", "minecraft:flame", 5, 0.1, 0.1, 0.1, 0.05)
+
+# Остановка
+particle_stop_bone("fire_hands")</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>Кости NPC: <code>"head"</code>, <code>"right_hand"</code>, <code>"left_hand"</code>, <code>"body"</code> и другие в зависимости от модели.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Типы частиц Minecraft</h2>
+                    <div class="grid-cards">
+                        <div class="card"><code>minecraft:flame</code><p>Пламя</p></div>
+                        <div class="card"><code>minecraft:soul</code><p>Души</p></div>
+                        <div class="card"><code>minecraft:heart</code><p>Сердечки</p></div>
+                        <div class="card"><code>minecraft:villager_happy</code><p>Счастливый житель</p></div>
+                        <div class="card"><code>minecraft:totem_of_undying</code><p>Тотем</p></div>
+                        <div class="card"><code>minecraft:crit</code><p>Критический удар</p></div>
+                        <div class="card"><code>minecraft:end_rod</code><p>Стержень Края</p></div>
+                        <div class="card"><code>minecraft:dust</code><p>Пыльца</p></div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Пример: магический круг</h2>
+                    <pre><code>async "magic_circle" {
+    val x = 0
+    val y = 64
+    val z = 0
+    
+    while (true) {
+        particle_circle("minecraft:soul_fire_flame", x, y, z, 3.0, 40, 0, 0, 0, 0)
+        particle_spiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)
+        await time(2)
+    }
+}
+
+on position(player, 0, 64, 0, 3) -> in_circle {
+    particle_spawn("minecraft:totem_of_undying", player.x, player.y + 1, player.z, 20, 0.5, 0.5, 0.5, 0.1)
+    chat("Ты вошел в магический круг!")
+}</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NPC — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>🤖 Создание NPC</h1>
+                
+                <section class="doc-section">
+                    <h2>Базовый синтаксис</h2>
+                    <pre><code>create npc readix_avatar {
+    name = "ReadixGG"
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/defolt.png"
+    pos = 8, -60, 7
+    show_name = false
+    speed = 0.2
+    hp = 20
+    collision = true
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Свойства NPC</h2>
+                    <div class="property-list">
+                        <ul>
+                            <li><code>name</code> — отображаемое имя</li>
+                            <li><code>hp</code> — здоровье и максимальное HP</li>
+                            <li><code>speed</code> — скорость движения</li>
+                            <li><code>pos</code> — координаты [x, y, z]</li>
+                            <li><code>rotate</code> — углы [yaw, pitch]</li>
+                            <li><code>show_name</code> — показывать имя (по умолчанию true)</li>
+                            <li><code>collision</code> — наличие коллизии (по умолчанию true)</li>
+                            <li><code>model</code>, <code>texture</code> — ресурсы модели и текстуры</li>
+                            <li><code>idle_anim</code>, <code>walk_anim</code> — анимации</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Анимации</h2>
+                    <pre><code># Проигрывание анимации один раз
+npc.playOnce("hello")
+
+# Зацикленная анимация
+npc.playLoop("sad")
+
+# Заморозка на последнем кадре
+npc.playFreeze("wave")
+
+# Остановка анимации
+npc.stop("animName")
+
+# Сброс всех оверлейных анимаций
+npc.stopOverlay()
+
+# Процедурные анимации (дыхание, дрожание)
+npc.setAdditiveWeight(1)</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Второй аргумент анимации: <code>true/"additive"</code> — накопительное смешивание, <code>false/"replace"</code> — замена.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Движение</h2>
+                    <pre><code># Перемещение к точке (с await блокирует до прибытия)
+await npc.moveTo(5, -60, 15)
+
+# Постоянное следование
+npc.alwaysMoveTo(player)
+npc.stopMove()
+
+# Следование до расстояния
+await npc.followUntil(player, 2.0)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Взгляд</h2>
+                    <pre><code># Разовый поворот головы
+npc.lookAt(player)
+
+# Постоянное слежение
+npc.alwaysLookAt(player)
+npc.stopLook()
+
+# Установка кости головы
+npc.setHeadBone("head")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Предметы в руках</h2>
+                    <pre><code># Установка предмета
+npc.setItem("right", "minecraft:iron_sword")
+npc.setItem("left", "minecraft:shield")
+
+# Очистка
+npc.removeItem("right")
+npc.removeItem()  # обе руки</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Подбор предметов</h2>
+                    <pre><code># Подбирать только от указанного игрока
+npc.pickupOnlyFrom(player)
+
+# Снять фильтр
+npc.pickupAny()
+
+# Количество предметов
+val iron = npc.countItem("minecraft:iron_ingot")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Удаление NPC</h2>
+                    <pre><code>npc.remove()</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

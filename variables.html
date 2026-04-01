@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Переменные — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>📦 Переменные и область видимости</h1>
+                
+                <section class="doc-section">
+                    <h2>Типы переменных</h2>
+                    <div class="table-wrapper">
+                        <table class="keyword-table">
+                            <thead><tr><th>Тип</th><th>Описание</th><th>Пример</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>val</code></td><td>Локальная переменная</td><td><code>val x = 10</code></td></tr>
+                                <tr><td><code>global val</code></td><td>Глобальная в рамках скрипта</td><td><code>global counter = 0</code></td></tr>
+                                <tr><td><code>world val</code></td><td>Сохраняется между перезапусками</td><td><code>world server_started = true</code></td></tr>
+                                <tr><td><code>player.data</code></td><td>Сессионные данные игрока</td><td><code>player.data["in_dialogue"] = true</code></td></tr>
+                                <tr><td><code>player.saved_data</code></td><td>Постоянные данные игрока</td><td><code>player.saved_data["deaths"] = 0</code></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Примеры использования</h2>
+                    <pre><code># Локальная переменная
+val local_var = 10
+
+# Глобальная для скрипта
+global global_var = "доступна везде"
+
+# Сохраняется между перезапусками сервера
+world saved_var = 42
+
+# Сессионные данные игрока (до перезапуска сервера)
+player.data["in_dialogue"] = true
+
+# Постоянные данные игрока (сохраняются в мире навсегда)
+val p = get_player("Steve")
+if (p.saved_data["deaths"] == null) {
+    p.saved_data["deaths"] = 0
+}
+p.saved_data["deaths"] = p.saved_data["deaths"] + 1</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Свойства сущностей</h2>
+                    <h3>Игрок:</h3>
+                    <pre><code>player.name
+player.hp
+player.x, player.y, player.z
+player.max_hp</code></pre>
+                    
+                    <h3>NPC:</h3>
+                    <pre><code>npc.name
+npc.show_name
+npc.hp, npc.max_hp
+npc.speed
+npc.x, npc.y, npc.z
+npc.yaw, npc.pitch
+npc.model, npc.texture</code></pre>
+                    
+                    <h3>Присваивание свойств:</h3>
+                    <pre><code>npc.name = "Новое имя"
+npc.hp = 100
+npc.x = 10
+npc.yaw = 90</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Методы</h2>
+                    <pre><code># Расстояние между сущностями
+val dist = player.distance_to(npc)
+
+# Методы игрока
+player.has_item("minecraft:iron_ingot")
+player.countItem("minecraft:iron_ingot")
+player.raycast(50)
+player.damage(5.0)
+player.teleport(100, 64, 200)</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

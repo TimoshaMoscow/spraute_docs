@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Функции и Await — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>🔧 Пользовательские функции и Await</h1>
+                
+                <section class="doc-section">
+                    <h2>Пользовательские функции</h2>
+                    <pre><code>fun name(a, b) {
+    return a + b
+}
+
+# Вызов
+val result = name(1, 2)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Await — ожидание событий</h2>
+                    <div class="grid-cards">
+                        <div class="card"><code>await time(seconds)</code><p>Пауза на секунды</p></div>
+                        <div class="card"><code>await interact(entity)</code><p>Ожидание взаимодействия</p></div>
+                        <div class="card"><code>await keybind("key")</code><p>Ожидание клавиши</p></div>
+                        <div class="card"><code>await death(target)</code><p>Смерть сущности</p></div>
+                        <div class="card"><code>await ui_click(player)</code><p>Клик в UI (возвращает id или "__close__")</p></div>
+                        <div class="card"><code>await ui_input(player, widget_id)</code><p>Ввод текста в input</p></div>
+                        <div class="card"><code>await pickup(npc, amount, item_id)</code><p>Подбор предметов NPC</p></div>
+                        <div class="card"><code>await position(player, x, y, z, radius)</code><p>Вход в радиус</p></div>
+                        <div class="card"><code>await chat(player, message)</code><p>Сообщение в чат</p></div>
+                        <div class="card"><code>await click_block(player, target)</code><p>Клик по блоку</p></div>
+                        <div class="card"><code>await break_block(player, target)</code><p>Разрушение блока</p></div>
+                        <div class="card"><code>await place_block(player, target)</code><p>Установка блока</p></div>
+                        <div class="card"><code>await task("task_id")</code><p>Завершение асинхронной задачи</p></div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Async — асинхронные задачи</h2>
+                    <pre><code># Запуск с id
+async "readix_idle" {
+    readix_avatar.alwaysLookAt(knight)
+    while (true) {
+        await time(5)
+        # действие каждые 5 секунд
+    }
+}
+
+# Остановка
+stop_task("readix_idle")
+
+# Проверка завершения
+if (task_done("task_id")) {
+    chat("Задача выполнена!")
+}
+
+# Ожидание
+await task("readix_idle")</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p><code>await ui_click</code> внутри <code>async</code> не поддерживается.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Пример с диалогом</h2>
+                    <pre><code>val player = get_nearest_player(npc)
+chat("Подойди и нажми ПКМ")
+val interactor = await interact(npc)
+
+say(npc, "Привет, " + interactor.name + "! Нажми F")
+await keybind("f")
+
+say(npc, "Нужна помощь!")
+await keybind("f")</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

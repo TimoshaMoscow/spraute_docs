@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Предметы и инвентарь — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>🎒 Предметы и инвентарь</h1>
+                
+                <section class="doc-section">
+                    <h2>Основные функции</h2>
+                    <div class="api-item">
+                        <div class="api-signature"><code>give_item(player, item_id, [count], [name], [lore], [nbt])</code><span class="api-tag">функция</span></div>
+                        <p>Выдаёт предмет игроку.</p>
+                        <pre><code>give_item(player, "minecraft:iron_ingot", 30)
+give_item(player, "minecraft:diamond", 1, "§6Королевский алмаз", ["§7Добыто в шахтах"], {"spraute_no_drop": true})</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>get_held_item(player)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает словарь с предметом в руке: "id", "count", "name", "nbt".</p>
+                        <pre><code>val held = get_held_item(player)
+if (held != null && held.id == "minecraft:stick") {
+    chat("У тебя палка!")
+}</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>player.held_item([hand])</code><span class="api-tag">метод</span></div>
+                        <p>ID предмета в руке. hand: "right"/"left"/"main_hand"/"offhand".</p>
+                        <pre><code>val item = player.held_item("right")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>player.slot(n)</code><span class="api-tag">метод</span></div>
+                        <p>Registry id предмета в слоте.</p>
+                        <p>Слоты: 0-8 хотбар, 9-35 инвентарь, 36-39 броня, 40 оффхенд.</p>
+                        <pre><code>val item = player.slot(0)</code></pre>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Проверка предметов</h2>
+                    <pre><code># Есть ли предмет
+if (player.has_item("minecraft:iron_ingot")) {
+    chat("У тебя есть железо!")
+}
+
+# Количество предметов
+val count = player.countItem("minecraft:iron_ingot")
+
+# Количество в слоте
+val slot_count = player.slot_count(0)
+
+# NBT предмета в слоте
+val nbt = player.slot_nbt(0)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Магазин на кнопку J (полный пример)</h2>
+                    <pre><code>on keybind("j") -> shopKey {
+    val player = event_player
+    
+    if (player.savedData["coins"] == null) {
+        player.savedData["coins"] = 50
+    }
+    
+    val coins = player.savedData["coins"]
+    
+    create ui shopui {
+        size = [280, 230]
+        bg = "#DD101010"
+        canClose = true
+        
+        text("title", "Магазин") {
+            pos = [12, 10]
+            color = "#FFD700"
+            scale = 1.2
+        }
+        text("coinsText", "Монеты: " + intStr(coins)) {
+            pos = [12, 30]
+            color = "#FFFFFF"
+        }
+        
+        scroll("shopScroll") {
+            pos = [10, 55]
+            size = [260, 130]
+            contentH = 340
+            
+            # Яблоко
+            item("icoApple") {
+                pos = [4, 3]
+                w = 16
+                item = "minecraft:apple"
+            }
+            text("itemApple", "Яблоко x3 — 5 монет") {
+                pos = [26, 5]
+                color = "#FF5555"
+            }
+            button("buyApple", "Купить") {
+                pos = [180, 2]
+                size = [70, 20]
+                color = "#55336688"
+                hover = "#66447799"
+                onClick {
+                    if (player.savedData["coins"] >= 5) {
+                        player.savedData["coins"] = player.savedData["coins"] - 5
+                        giveItem(player, "minecraft:apple", 3)
+                        playSound(player, "minecraft:entity.player.levelup", 0.6, 1.2)
+                        uiUpdate(player, "coinsText", "text", "Монеты: " + intStr(player.savedData["coins"]))
+                    } else {
+                        playSound(player, "minecraft:entity.villager.no", 0.8, 1.0)
+                    }
+                }
+            }
+            
+            # Хлеб
+            item("icoBread") {
+                pos = [4, 33]
+                w = 16
+                item = "minecraft:bread"
+            }
+            text("itemBread", "Хлеб x5 — 8 монет") {
+                pos = [26, 35]
+                color = "#FFAA00"
+            }
+            button("buyBread", "Купить") {
+                pos = [180, 32]
+                size = [70, 20]
+                color = "#55336688"
+                hover = "#66447799"
+                onClick {
+                    if (player.savedData["coins"] >= 8) {
+                        player.savedData["coins"] = player.savedData["coins"] - 8
+                        giveItem(player, "minecraft:bread", 5)
+                        playSound(player, "minecraft:entity.player.levelup", 0.6, 1.2)
+                        uiUpdate(player, "coinsText", "text", "Монеты: " + intStr(player.savedData["coins"]))
+                    } else {
+                        playSound(player, "minecraft:entity.villager.no", 0.8, 1.0)
+                    }
+                }
+            }
+        }
+        
+        button("freeMoney", "+100 монет") {
+            pos = [12, 200]
+            size = [100, 20]
+            color = "#55116611"
+            hover = "#66228822"
+            onClick {
+                player.savedData["coins"] = player.savedData["coins"] + 100
+                playSound(player, "minecraft:entity.experience_orb.pickup", 1.0, 1.0)
+                uiUpdate(player, "coinsText", "text", "Монеты: " + intStr(player.savedData["coins"]))
+            }
+        }
+        
+        button("closeShop", "Закрыть") {
+            pos = [168, 200]
+            size = [100, 20]
+            color = "#88333333"
+            hover = "#AA555555"
+            onClick {
+                uiClose(player)
+            }
+        }
+    }
+    
+    uiOpen(player, shopui)
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>NBT-тег spraute_no_drop</h2>
+                    <div class="info-block">
+                        <i class="fas fa-lock"></i>
+                        <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря (кнопкой Q или перетаскиванием).</p>
+                    </div>
+                    <pre><code>give_item(player, "minecraft:quest_item", 1, null, null, {"spraute_no_drop": true})</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

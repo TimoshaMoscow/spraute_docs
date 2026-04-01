@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Синтаксис — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>📝 Синтаксис языка .spr</h1>
+                
+                <section class="doc-section">
+                    <h2>Ключевые слова</h2>
+                    <div class="table-wrapper">
+                        <table class="keyword-table">
+                            <thead><tr><th>Ключевое слово</th><th>Назначение</th></tr></thead>
+                            <tbody>
+                                <tr><td><code>val</code></td><td>Локальная переменная</td></tr>
+                                <tr><td><code>global val</code></td><td>Глобальная переменная (в рамках скрипта)</td></tr>
+                                <tr><td><code>world val</code></td><td>Переменная мира (сохраняется между перезапусками)</td></tr>
+                                <tr><td><code>include "name"</code></td><td>Вставляет код из другого скрипта name.spr</td></tr>
+                                <tr><td><code>await</code></td><td>Ожидание события / времени / задачи</td></tr>
+                                <tr><td><code>create npc</code></td><td>Блок создания NPC</td></tr>
+                                <tr><td><code>create ui</code></td><td>Блок описания UI</td></tr>
+                                <tr><td><code>if / else / else if</code></td><td>Условные конструкции</td></tr>
+                                <tr><td><code>while</code></td><td>Цикл</td></tr>
+                                <tr><td><code>for (i in range(...))</code></td><td>Цикл по range()</td></tr>
+                                <tr><td><code>fun / return</code></td><td>Пользовательские функции</td></tr>
+                                <tr><td><code>on</code></td><td>Обработчик события в фоне</td></tr>
+                                <tr><td><code>every</code></td><td>Периодический таймер</td></tr>
+                                <tr><td><code>stop</code></td><td>Остановка обработчика on / every</td></tr>
+                                <tr><td><code>async</code></td><td>Асинхронный блок</td></tr>
+                                <tr><td><code>true / false</code></td><td>Булевы литералы</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Операторы</h2>
+                    <div class="grid-cards">
+                        <div class="card"><code>+</code><p>Сложение / конкатенация</p></div>
+                        <div class="card"><code>-</code><p>Вычитание</p></div>
+                        <div class="card"><code>*</code><p>Умножение</p></div>
+                        <div class="card"><code>/</code><p>Деление</p></div>
+                        <div class="card"><code>//</code><p>Целочисленное деление (floor)</p></div>
+                        <div class="card"><code>**</code><p>Возведение в степень</p></div>
+                        <div class="card"><code>==</code><p>Равно</p></div>
+                        <div class="card"><code>!=</code><p>Не равно</p></div>
+                        <div class="card"><code>&lt; &gt; &lt;= &gt;=</code><p>Сравнение</p></div>
+                        <div class="card"><code>&amp;&amp; || !</code><p>Логические операторы</p></div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Комментарии</h2>
+                    <pre><code># Это комментарий до конца строки
+val x = 10  # Тоже комментарий
+
+# Многострочные комментарии не поддерживаются,
+# нужно использовать # на каждой строке</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Функция range()</h2>
+                    <pre><code># range(n) — от 0 до n-1
+for (i in range(5)) {
+    chat("i = " + i)  # 0, 1, 2, 3, 4
+}
+
+# range(start, end) — от start до end-1
+for (i in range(2, 7)) {
+    chat("i = " + i)  # 2, 3, 4, 5, 6
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Списки и словари</h2>
+                    <pre><code># Списки
+val list = [1, 2, 3]
+list[0] = 10
+val first = list[0]
+
+# Словари
+val dict = dict()
+dict["name"] = "Readix"
+
+# Литерал словаря
+val data = {"name": "Guard", "hp": 50}
+
+# Цепочки индексов
+val value = matrix[0][1]</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

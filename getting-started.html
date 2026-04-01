@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Начало работы — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>🚀 Начало работы</h1>
+                
+                <section class="doc-section">
+                    <h2>Что такое Spraute Engine?</h2>
+                    <p>Spraute Engine — это система скриптов для Minecraft, написанная на языке <code>.spr</code>. Она позволяет создавать сложные интерактивные элементы без необходимости писать Java-код.</p>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Первый скрипт</h2>
+                    <p>Создайте файл <code>hello.spr</code> и напишите:</p>
+                    <pre><code># Простой скрипт приветствия
+create npc greeter {
+    name = "Приветственный NPC"
+    pos = [0, 64, 0]
+    speed = 0.2
+}
+
+on interact(greeter) {
+    val player = _event_player
+    say(greeter, "Привет, " + player.name + "!")
+    chat("§aДобро пожаловать на сервер!")
+}</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Поместите скрипт в папку <code>scripts/</code> на сервере. После перезагрузки или выполнения команды <code>/script reload</code> NPC появится в мире.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Основные концепции</h2>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <i class="fas fa-robot"></i>
+                            <h3>NPC</h3>
+                            <p>Неигровые персонажи с моделями, анимациями и поведением</p>
+                        </div>
+                        <div class="card">
+                            <i class="fas fa-clock"></i>
+                            <h3>Await</h3>
+                            <p>Асинхронное ожидание событий без блокировки</p>
+                        </div>
+                        <div class="card">
+                            <i class="fas fa-window-maximize"></i>
+                            <h3>UI</h3>
+                            <p>Серверные интерфейсы с анимациями</p>
+                        </div>
+                        <div class="card">
+                            <i class="fas fa-database"></i>
+                            <h3>Сохранение</h3>
+                            <p>world и player.saved_data для постоянных данных</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Подключение библиотек</h2>
+                    <pre><code># Подключение встроенной библиотеки
+include "spraute_chat"
+
+# Использование
+npc_chat(player, my_guard, "Проход закрыт!", "#FF5555")</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

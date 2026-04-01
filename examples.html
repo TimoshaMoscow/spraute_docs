@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Примеры кода — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1>📚 Полные примеры кода</h1>
+                
+                <section class="doc-section">
+                    <h2>Пример 1: Кликер по блоку с NPC и магазином</h2>
+                    <pre><code># ==========================================
+# Скрипт: Кликер по блоку с NPC и Магазином
+# ==========================================
+
+# 1. Настройка координат блока-кликера
+val block_x = 16
+val block_y = -60
+val block_z = -3
+
+# Устанавливаем сам блок
+set_block(block_x, block_y, block_z, "minecraft:gold_block")
+
+# 2. Создаем NPC рядом с блоком
+create npc clicker_npc {
+    name = "§e§lХранитель Блока"
+    hp = 20
+    pos = block_x + 2, block_y, block_z
+    show_name = true
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/knight.png"
+}
+
+clicker_npc.alwaysLookAt(block_x, block_y, block_z)
+
+# Функция инициализации данных игрока
+fun init_player_data(p) {
+    val data = p.saved_data
+    if (data["money"] == null) {
+        data["money"] = 0
+        data["level"] = 1
+        data["xp"] = 0
+        data["max_xp"] = 10
+        data["click_power"] = 1
+        data["xp_power"] = 1
+    }
+}
+
+# 3. Шаблон HUD
+create ui main_hud {
+    size = ["100%", "100%"]
+    background = "#00000000"
+    
+    text("money_text", "$ 0") {
+        pos = ["98%", "45%"]
+        anchor = ["1.0", "0.5"]
+        color = "#55FF55"
+        scale = 2.0
+    }
+    
+    rect("xp_bg") {
+        pos = ["35%", "10"]
+        size = ["30%", "20"]
+        color = "#555555"
+    }
+    
+    rect("xp_fill") {
+        pos = ["35%", "10"]
+        size = ["0%", "20"]
+        color = "#FFAA00"
+    }
+    
+    text("level_text", "Уровень: 1 (0/10)") {
+        pos = ["50%", "20"]
+        anchor = "center"
+        color = "#FFFFFF"
+    }
+}
+
+# Функция обновления HUD
+fun update_hud(p) {
+    val money = p.saved_data["money"]
+    val lvl = p.saved_data["level"]
+    val xp = p.saved_data["xp"]
+    val max_xp = p.saved_data["max_xp"]
+    
+    ui_update(p, "money_text", "text", "$ " + money)
+    ui_update(p, "level_text", "text", "Уровень: " + lvl + " (" + xp + "/" + max_xp + ")")
+    ui_update(p, "shop_money_text", "text", "Твой баланс: $ " + money)
+    
+    val percent = (xp * 100) / max_xp
+    val width_percent = (percent * 30) / 100
+    ui_update(p, "xp_fill", "w", width_percent + "%")
+}
+
+# 4. Магазин прокачки
+create ui shop_ui {
+    size = ["200", "150"]
+    background = "#DD222222"
+    
+    text("title", "Магазин Улучшений") {
+        pos = ["45", "10"]
+        color = "#FFAA00"
+    }
+    
+    text("shop_money_text", "Твой баланс: $ 0") {
+        pos = ["45", "25"]
+        color = "#55FF55"
+    }
+    
+    button("upg_power", "Сила клика (+1) | 50$") {
+        pos = ["20", "40"]
+        size = ["160", "25"]
+        color = "#44AA44"
+        hover = "#55FF55"
+    }
+    
+    button("upg_xp", "Опыт за клик (+1) | 100$") {
+        pos = ["20", "75"]
+        size = ["160", "25"]
+        color = "#4444AA"
+        hover = "#5555FF"
+    }
+}
+
+# 5. Обработчик кликов по кнопкам магазина
+on ui_click() -> shop_click_handler {
+    val p = _event_player
+    val btn = _event_widget
+    val data = p.saved_data
+    
+    if (btn == "upg_power") {
+        if (data["money"] >= 50) {
+            data["money"] = data["money"] - 50
+            data["click_power"] = data["click_power"] + 1
+            play_sound(p, "minecraft:entity.player.levelup", 1.0, 2.0)
+            update_hud(p)
+        }
+    }
+    
+    if (btn == "upg_xp") {
+        if (data["money"] >= 100) {
+            data["money"] = data["money"] - 100
+            data["xp_power"] = data["xp_power"] + 1
+            play_sound(p, "minecraft:entity.player.levelup", 1.0, 2.0)
+            update_hud(p)
+        }
+    }
+}
+
+# 6. Открытие магазина по G
+on keybind("g") -> shop_bind {
+    val p = _event_player
+    init_player_data(p)
+    ui_open(p, shop_ui)
+    ui_update(p, "shop_money_text", "text", "Твой баланс: $ " + p.saved_data["money"])
+}
+
+# 7. Основная логика клика по блоку
+on click_block(block_x, block_y, block_z) -> block_click {
+    val p = _event_player
+    init_player_data(p)
+    
+    overlay_open(p, main_hud)
+    
+    val power = p.saved_data["click_power"]
+    val xp_gain = p.saved_data["xp_power"]
+    
+    p.saved_data["money"] = p.saved_data["money"] + power
+    p.saved_data["xp"] = p.saved_data["xp"] + xp_gain
+    
+    particle_spawn("minecraft:happy_villager", block_x + 0.5, block_y + 1.2, block_z + 0.5, 3, 0.2, 0.2, 0.2, 0)
+    play_sound(p, "minecraft:entity.experience_orb.pickup", 0.5, 2.0)
+    
+    # Проверка на повышение уровня
+    if (p.saved_data["xp"] >= p.saved_data["max_xp"]) {
+        p.saved_data["xp"] = p.saved_data["xp"] - p.saved_data["max_xp"]
+        p.saved_data["level"] = p.saved_data["level"] + 1
+        p.saved_data["max_xp"] = p.saved_data["max_xp"] * 2
+        
+        play_sound(p, "minecraft:entity.player.levelup", 1.0, 1.0)
+        particle_spawn("minecraft:totem_of_undying", p.x, p.y + 1.0, p.z, 50, 0.4, 0.5, 0.4, 0.15)
+    }
+    
+    update_hud(p)
+}
+
+# 8. Открытие HUD при старте
+val start_player = get_nearest_player("clicker_npc")
+if (start_player != null) {
+    init_player_data(start_player)
+    overlay_open(start_player, main_hud)
+    update_hud(start_player)
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2>Пример 2: Диалог с NPC и квест на сбор ресурсов</h2>
+                    <pre><code>create npc readix_avatar {
+    name = "ReadixGG"
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/defolt.png"
+    pos = 8, -60, 7
+    show_name = false
+    speed = 0.2
+}
+
+create npc knight {
+    name = "Верный Рыцарь"
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/knight.png"
+    pos = 8, -60, 9
+    show_name = false
+    speed = 0.2
+}
+
+async "readix_idle" {
+    readix_avatar.alwaysLookAt(knight)
+}
+
+async "knight_idle" {
+    knight.alwaysLookAt(readix_avatar)
+}
+
+readix_avatar.setAdditiveWeight(1)
+knight.setAdditiveWeight(1)
+
+val player = get_nearest_player(readix_avatar)
+chat("§7[!] Подойди к ReadixGG и нажми ПКМ")
+val interactor = await interact(readix_avatar)
+
+readix_avatar.alwaysLookAt(interactor)
+knight.alwaysLookAt(interactor)
+readix_avatar.playOnce("hello")
+say(readix_avatar, "Привет, " + interactor.name + "! Нажми §e[F]")
+await keybind("f")
+
+create ui dialog_panel {
+    size = [300, 128]
+    background = "#F0181828"
+    text("q_text", "Нужна твоя помощь с железом. Что скажешь?") {
+        pos = [12, 14]
+        color = "#EAEAEA"
+    }
+    button("ans_help", "Помогу, сколько нужно") {
+        pos = [12, 48]
+        size = [158, 22]
+        color = "#55336688"
+        hover = "#66447799"
+    }
+    button("ans_later", "Позже") {
+        pos = [12, 78]
+        size = [158, 22]
+        color = "#55336688"
+        hover = "#66447799"
+    }
+    entity("npc:readix_avatar") {
+        pos = [188, 30]
+        size = [96, 98]
+        scale = 1.05
+        crop = [0, 0.0, 0.0, 0.4]
+        anchor_y = 2.1
+    }
+}
+
+ui_open(interactor, dialog_panel)
+val dialog_pick = await ui_click(interactor)
+ui_close(interactor)
+
+if (dialog_pick == "ans_help") {
+    readix_avatar.playOnce("happy")
+    say(readix_avatar, "Тогда по рукам — жду слитки!")
+} else {
+    readix_avatar.playOnce("sad")
+    say(readix_avatar, "Ладно, зайди, когда будет время.")
+}
+await keybind("f")
+
+knight.alwaysLookAt(readix_avatar)
+knight.playLoop("sad")
+say(knight, "Readix, у нас в кузнице закончилось железо.")
+await keybind("f")
+
+readix_avatar.alwaysLookAt(interactor)
+knight.alwaysLookAt(interactor)
+knight.stop("sad")
+readix_avatar.playLoop("hint")
+
+say(readix_avatar, interactor.name + ", выручишь нас? Нужно 30 слитков железа. Кидай их мне (Q).")
+await keybind("f")
+readix_avatar.stop("hint")
+
+say(knight, "Мы будем ждать тебя у тех скал. Поторопись!")
+await keybind("f")
+
+async "readix_run" {
+    readix_avatar.moveTo(5, -60, 15)
+}
+async "knight_run" {
+    knight.moveTo(7, -60, 17)
+}
+await task("readix_run")
+await task("knight_run")
+
+readix_avatar.stopLook()
+knight.stopLook()
+readix_avatar.alwaysLookAt(knight)
+knight.alwaysLookAt(readix_avatar)
+
+val need = 30
+var iron_quest_active = false
+
+on pickup(readix_avatar, "minecraft:iron_ingot") -> iron_progress {
+    val have = readix_avatar.countItem("minecraft:iron_ingot")
+    val left = need - have
+    if (iron_quest_active && left > 0) {
+        say(readix_avatar, "Осталось " + int_str(left) + ", принёс " + int_str(have))
+    }
+}
+
+var quest_done = false
+while (!quest_done) {
+    val checker = await interact(readix_avatar)
+    
+    readix_avatar.alwaysLookAt(checker)
+    knight.alwaysLookAt(checker)
+    
+    readix_avatar.pickupOnlyFrom(checker)
+    readix_avatar.playLoop("question")
+    say(readix_avatar, "Кидай железо сюда (Q)! Нужно 30.")
+    
+    iron_quest_active = true
+    await pickup(readix_avatar, 30, "minecraft:iron_ingot")
+    iron_quest_active = false
+    readix_avatar.stop("question")
+    readix_avatar.playOnce("happy")
+    
+    readix_avatar.pickupAny()
+    stop(iron_progress)
+    say(readix_avatar, "О, ты принёс всё вовремя!")
+    await keybind("f")
+    quest_done = true
+}
+
+say(readix_avatar, "Работа кипит! Ты лучший помощник.")
+await keybind("f")
+
+knight.playOnce("laughter")
+say(knight, "ЕЕЕЕ! ПОГНАЛИ!")
+await keybind("f")
+
+say(readix_avatar, "Удачи в приключениях! Еще увидимся.")</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
