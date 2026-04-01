@@ -18,13 +18,15 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>📝 Синтаксис языка .spr</h1>
+                <h1><i class="fas fa-code"></i> Синтаксис языка .spr</h1>
                 
                 <section class="doc-section">
-                    <h2>Ключевые слова</h2>
+                    <h2><i class="fas fa-key"></i> Ключевые слова</h2>
                     <div class="table-wrapper">
                         <table class="keyword-table">
-                            <thead><tr><th>Ключевое слово</th><th>Назначение</th></tr></thead>
+                            <thead>
+                                <tr><th>Ключевое слово</th><th>Назначение</th></tr>
+                            </thead>
                             <tbody>
                                 <tr><td><code>val</code></td><td>Локальная переменная</td></tr>
                                 <tr><td><code>global val</code></td><td>Глобальная переменная (в рамках скрипта)</td></tr>
@@ -48,7 +50,7 @@
                 </section>
 
                 <section class="doc-section">
-                    <h2>Операторы</h2>
+                    <h2><i class="fas fa-calculator"></i> Операторы</h2>
                     <div class="grid-cards">
                         <div class="card"><code>+</code><p>Сложение / конкатенация</p></div>
                         <div class="card"><code>-</code><p>Вычитание</p></div>
@@ -64,7 +66,7 @@
                 </section>
 
                 <section class="doc-section">
-                    <h2>Комментарии</h2>
+                    <h2><i class="fas fa-comment"></i> Комментарии</h2>
                     <pre><code># Это комментарий до конца строки
 val x = 10  # Тоже комментарий
 
@@ -73,7 +75,7 @@ val x = 10  # Тоже комментарий
                 </section>
 
                 <section class="doc-section">
-                    <h2>Функция range()</h2>
+                    <h2><i class="fas fa-chart-line"></i> Функция range()</h2>
                     <pre><code># range(n) — от 0 до n-1
 for (i in range(5)) {
     chat("i = " + i)  # 0, 1, 2, 3, 4
@@ -86,7 +88,7 @@ for (i in range(2, 7)) {
                 </section>
 
                 <section class="doc-section">
-                    <h2>Списки и словари</h2>
+                    <h2><i class="fas fa-list-ul"></i> Списки и словари</h2>
                     <pre><code># Списки
 val list = [1, 2, 3]
 list[0] = 10

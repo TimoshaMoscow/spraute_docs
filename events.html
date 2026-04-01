@@ -18,10 +18,10 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>⚡ События (on) и таймеры (every)</h1>
+                <h1><i class="fas fa-bolt"></i> События (on) и таймеры (every)</h1>
                 
                 <section class="doc-section">
-                    <h2>Синтаксис</h2>
+                    <h2><i class="fas fa-code"></i> Синтаксис</h2>
                     <pre><code>on event(params) -> handler_id {
     # код обработчика
 }
@@ -35,7 +35,7 @@ stop(handler_id)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>События взаимодействия</h2>
+                    <h2><i class="fas fa-hand-pointer"></i> События взаимодействия</h2>
                     <div class="grid-cards">
                         <div class="card">
                             <code>on interact(target) -> id { }</code>
@@ -53,7 +53,7 @@ stop(handler_id)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>События предметов</h2>
+                    <h2><i class="fas fa-box"></i> События предметов</h2>
                     <div class="grid-cards">
                         <div class="card">
                             <code>on pickup(npc, item_id) -> id { }</code>
@@ -67,7 +67,7 @@ stop(handler_id)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>События UI</h2>
+                    <h2><i class="fas fa-desktop"></i> События UI</h2>
                     <div class="grid-cards">
                         <div class="card">
                             <code>on ui_click(player) -> id { }</code>
@@ -85,7 +85,7 @@ stop(handler_id)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>События позиции и блоков</h2>
+                    <h2><i class="fas fa-map-marker-alt"></i> События позиции и блоков</h2>
                     <div class="grid-cards">
                         <div class="card">
                             <code>on position(player, x, y, z, r) -> id { }</code>
@@ -107,7 +107,7 @@ stop(handler_id)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>События чата</h2>
+                    <h2><i class="fas fa-comment"></i> События чата</h2>
                     <div class="grid-cards">
                         <div class="card">
                             <code>on chat(player, message) -> id { }</code>
@@ -117,7 +117,7 @@ stop(handler_id)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Примеры</h2>
+                    <h2><i class="fas fa-examples"></i> Примеры</h2>
                     <pre><code># Обработка подбора железа
 on pickup(readix_avatar, "minecraft:iron_ingot") -> progress {
     val have = readix_avatar.countItem("minecraft:iron_ingot")

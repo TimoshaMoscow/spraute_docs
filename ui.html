@@ -18,10 +18,10 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>🖥️ UI система</h1>
+                <h1><i class="fas fa-window-maximize"></i> UI система</h1>
                 
                 <section class="doc-section">
-                    <h2>Создание UI шаблона</h2>
+                    <h2><i class="fas fa-code"></i> Создание UI шаблона</h2>
                     <pre><code>create ui dialog_panel {
     size = [300, 128]
     background = "#F0181828"
@@ -54,7 +54,7 @@
                 </section>
 
                 <section class="doc-section">
-                    <h2>Открытие и закрытие UI</h2>
+                    <h2><i class="fas fa-window-restore"></i> Открытие и закрытие UI</h2>
                     <pre><code># Открыть UI
 ui_open(player, dialog_panel)
 
@@ -67,7 +67,7 @@ overlay_close(player)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Обновление виджетов</h2>
+                    <h2><i class="fas fa-sync-alt"></i> Обновление виджетов</h2>
                     <pre><code># Обновление текста
 ui_update(player, "my_text", "text", "Новый текст")
 
@@ -79,7 +79,7 @@ ui_update(player, "xp_fill", "w", "30%")</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Анимации</h2>
+                    <h2><i class="fas fa-chart-line"></i> Анимации</h2>
                     <pre><code># Плавное перемещение кнопки
 ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
 
@@ -88,7 +88,7 @@ ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
                 </section>
 
                 <section class="doc-section">
-                    <h2>Виджеты</h2>
+                    <h2><i class="fas fa-th-large"></i> Виджеты</h2>
                     <div class="grid-cards">
                         <div class="card"><code>text</code><p>Текст с wrap, max_lines, anchor</p></div>
                         <div class="card"><code>input</code><p>Поле ввода с placeholder, password</p></div>
@@ -104,7 +104,7 @@ ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
                 </section>
 
                 <section class="doc-section">
-                    <h2>Динамическое создание виджетов</h2>
+                    <h2><i class="fas fa-code-branch"></i> Динамическое создание виджетов</h2>
                     <pre><code>create ui dynamic_ui {
     size = [400, 200]
     background = "#FF000000"
@@ -122,7 +122,7 @@ ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
                 </section>
 
                 <section class="doc-section">
-                    <h2>Проценты в позиционировании</h2>
+                    <h2><i class="fas fa-percent"></i> Проценты в позиционировании</h2>
                     <pre><code>text("centered", "По центру") {
     pos = ["50%", "50%"]
     anchor = "center"

@@ -18,13 +18,15 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>📦 Переменные и область видимости</h1>
+                <h1><i class="fas fa-database"></i> Переменные и область видимости</h1>
                 
                 <section class="doc-section">
-                    <h2>Типы переменных</h2>
+                    <h2><i class="fas fa-tags"></i> Типы переменных</h2>
                     <div class="table-wrapper">
                         <table class="keyword-table">
-                            <thead><tr><th>Тип</th><th>Описание</th><th>Пример</th></tr></thead>
+                            <thead>
+                                <tr><th>Тип</th><th>Описание</th><th>Пример</th></tr>
+                            </thead>
                             <tbody>
                                 <tr><td><code>val</code></td><td>Локальная переменная</td><td><code>val x = 10</code></td></tr>
                                 <tr><td><code>global val</code></td><td>Глобальная в рамках скрипта</td><td><code>global counter = 0</code></td></tr>
@@ -37,7 +39,7 @@
                 </section>
 
                 <section class="doc-section">
-                    <h2>Примеры использования</h2>
+                    <h2><i class="fas fa-code"></i> Примеры использования</h2>
                     <pre><code># Локальная переменная
 val local_var = 10
 
@@ -59,14 +61,14 @@ p.saved_data["deaths"] = p.saved_data["deaths"] + 1</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Свойства сущностей</h2>
-                    <h3>Игрок:</h3>
+                    <h2><i class="fas fa-user"></i> Свойства сущностей</h2>
+                    <h3><i class="fas fa-user-circle"></i> Игрок:</h3>
                     <pre><code>player.name
 player.hp
 player.x, player.y, player.z
 player.max_hp</code></pre>
                     
-                    <h3>NPC:</h3>
+                    <h3><i class="fas fa-robot"></i> NPC:</h3>
                     <pre><code>npc.name
 npc.show_name
 npc.hp, npc.max_hp
@@ -75,7 +77,7 @@ npc.x, npc.y, npc.z
 npc.yaw, npc.pitch
 npc.model, npc.texture</code></pre>
                     
-                    <h3>Присваивание свойств:</h3>
+                    <h3><i class="fas fa-edit"></i> Присваивание свойств:</h3>
                     <pre><code>npc.name = "Новое имя"
 npc.hp = 100
 npc.x = 10
@@ -83,7 +85,7 @@ npc.yaw = 90</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Методы</h2>
+                    <h2><i class="fas fa-cogs"></i> Методы</h2>
                     <pre><code># Расстояние между сущностями
 val dist = player.distance_to(npc)
 

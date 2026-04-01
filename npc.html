@@ -18,10 +18,10 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>🤖 Создание NPC</h1>
+                <h1><i class="fas fa-robot"></i> Создание NPC</h1>
                 
                 <section class="doc-section">
-                    <h2>Базовый синтаксис</h2>
+                    <h2><i class="fas fa-code"></i> Базовый синтаксис</h2>
                     <pre><code>create npc readix_avatar {
     name = "ReadixGG"
     model = "geo/defolt.geo.json"
@@ -35,7 +35,7 @@
                 </section>
 
                 <section class="doc-section">
-                    <h2>Свойства NPC</h2>
+                    <h2><i class="fas fa-list"></i> Свойства NPC</h2>
                     <div class="property-list">
                         <ul>
                             <li><code>name</code> — отображаемое имя</li>
@@ -52,7 +52,7 @@
                 </section>
 
                 <section class="doc-section">
-                    <h2>Анимации</h2>
+                    <h2><i class="fas fa-film"></i> Анимации</h2>
                     <pre><code># Проигрывание анимации один раз
 npc.playOnce("hello")
 
@@ -77,7 +77,7 @@ npc.setAdditiveWeight(1)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Движение</h2>
+                    <h2><i class="fas fa-arrows-alt"></i> Движение</h2>
                     <pre><code># Перемещение к точке (с await блокирует до прибытия)
 await npc.moveTo(5, -60, 15)
 
@@ -90,7 +90,7 @@ await npc.followUntil(player, 2.0)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Взгляд</h2>
+                    <h2><i class="fas fa-eye"></i> Взгляд</h2>
                     <pre><code># Разовый поворот головы
 npc.lookAt(player)
 
@@ -103,7 +103,7 @@ npc.setHeadBone("head")</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Предметы в руках</h2>
+                    <h2><i class="fas fa-hand-paper"></i> Предметы в руках</h2>
                     <pre><code># Установка предмета
 npc.setItem("right", "minecraft:iron_sword")
 npc.setItem("left", "minecraft:shield")
@@ -114,7 +114,7 @@ npc.removeItem()  # обе руки</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Подбор предметов</h2>
+                    <h2><i class="fas fa-magnet"></i> Подбор предметов</h2>
                     <pre><code># Подбирать только от указанного игрока
 npc.pickupOnlyFrom(player)
 
@@ -126,7 +126,7 @@ val iron = npc.countItem("minecraft:iron_ingot")</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Удаление NPC</h2>
+                    <h2><i class="fas fa-trash-alt"></i> Удаление NPC</h2>
                     <pre><code>npc.remove()</code></pre>
                 </section>
             </div>

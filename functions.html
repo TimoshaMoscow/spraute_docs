@@ -18,10 +18,10 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>🔧 Пользовательские функции и Await</h1>
+                <h1><i class="fas fa-cogs"></i> Пользовательские функции и Await</h1>
                 
                 <section class="doc-section">
-                    <h2>Пользовательские функции</h2>
+                    <h2><i class="fas fa-code"></i> Пользовательские функции</h2>
                     <pre><code>fun name(a, b) {
     return a + b
 }
@@ -31,7 +31,7 @@ val result = name(1, 2)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Await — ожидание событий</h2>
+                    <h2><i class="fas fa-hourglass-half"></i> Await — ожидание событий</h2>
                     <div class="grid-cards">
                         <div class="card"><code>await time(seconds)</code><p>Пауза на секунды</p></div>
                         <div class="card"><code>await interact(entity)</code><p>Ожидание взаимодействия</p></div>
@@ -50,7 +50,7 @@ val result = name(1, 2)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Async — асинхронные задачи</h2>
+                    <h2><i class="fas fa-tasks"></i> Async — асинхронные задачи</h2>
                     <pre><code># Запуск с id
 async "readix_idle" {
     readix_avatar.alwaysLookAt(knight)
@@ -77,7 +77,7 @@ await task("readix_idle")</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Пример с диалогом</h2>
+                    <h2><i class="fas fa-comment"></i> Пример с диалогом</h2>
                     <pre><code>val player = get_nearest_player(npc)
 chat("Подойди и нажми ПКМ")
 val interactor = await interact(npc)

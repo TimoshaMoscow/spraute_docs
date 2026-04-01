@@ -18,15 +18,15 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>💬 Библиотека кастомного чата</h1>
+                <h1><i class="fas fa-comment-dots"></i> Библиотека кастомного чата</h1>
                 
                 <section class="doc-section">
-                    <h2>Подключение</h2>
+                    <h2><i class="fas fa-plug"></i> Подключение</h2>
                     <pre><code>include "spraute_chat"</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Настройка головы NPC</h2>
+                    <h2><i class="fas fa-user-circle"></i> Настройка головы NPC</h2>
                     <pre><code>create npc my_guard {
     name = "Охранник"
     hp = 20
@@ -36,7 +36,7 @@ my_guard.head = "minecraft:textures/heads/guard.png"</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Отправка сообщения</h2>
+                    <h2><i class="fas fa-paper-plane"></i> Отправка сообщения</h2>
                     <pre><code>npc_chat(player, my_guard, "Проход закрыт, уходи отсюда!", "#FF5555")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-comment"></i>
@@ -45,12 +45,12 @@ my_guard.head = "minecraft:textures/heads/guard.png"</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>История сообщений</h2>
+                    <h2><i class="fas fa-history"></i> История сообщений</h2>
                     <p>При нажатии клавиши <kbd>B</kbd> открывается окно с историей последних 50 сообщений кастомного чата с прокруткой.</p>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Полный код библиотеки</h2>
+                    <h2><i class="fas fa-file-code"></i> Полный код библиотеки</h2>
                     <pre><code># Библиотека кастомного чата
 # Импортируйте через: include "spraute_chat"
 

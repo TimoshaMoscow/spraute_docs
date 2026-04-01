@@ -18,21 +18,24 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>🚀 Начало работы</h1>
+                <h1><i class="fas fa-rocket"></i> Начало работы</h1>
                 
                 <section class="doc-section">
-                    <h2>Что такое Spraute Engine?</h2>
+                    <h2><i class="fas fa-question-circle"></i> Что такое Spraute Engine?</h2>
                     <p>Spraute Engine — это система скриптов для Minecraft, написанная на языке <code>.spr</code>. Она позволяет создавать сложные интерактивные элементы без необходимости писать Java-код.</p>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Первый скрипт</h2>
+                    <h2><i class="fas fa-code"></i> Первый скрипт</h2>
                     <p>Создайте файл <code>hello.spr</code> и напишите:</p>
                     <pre><code># Простой скрипт приветствия
 create npc greeter {
     name = "Приветственный NPC"
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/greeter.png"
     pos = [0, 64, 0]
     speed = 0.2
+    show_name = true
 }
 
 on interact(greeter) {
@@ -42,12 +45,12 @@ on interact(greeter) {
 }</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
-                        <p>Поместите скрипт в папку <code>scripts/</code> на сервере. После перезагрузки или выполнения команды <code>/script reload</code> NPC появится в мире.</p>
+                        <p>Поместите скрипт в папку <code>scripts/</code> на сервере. После перезагрузки или выполнения команды <code>/spraute reload</code> NPC появится в мире.</p>
                     </div>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Основные концепции</h2>
+                    <h2><i class="fas fa-cubes"></i> Основные концепции</h2>
                     <div class="grid-cards">
                         <div class="card">
                             <i class="fas fa-robot"></i>
@@ -55,12 +58,12 @@ on interact(greeter) {
                             <p>Неигровые персонажи с моделями, анимациями и поведением</p>
                         </div>
                         <div class="card">
-                            <i class="fas fa-clock"></i>
+                            <i class="fas fa-hourglass-half"></i>
                             <h3>Await</h3>
                             <p>Асинхронное ожидание событий без блокировки</p>
                         </div>
                         <div class="card">
-                            <i class="fas fa-window-maximize"></i>
+                            <i class="fas fa-desktop"></i>
                             <h3>UI</h3>
                             <p>Серверные интерфейсы с анимациями</p>
                         </div>
@@ -73,12 +76,34 @@ on interact(greeter) {
                 </section>
 
                 <section class="doc-section">
-                    <h2>Подключение библиотек</h2>
+                    <h2><i class="fas fa-plug"></i> Подключение библиотек</h2>
                     <pre><code># Подключение встроенной библиотеки
 include "spraute_chat"
 
 # Использование
 npc_chat(player, my_guard, "Проход закрыт!", "#FF5555")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-terminal"></i> Команды сервера</h2>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <code>/spraute reload</code>
+                            <p>Перезагрузить все скрипты</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute run &lt;script&gt;</code>
+                            <p>Запустить скрипт</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute stop &lt;script&gt;</code>
+                            <p>Остановить скрипт</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute list</code>
+                            <p>Список активных скриптов</p>
+                        </div>
+                    </div>
                 </section>
             </div>
         </main>

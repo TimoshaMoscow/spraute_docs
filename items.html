@@ -18,10 +18,10 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1>🎒 Предметы и инвентарь</h1>
+                <h1><i class="fas fa-box"></i> Предметы и инвентарь</h1>
                 
                 <section class="doc-section">
-                    <h2>Основные функции</h2>
+                    <h2><i class="fas fa-cubes"></i> Основные функции</h2>
                     <div class="api-item">
                         <div class="api-signature"><code>give_item(player, item_id, [count], [name], [lore], [nbt])</code><span class="api-tag">функция</span></div>
                         <p>Выдаёт предмет игроку.</p>
@@ -53,7 +53,7 @@ if (held != null && held.id == "minecraft:stick") {
                 </section>
 
                 <section class="doc-section">
-                    <h2>Проверка предметов</h2>
+                    <h2><i class="fas fa-search"></i> Проверка предметов</h2>
                     <pre><code># Есть ли предмет
 if (player.has_item("minecraft:iron_ingot")) {
     chat("У тебя есть железо!")
@@ -70,7 +70,7 @@ val nbt = player.slot_nbt(0)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>Магазин на кнопку J (полный пример)</h2>
+                    <h2><i class="fas fa-store"></i> Магазин на кнопку J (полный пример)</h2>
                     <pre><code>on keybind("j") -> shopKey {
     val player = event_player
     
@@ -126,33 +126,6 @@ val nbt = player.slot_nbt(0)</code></pre>
                     }
                 }
             }
-            
-            # Хлеб
-            item("icoBread") {
-                pos = [4, 33]
-                w = 16
-                item = "minecraft:bread"
-            }
-            text("itemBread", "Хлеб x5 — 8 монет") {
-                pos = [26, 35]
-                color = "#FFAA00"
-            }
-            button("buyBread", "Купить") {
-                pos = [180, 32]
-                size = [70, 20]
-                color = "#55336688"
-                hover = "#66447799"
-                onClick {
-                    if (player.savedData["coins"] >= 8) {
-                        player.savedData["coins"] = player.savedData["coins"] - 8
-                        giveItem(player, "minecraft:bread", 5)
-                        playSound(player, "minecraft:entity.player.levelup", 0.6, 1.2)
-                        uiUpdate(player, "coinsText", "text", "Монеты: " + intStr(player.savedData["coins"]))
-                    } else {
-                        playSound(player, "minecraft:entity.villager.no", 0.8, 1.0)
-                    }
-                }
-            }
         }
         
         button("freeMoney", "+100 монет") {
@@ -183,7 +156,7 @@ val nbt = player.slot_nbt(0)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2>NBT-тег spraute_no_drop</h2>
+                    <h2><i class="fas fa-lock"></i> NBT-тег spraute_no_drop</h2>
                     <div class="info-block">
                         <i class="fas fa-lock"></i>
                         <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря (кнопкой Q или перетаскиванием).</p>
