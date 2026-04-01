@@ -1,103 +1,4 @@
 (function() {
-    // Определяем окружение
-    var isFileProtocol = window.location.protocol === 'file:';
-    var basePath = '';
-    
-    // Если открыто как file://, компоненты нужно вставлять иначе
-    if (isFileProtocol) {
-        console.log('Работа в file:// режиме, компоненты не загружаются');
-    }
-    
-    // Функция для вставки компонентов (копипаст из comp файлов)
-    function insertComponents() {
-        // Логотип
-        var logoContainer = document.querySelector('.logo-container');
-        if (logoContainer) {
-            logoContainer.innerHTML = `
-                <div class="logo">
-                    <a href="index.html" class="logo-link">
-                        <i class="fas fa-code"></i>
-                        <span>Spraute Engine</span>
-                    </a>
-                </div>
-            `;
-        }
-        
-        // Сайдбар меню
-        var navContainer = document.querySelector('.nav-container');
-        if (navContainer) {
-            navContainer.innerHTML = `
-                <nav class="nav-menu">
-                    <div class="nav-category">Основы</div>
-                    <a href="getting-started.html" class="nav-link">🚀 Начало работы</a>
-                    <a href="syntax.html" class="nav-link">📝 Синтаксис</a>
-                    <a href="variables.html" class="nav-link">📦 Переменные</a>
-                    
-                    <div class="nav-category">NPC</div>
-                    <a href="npc.html" class="nav-link">🤖 Создание NPC</a>
-                    
-                    <div class="nav-category">Интерфейсы</div>
-                    <a href="ui.html" class="nav-link">🖥️ UI система</a>
-                    <a href="chat-library.html" class="nav-link">💬 Кастомный чат</a>
-                    
-                    <div class="nav-category">Программирование</div>
-                    <a href="events.html" class="nav-link">⚡ События (on)</a>
-                    <a href="functions.html" class="nav-link">🔧 Функции и await</a>
-                    
-                    <div class="nav-category">Игровая механика</div>
-                    <a href="items.html" class="nav-link">🎒 Предметы и инвентарь</a>
-                    <a href="particles.html" class="nav-link">✨ Частицы</a>
-                    
-                    <div class="nav-category">Примеры</div>
-                    <a href="examples.html" class="nav-link">📚 Полные примеры</a>
-                </nav>
-                
-                <div class="sidebar-footer">
-                    <a href="https://t.me/spraute_esd" target="_blank" class="telegram-link">
-                        <i class="fab fa-telegram"></i>
-                        <span>Telegram канал</span>
-                    </a>
-                    <a href="https://t.me/spraute_community" target="_blank" class="telegram-link">
-                        <i class="fab fa-telegram"></i>
-                        <span>Сообщество разработчиков</span>
-                    </a>
-                </div>
-            `;
-        }
-    }
-    
-    // Функция для загрузки компонентов (только для http/https)
-    function loadComponentsFromServer() {
-        var isHttp = window.location.protocol === 'http:' || window.location.protocol === 'https:';
-        
-        if (!isHttp) {
-            // Если file://, просто вставляем напрямую
-            insertComponents();
-            return Promise.resolve();
-        }
-        
-        // Для http/https пробуем загрузить
-        var promises = [];
-        
-        var logoContainer = document.querySelector('.logo-container');
-        if (logoContainer) {
-            promises.push(fetch('comp/header.html')
-                .then(response => response.text())
-                .then(html => { logoContainer.innerHTML = html; })
-                .catch(() => insertComponents()));
-        }
-        
-        var navContainer = document.querySelector('.nav-container');
-        if (navContainer) {
-            promises.push(fetch('comp/sidebar.html')
-                .then(response => response.text())
-                .then(html => { navContainer.innerHTML = html; })
-                .catch(() => insertComponents()));
-        }
-        
-        return Promise.all(promises);
-    }
-    
     // Функция для копирования кода
     function setupCodeCopy() {
         var preBlocks = document.querySelectorAll('pre');
@@ -129,53 +30,90 @@
         }
     }
     
-    // Функция для авто-добавления классов подсветки
-    function setupCodeHighlight() {
-        var preBlocks = document.querySelectorAll('pre');
+    // Функция для загрузки компонентов
+    function loadComponents() {
+        var isHttp = window.location.protocol === 'http:' || window.location.protocol === 'https:';
         
-        for (var i = 0; i < preBlocks.length; i++) {
-            var pre = preBlocks[i];
-            var code = pre.querySelector('code');
-            
-            if (!code) {
-                code = document.createElement('code');
-                code.innerHTML = pre.innerHTML;
-                pre.innerHTML = '';
-                pre.appendChild(code);
-            }
-            
-            if (!code.className || !code.className.includes('language-')) {
-                code.className = 'language-spr';
+        // Логотип
+        var logoContainer = document.querySelector('.logo-container');
+        if (logoContainer) {
+            if (isHttp) {
+                fetch('comp/header.html')
+                    .then(function(response) { return response.text(); })
+                    .then(function(html) { logoContainer.innerHTML = html; })
+                    .catch(function() { insertComponents(); });
+            } else {
+                insertComponents();
             }
         }
         
-        if (typeof hljs !== 'undefined') {
-            hljs.highlightAll();
+        // Сайдбар
+        var navContainer = document.querySelector('.nav-container');
+        if (navContainer) {
+            if (isHttp) {
+                fetch('comp/sidebar.html')
+                    .then(function(response) { return response.text(); })
+                    .then(function(html) { navContainer.innerHTML = html; })
+                    .catch(function() { insertComponents(); });
+            } else {
+                insertComponents();
+            }
         }
     }
     
-    // Регистрация языка spr
-    function registerSprLanguage() {
-        if (typeof hljs !== 'undefined' && !hljs.getLanguage('spr')) {
-            hljs.registerLanguage('spr', function(hljs) {
-                return {
-                    name: 'Spraute Script',
-                    keywords: {
-                        keyword: 'val global world await create if else while for fun return on every stop async true false include',
-                        built_in: 'chat say get_nearest_player get_player give_item set_block random play_sound ui_open ui_close ui_update ui_animate overlay_open overlay_close stop_task task_done int_str whole_str'
-                    },
-                    contains: [
-                        hljs.COMMENT('#', '$'),
-                        hljs.QUOTE_STRING_MODE,
-                        hljs.C_NUMBER_MODE,
-                        {
-                            className: 'function',
-                            begin: /\b([a-zA-Z_][a-zA-Z0-9_]*)\s*\(/,
-                            relevance: 0
-                        }
-                    ]
-                };
-            });
+    // Функция для вставки компонентов напрямую (для file://)
+    function insertComponents() {
+        var logoContainer = document.querySelector('.logo-container');
+        if (logoContainer) {
+            logoContainer.innerHTML = `
+                <div class="logo">
+                    <a href="index.html" class="logo-link">
+                        <i class="fas fa-code"></i>
+                        <span>Spraute Engine</span>
+                    </a>
+                </div>
+            `;
+        }
+        
+        var navContainer = document.querySelector('.nav-container');
+        if (navContainer) {
+            navContainer.innerHTML = `
+                <nav class="nav-menu">
+                    <div class="nav-category"><i class="fas fa-graduation-cap"></i> Основы</div>
+                    <a href="getting-started.html" class="nav-link"><i class="fas fa-rocket"></i> Начало работы</a>
+                    <a href="syntax.html" class="nav-link"><i class="fas fa-code"></i> Синтаксис</a>
+                    <a href="variables.html" class="nav-link"><i class="fas fa-database"></i> Переменные</a>
+                    
+                    <div class="nav-category"><i class="fas fa-robot"></i> NPC</div>
+                    <a href="npc.html" class="nav-link"><i class="fas fa-robot"></i> Создание NPC</a>
+                    
+                    <div class="nav-category"><i class="fas fa-desktop"></i> Интерфейсы</div>
+                    <a href="ui.html" class="nav-link"><i class="fas fa-window-maximize"></i> UI система</a>
+                    <a href="chat-library.html" class="nav-link"><i class="fas fa-comment"></i> Кастомный чат</a>
+                    
+                    <div class="nav-category"><i class="fas fa-bolt"></i> Программирование</div>
+                    <a href="events.html" class="nav-link"><i class="fas fa-bell"></i> События (on)</a>
+                    <a href="functions.html" class="nav-link"><i class="fas fa-cog"></i> Функции и await</a>
+                    
+                    <div class="nav-category"><i class="fas fa-gamepad"></i> Игровая механика</div>
+                    <a href="items.html" class="nav-link"><i class="fas fa-box"></i> Предметы и инвентарь</a>
+                    <a href="particles.html" class="nav-link"><i class="fas fa-sparkles"></i> Частицы</a>
+                    
+                    <div class="nav-category"><i class="fas fa-folder-open"></i> Примеры</div>
+                    <a href="examples.html" class="nav-link"><i class="fas fa-file-code"></i> Полные примеры</a>
+                </nav>
+                
+                <div class="sidebar-footer">
+                    <a href="https://t.me/spraute_esd" target="_blank" class="telegram-link">
+                        <i class="fab fa-telegram"></i>
+                        <span>Telegram канал</span>
+                    </a>
+                    <a href="https://t.me/spraute_community" target="_blank" class="telegram-link">
+                        <i class="fab fa-telegram"></i>
+                        <span>Сообщество разработчиков</span>
+                    </a>
+                </div>
+            `;
         }
     }
     
@@ -213,6 +151,14 @@
                 }
             });
         }
+        
+        document.addEventListener('click', function(e) {
+            if (window.innerWidth <= 768 && sidebar && sidebar.classList.contains('open')) {
+                if (!sidebar.contains(e.target) && e.target !== menuToggle) {
+                    sidebar.classList.remove('open');
+                }
+            }
+        });
     }
     
     // Функция для подсветки активной страницы
@@ -230,37 +176,12 @@
         }
     }
     
-    // Функция для исправления ссылок
-    function fixLinks() {
-        var navLinks = document.querySelectorAll('.nav-link');
-        for (var i = 0; i < navLinks.length; i++) {
-            var link = navLinks[i];
-            var href = link.getAttribute('href');
-            
-            if (href && !href.includes('.html') && !href.startsWith('http') && !href.startsWith('#')) {
-                link.setAttribute('href', href + '.html');
-            }
-        }
-    }
-    
     // Инициализация
     function init() {
-        loadComponentsFromServer().then(function() {
-            fixLinks();
-            registerSprLanguage();
-            setupCodeHighlight();
-            setupCodeCopy();
-            setupMobileMenu();
-            highlightActivePage();
-        }).catch(function() {
-            // fallback
-            fixLinks();
-            registerSprLanguage();
-            setupCodeHighlight();
-            setupCodeCopy();
-            setupMobileMenu();
-            highlightActivePage();
-        });
+        loadComponents();
+        setupCodeCopy();
+        setupMobileMenu();
+        highlightActivePage();
     }
     
     if (document.readyState === 'loading') {
