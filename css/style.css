@@ -79,6 +79,11 @@ body {
     margin-top: 0;
 }
 
+.nav-category i {
+    margin-right: 6px;
+    font-size: 12px;
+}
+
 .nav-link {
     display: flex;
     align-items: center;
@@ -89,6 +94,11 @@ body {
     border-radius: 10px;
     font-size: 14px;
     transition: all 0.2s;
+}
+
+.nav-link i {
+    width: 20px;
+    font-size: 16px;
 }
 
 .nav-link:hover {
@@ -152,6 +162,10 @@ h1 {
     background-clip: text;
 }
 
+h1 i {
+    margin-right: 12px;
+}
+
 .subtitle {
     color: var(--text-secondary);
     font-size: 1.1rem;
@@ -171,6 +185,7 @@ h2 {
 
 h2 i {
     color: var(--accent);
+    margin-right: 12px;
 }
 
 h3 {
@@ -385,7 +400,7 @@ pre code {
     margin: 0 0 16px;
     font-size: 2rem;
     text-align: center;
-    display: block; /* Добавить эту строку */
+    display: block;
 }
 
 .hero p {
@@ -525,7 +540,26 @@ kbd {
     font-size: 0.85rem;
 }
 
+/* Мобильное меню */
+.mobile-menu-toggle {
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    z-index: 1001;
+    background-color: var(--accent);
+    border: none;
+    border-radius: 8px;
+    padding: 12px;
+    cursor: pointer;
+    color: var(--bg-primary);
+    display: none;
+}
+
 @media (max-width: 768px) {
+    .mobile-menu-toggle {
+        display: block;
+    }
+    
     .sidebar {
         transform: translateX(-100%);
         transition: transform 0.3s;
@@ -539,6 +573,7 @@ kbd {
     .content {
         margin-left: 0;
         padding: 20px;
+        padding-top: 60px;
     }
     
     h1 {
@@ -571,26 +606,152 @@ kbd {
     }
 }
 
-.mobile-menu-toggle {
-    position: fixed;
-    top: 16px;
-    left: 16px;
-    z-index: 1001;
+/* Логотип со ссылкой */
+.logo-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    padding: 24px 20px;
+    border-bottom: 1px solid var(--border);
+    transition: opacity 0.2s;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+}
+
+.logo-link i {
+    font-size: 28px;
+    color: var(--accent);
+}
+
+.logo-link span {
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Страница 404 */
+.error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    text-align: center;
+    padding: 40px 20px;
+}
+
+.error-code {
+    font-size: 8rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    line-height: 1;
+}
+
+.error-title {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.error-message {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    margin-bottom: 32px;
+    max-width: 500px;
+}
+
+.error-buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.error-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.error-btn.primary {
     background-color: var(--accent);
-    border: none;
-    border-radius: 8px;
-    padding: 12px;
-    cursor: pointer;
     color: var(--bg-primary);
-    display: none;
+}
+
+.error-btn.primary:hover {
+    background-color: var(--accent-dark);
+    transform: translateY(-2px);
+}
+
+.error-btn.secondary {
+    background-color: var(--bg-tertiary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+}
+
+.error-btn.secondary:hover {
+    background-color: var(--bg-secondary);
+    transform: translateY(-2px);
+}
+
+.error-icon {
+    font-size: 4rem;
+    color: var(--accent);
+    margin-bottom: 24px;
+    opacity: 0.5;
+}
+
+.error-suggestion {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.error-suggestion a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.error-suggestion a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
-    .mobile-menu-toggle {
-        display: block;
+    .error-code {
+        font-size: 5rem;
+    }
+    .error-title {
+        font-size: 1.5rem;
+    }
+    .error-buttons {
+        flex-direction: column;
+        width: 100%;
+        max-width: 250px;
+    }
+    .error-btn {
+        justify-content: center;
     }
 }
 
+/* Скроллбар */
 ::-webkit-scrollbar {
     width: 8px;
 }
@@ -608,60 +769,7 @@ kbd {
     background: var(--accent);
 }
 
-/* Синтаксическая подсветка */
-.keyword {
-    color: #d1e65e;
-    font-weight: 600;
-}
-
-.string {
-    color: #6bcf7f;
-}
-
-.number {
-    color: #f0b34b;
-}
-
-.comment {
-    color: #6c6c6c;
-}
-
-.function {
-    color: #e66868;
-}
-
-/* Синтаксическая подсветка */
-.keyword {
-    color: #d1e65e;
-    font-weight: 600;
-}
-
-.string {
-    color: #6bcf7f;
-}
-
-.number {
-    color: #f0b34b;
-}
-
-.comment {
-    color: #6c6c6c;
-}
-
-.function {
-    color: #e66868;
-}
-
-/* Стили для кода - без JS подсветки, просто моноширинный */
-pre code {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
-    display: block;
-    color: #e4e4e4;
-}
-
-/* Переопределение стилей Highlight.js под тёмную тему */
+/* Стили для Highlight.js */
 .hljs {
     background: #0f0f0f !important;
     color: #e4e4e4 !important;
@@ -705,161 +813,3 @@ pre code {
 .hljs-operator {
     color: #d8dee9 !important;
 }
-
-/* Фон pre блока */
-pre {
-    background-color: #0f0f0f !important;
-    border: 1px solid #3a3a3a;
-}
-
-pre code {
-    background-color: #0f0f0f !important;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.85rem;
-    line-height: 1.5;
-}
-
-/* Логотип со ссылкой */
-.logo-link {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    padding: 24px 20px;
-    border-bottom: 1px solid var(--border);
-    margin-bottom: 20px;
-    transition: opacity 0.2s;
-}
-
-.logo-link:hover {
-    opacity: 0.8;
-}
-
-.logo-link i {
-    font-size: 28px;
-    color: var(--accent);
-}
-
-.logo-link span {
-    font-size: 20px;
-    font-weight: 700;
-    background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-        .error-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 80vh;
-            text-align: center;
-            padding: 40px 20px;
-        }
-        
-        .error-code {
-            font-size: 8rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 20px;
-            line-height: 1;
-        }
-        
-        .error-title {
-            font-size: 2rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-            color: var(--text-primary);
-        }
-        
-        .error-message {
-            font-size: 1.1rem;
-            color: var(--text-secondary);
-            margin-bottom: 32px;
-            max-width: 500px;
-        }
-        
-        .error-buttons {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .error-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            padding: 12px 24px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.2s;
-        }
-        
-        .error-btn.primary {
-            background-color: var(--accent);
-            color: var(--bg-primary);
-        }
-        
-        .error-btn.primary:hover {
-            background-color: var(--accent-dark);
-            transform: translateY(-2px);
-        }
-        
-        .error-btn.secondary {
-            background-color: var(--bg-tertiary);
-            color: var(--text-primary);
-            border: 1px solid var(--border);
-        }
-        
-        .error-btn.secondary:hover {
-            background-color: var(--bg-secondary);
-            transform: translateY(-2px);
-        }
-        
-        .error-icon {
-            font-size: 4rem;
-            color: var(--accent);
-            margin-bottom: 24px;
-            opacity: 0.5;
-        }
-        
-        .error-suggestion {
-            margin-top: 48px;
-            padding-top: 32px;
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-        
-        .error-suggestion a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        
-        .error-suggestion a:hover {
-            text-decoration: underline;
-        }
-        
-        @media (max-width: 768px) {
-            .error-code {
-                font-size: 5rem;
-            }
-            .error-title {
-                font-size: 1.5rem;
-            }
-            .error-buttons {
-                flex-direction: column;
-                width: 100%;
-                max-width: 250px;
-            }
-            .error-btn {
-                justify-content: center;
-            }
-        }
