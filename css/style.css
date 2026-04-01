@@ -384,12 +384,15 @@ pre code {
 .hero h2 {
     margin: 0 0 16px;
     font-size: 2rem;
+    text-align: center;
+    display: block; /* Добавить эту строку */
 }
 
 .hero p {
     color: var(--text-secondary);
     max-width: 600px;
     margin: 0 auto 24px;
+    text-align: center;
 }
 
 .hero-buttons {
