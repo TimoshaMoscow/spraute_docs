@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Страница не найдена — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        .error-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 80vh;
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .error-code {
+            font-size: 8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent) 0%, #ffffff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1;
+        }
+        
+        .error-title {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-primary);
+        }
+        
+        .error-message {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+        
+        .error-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .error-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        
+        .error-btn.primary {
+            background-color: var(--accent);
+            color: var(--bg-primary);
+        }
+        
+        .error-btn.primary:hover {
+            background-color: var(--accent-dark);
+            transform: translateY(-2px);
+        }
+        
+        .error-btn.secondary {
+            background-color: var(--bg-tertiary);
+            color: var(--text-primary);
+            border: 1px solid var(--border);
+        }
+        
+        .error-btn.secondary:hover {
+            background-color: var(--bg-secondary);
+            transform: translateY(-2px);
+        }
+        
+        .error-icon {
+            font-size: 4rem;
+            color: var(--accent);
+            margin-bottom: 24px;
+            opacity: 0.5;
+        }
+        
+        .error-suggestion {
+            margin-top: 48px;
+            padding-top: 32px;
+            border-top: 1px solid var(--border);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .error-suggestion a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        
+        .error-suggestion a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .error-code {
+                font-size: 5rem;
+            }
+            .error-title {
+                font-size: 1.5rem;
+            }
+            .error-buttons {
+                flex-direction: column;
+                width: 100%;
+                max-width: 250px;
+            }
+            .error-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app" style="display: block;">
+        <main class="content" style="margin-left: 0; max-width: 100%;">
+            <div class="error-container">
+                <div class="error-icon">
+                    <i class="fas fa-code-branch"></i>
+                </div>
+                <div class="error-code">404</div>
+                <h1 class="error-title">Страница не найдена</h1>
+                <p class="error-message">
+                    Извините, страница, которую вы ищете, не существует или была перемещена.
+                </p>
+                <div class="error-buttons">
+                    <a href="index.html" class="error-btn primary">
+                        <i class="fas fa-home"></i>
+                        На главную
+                    </a>
+                    <a href="getting-started.html" class="error-btn secondary">
+                        <i class="fas fa-book"></i>
+                        Начать изучение
+                    </a>
+                </div>
+                <div class="error-suggestion">
+                    <i class="fas fa-lightbulb"></i>
+                    Возможно, вы искали: 
+                    <a href="getting-started.html">Начало работы</a>, 
+                    <a href="npc.html">Создание NPC</a>, 
+                    <a href="ui.html">UI система</a>, 
+                    <a href="examples.html">Примеры кода</a>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
