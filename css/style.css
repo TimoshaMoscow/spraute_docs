@@ -813,3 +813,30 @@ kbd {
 .hljs-operator {
     color: #d8dee9 !important;
 }
+
+/* Стили для страницы визуальных блоков */
+.how-it-works {
+    background-color: var(--bg-tertiary);
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    border: 1px solid var(--border);
+}
+
+.how-it-works h4 {
+    margin-top: 0;
+    margin-bottom: 12px;
+    color: var(--accent);
+}
+
+.how-it-works ol, .how-it-works ul {
+    padding-left: 20px;
+}
+
+.how-it-works li {
+    margin-bottom: 8px;
+}
+
+.how-it-works li:last-child {
+    margin-bottom: 0;
+}
