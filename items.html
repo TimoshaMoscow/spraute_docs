@@ -23,25 +23,25 @@
                 <section class="doc-section">
                     <h2><i class="fas fa-cubes"></i> Основные функции</h2>
                     <div class="api-item">
-                        <div class="api-signature"><code>give_item(player, item_id, [count], [name], [lore], [nbt])</code><span class="api-tag">функция</span></div>
+                        <div class="api-signature"><code>giveItem(player, item_id, [count], [name], [lore], [nbt])</code><span class="api-tag">функция</span></div>
                         <p>Выдаёт предмет игроку.</p>
-                        <pre><code>give_item(player, "minecraft:iron_ingot", 30)
-give_item(player, "minecraft:diamond", 1, "§6Королевский алмаз", ["§7Добыто в шахтах"], {"spraute_no_drop": true})</code></pre>
+                        <pre><code>giveItem(player, "minecraft:iron_ingot", 30)
+giveItem(player, "minecraft:diamond", 1, "§6Королевский алмаз", ["§7Добыто в шахтах"], {"spraute_no_drop": true})</code></pre>
                     </div>
 
                     <div class="api-item">
-                        <div class="api-signature"><code>get_held_item(player)</code><span class="api-tag">функция</span></div>
+                        <div class="api-signature"><code>getHeldItem(player)</code><span class="api-tag">функция</span></div>
                         <p>Возвращает словарь с предметом в руке: "id", "count", "name", "nbt".</p>
-                        <pre><code>val held = get_held_item(player)
+                        <pre><code>val held = getHeldItem(player)
 if (held != null && held.id == "minecraft:stick") {
     chat("У тебя палка!")
 }</code></pre>
                     </div>
 
                     <div class="api-item">
-                        <div class="api-signature"><code>player.held_item([hand])</code><span class="api-tag">метод</span></div>
+                        <div class="api-signature"><code>player.heldItem([hand])</code><span class="api-tag">метод</span></div>
                         <p>ID предмета в руке. hand: "right"/"left"/"main_hand"/"offhand".</p>
-                        <pre><code>val item = player.held_item("right")</code></pre>
+                        <pre><code>val item = player.heldItem("right")</code></pre>
                     </div>
 
                     <div class="api-item">
@@ -55,7 +55,7 @@ if (held != null && held.id == "minecraft:stick") {
                 <section class="doc-section">
                     <h2><i class="fas fa-search"></i> Проверка предметов</h2>
                     <pre><code># Есть ли предмет
-if (player.has_item("minecraft:iron_ingot")) {
+if (player.hasItem("minecraft:iron_ingot")) {
     chat("У тебя есть железо!")
 }
 
@@ -63,16 +63,16 @@ if (player.has_item("minecraft:iron_ingot")) {
 val count = player.countItem("minecraft:iron_ingot")
 
 # Количество в слоте
-val slot_count = player.slot_count(0)
+val slot_count = player.slotCount(0)
 
 # NBT предмета в слоте
-val nbt = player.slot_nbt(0)</code></pre>
+val nbt = player.slotNbt(0)</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-store"></i> Магазин на кнопку J (полный пример)</h2>
                     <pre><code>on keybind("j") -> shopKey {
-    val player = event_player
+    val player = _event_player
     
     if (player.savedData["coins"] == null) {
         player.savedData["coins"] = 50
@@ -128,18 +128,6 @@ val nbt = player.slot_nbt(0)</code></pre>
             }
         }
         
-        button("freeMoney", "+100 монет") {
-            pos = [12, 200]
-            size = [100, 20]
-            color = "#55116611"
-            hover = "#66228822"
-            onClick {
-                player.savedData["coins"] = player.savedData["coins"] + 100
-                playSound(player, "minecraft:entity.experience_orb.pickup", 1.0, 1.0)
-                uiUpdate(player, "coinsText", "text", "Монеты: " + intStr(player.savedData["coins"]))
-            }
-        }
-        
         button("closeShop", "Закрыть") {
             pos = [168, 200]
             size = [100, 20]
@@ -161,7 +149,19 @@ val nbt = player.slot_nbt(0)</code></pre>
                         <i class="fas fa-lock"></i>
                         <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря (кнопкой Q или перетаскиванием).</p>
                     </div>
-                    <pre><code>give_item(player, "minecraft:quest_item", 1, null, null, {"spraute_no_drop": true})</code></pre>
+                    <pre><code>giveItem(player, "minecraft:quest_item", 1, null, null, {"spraute_no_drop": true})</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-arrow-up"></i> Кастомные орбы</h2>
+                    <pre><code># Спавн орба
+val orbUuid = spawnOrb("textures/item/diamond.png", 5, x, y, z, "minecraft:overworld")
+
+# Ожидание подбора орба игроком
+await orbPickup(player, 5, "textures/item/diamond.png")
+
+# Удаление всех орбов с текстурой
+removeOrbs("textures/item/diamond.png")</code></pre>
                 </section>
             </div>
         </main>

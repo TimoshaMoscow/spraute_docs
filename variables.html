@@ -32,7 +32,7 @@
                                 <tr><td><code>global val</code></td><td>Глобальная в рамках скрипта</td><td><code>global counter = 0</code></td></tr>
                                 <tr><td><code>world val</code></td><td>Сохраняется между перезапусками</td><td><code>world server_started = true</code></td></tr>
                                 <tr><td><code>player.data</code></td><td>Сессионные данные игрока</td><td><code>player.data["in_dialogue"] = true</code></td></tr>
-                                <tr><td><code>player.saved_data</code></td><td>Постоянные данные игрока</td><td><code>player.saved_data["deaths"] = 0</code></td></tr>
+                                <tr><td><code>player.savedData</code></td><td>Постоянные данные игрока</td><td><code>player.savedData["deaths"] = 0</code></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -53,11 +53,11 @@ world saved_var = 42
 player.data["in_dialogue"] = true
 
 # Постоянные данные игрока (сохраняются в мире навсегда)
-val p = get_player("Steve")
-if (p.saved_data["deaths"] == null) {
-    p.saved_data["deaths"] = 0
+val p = getPlayer("Steve")
+if (p.savedData["deaths"] == null) {
+    p.savedData["deaths"] = 0
 }
-p.saved_data["deaths"] = p.saved_data["deaths"] + 1</code></pre>
+p.savedData["deaths"] = p.savedData["deaths"] + 1</code></pre>
                 </section>
 
                 <section class="doc-section">
@@ -66,7 +66,11 @@ p.saved_data["deaths"] = p.saved_data["deaths"] + 1</code></pre>
                     <pre><code>player.name
 player.hp
 player.x, player.y, player.z
-player.max_hp</code></pre>
+player.max_hp
+player.pitch, player.yaw
+player.look_x, player.look_y, player.look_z  # вектор взгляда
+player.uuid
+player.java  # Java-объект ServerPlayer</code></pre>
                     
                     <h3><i class="fas fa-robot"></i> NPC:</h3>
                     <pre><code>npc.name
@@ -75,7 +79,9 @@ npc.hp, npc.max_hp
 npc.speed
 npc.x, npc.y, npc.z
 npc.yaw, npc.pitch
-npc.model, npc.texture</code></pre>
+npc.model, npc.texture
+npc.uuid
+npc.java  # Java-объект Entity</code></pre>
                     
                     <h3><i class="fas fa-edit"></i> Присваивание свойств:</h3>
                     <pre><code>npc.name = "Новое имя"
@@ -85,12 +91,18 @@ npc.yaw = 90</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-cogs"></i> Методы</h2>
+                    <h2><i class="fas fa-cogs"></i> Методы сущностей</h2>
                     <pre><code># Расстояние между сущностями
 val dist = player.distance_to(npc)
 
+# UUID сущности
+val uuid = player.uuid()
+
+# Java-объект
+val javaEntity = player.java()
+
 # Методы игрока
-player.has_item("minecraft:iron_ingot")
+player.hasItem("minecraft:iron_ingot")
 player.countItem("minecraft:iron_ingot")
 player.raycast(50)
 player.damage(5.0)

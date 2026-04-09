@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кастомные ресурсы — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1><i class="fas fa-cube"></i> Кастомные ресурсы</h1>
+                
+                <section class="doc-section">
+                    <h2><i class="fas fa-terminal"></i> Кастомные команды</h2>
+                    <pre><code>create command mycmd {
+    val p = _event_player
+    val args = _event_args
+    
+    if (p != null) {
+        if (size(args) > 0) {
+            val firstArg = args[0]
+            chat(p, "Команда вызвана с аргументом: " + firstArg)
+        } else {
+            chat(p, "Команда вызвана без аргументов")
+        }
+    }
+}</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Команда регистрируется в сервере и доступна всем игрокам. Аргументы автоматически конвертируются: числа в <code>Double</code>, <code>true/false</code> в <code>Boolean</code>, остальное в строки.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-palette"></i> Творческая вкладка</h2>
+                    <pre><code>create tab my_tab {
+    icon = "minecraft:diamond"
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-gem"></i> Кастомный предмет</h2>
+                    <pre><code>create item magic_stick {
+    model = "spraute_engine:item/stick"
+    texture = "spraute_engine:item/stick"
+    maxStackSize = 1
+    tab = "my_tab"
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-cube"></i> Кастомный блок</h2>
+                    <pre><code>create block magic_stone {
+    model = "spraute_engine:block/stone"
+    texture = "spraute_engine:block/stone"
+    collision = true
+    hardness = 2.0
+    light = 15
+    drop = "spraute_engine:magic_stick"
+    tab = "my_tab"
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-chart-line"></i> Блок-руда с генерацией</h2>
+                    <pre><code>create block magic_ore {
+    model = "spraute_engine:block/magic_ore"
+    texture = "spraute_engine:block/magic_ore"
+    hardness = 3.0
+    is_ore = true
+    ore_vein = 8
+    ore_min = -64
+    ore_max = 64
+    ore_chances = 10
+    ore_dimension = "minecraft:overworld"
+    drop = "spraute_engine:magic_stick"
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-sparkles"></i> Кастомный партикл</h2>
+                    <pre><code>create particle my_magic_spark {
+    texture = "textures/particle/spark.png"
+}
+
+# Использование
+particleSpawn("spraute_engine:my_magic_spark", x, y, z, 10, 0, 0, 0, 0)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-crafting"></i> Рецепты крафта</h2>
+                    
+                    <h3>Форменный крафт (shaped)</h3>
+                    <pre><code>create craft my_sword {
+    type = "shaped"
+    pattern_1 = " I "
+    pattern_2 = " I "
+    pattern_3 = " S "
+    key_I = "minecraft:iron_ingot"
+    key_S = "minecraft:stick"
+    result = "spraute_engine:magic_stick"
+    count = 1
+}</code></pre>
+
+                    <h3>Бесформенный крафт (shapeless)</h3>
+                    <pre><code>create craft my_shapeless {
+    type = "shapeless"
+    ingredients = ["minecraft:iron_ingot", "minecraft:stick"]
+    result = "minecraft:iron_sword"
+    count = 1
+}</code></pre>
+
+                    <h3>Переплавка (smelting)</h3>
+                    <pre><code>create craft iron_ingot {
+    type = "smelting"
+    ingredient = "minecraft:iron_ore"
+    result = "minecraft:iron_ingot"
+    xp = 0.7
+    time = 200
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-desktop"></i> Кастомный контейнер (UI с инвентарём)</h2>
+                    <pre><code>create ui my_workbench {
+    type = "container"
+    size = [176, 166]
+    background = "#00000000"
+    
+    image("bg") {
+        pos = [0, 0]
+        size = [176, 166]
+        texture = "minecraft:textures/gui/container/dispenser.png"
+    }
+    
+    player_inventory {
+        pos = [8, 84]
+    }
+    
+    slot(0) { pos = [62, 20] }
+    slot(1) { pos = [80, 20] }
+    slot(2) { pos = [98, 20] }
+    
+    button("craft_btn", "Скрафтить") {
+        pos = [62, 50]
+        size = [54, 20]
+        onClick {
+            val slot0 = getBlockSlot(bx, by, bz, 0)
+            val slot1 = getBlockSlot(bx, by, bz, 1)
+            if (slot0 == "minecraft:iron_ingot" && slot1 == "minecraft:stick") {
+                # Даём результат
+                giveItem(_event_player, "minecraft:iron_sword", 1)
+                # Очищаем слоты
+                setBlockSlot(bx, by, bz, 0, "")
+                setBlockSlot(bx, by, bz, 1, "")
+            }
+        }
+    }
+}</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

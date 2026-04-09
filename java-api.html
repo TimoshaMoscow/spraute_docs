@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java API — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1><i class="fab fa-java"></i> Java API</h1>
+                
+                <section class="doc-section">
+                    <h2><i class="fas fa-exclamation-triangle"></i> Важно</h2>
+                    <div class="info-block">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Доступ к Java-классам ограничен "белым списком" (allowlist) из соображений безопасности. Если класс не разрешён, <code>java_class</code> вернёт <code>null</code>.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-code"></i> Получение Java-класса</h2>
+                    <pre><code># Получение Java-класса по полному имени
+val RandomClass = java_class("java.util.Random")
+val Math = java_class("java.lang.Math")
+val Lifecycle = java_class("net.minecraftforge.server.ServerLifecycleHooks")
+
+# Вызов статических методов
+val maxValue = Math.max(1, 5)
+chat("Максимум: " + wholeStr(maxValue))
+
+# Получение сервера
+val server = Lifecycle.getCurrentServer()</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-cube"></i> Создание экземпляра Java-класса</h2>
+                    <pre><code>val RandomClass = java_class("java.util.Random")
+val randomObj = java_new(RandomClass)
+
+# Вызов Java-методов напрямую
+val randomInt = randomObj.nextInt(100)
+chat("Случайное число из Java: " + wholeStr(randomInt))</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-box"></i> Работа с сущностями через .java()</h2>
+                    <pre><code># Получение Java-объекта сущности
+val javaPlayer = player.java()
+val javaNPC = readix_avatar.java()
+
+# UUID
+val uuid = player.java().getUUID().toString()
+
+# Отправка пакета игроку
+val SetCameraPacket = java_class("net.minecraft.network.protocol.game.ClientboundSetCameraPacket")
+val packet = java_new(SetCameraPacket, camera_npc.java())
+sendPacket(player, packet)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-paper-plane"></i> Отправка Java-пакетов</h2>
+                    <pre><code># Создание и отправка пакета
+val SetCameraPacket = java_class("net.minecraft.network.protocol.game.ClientboundSetCameraPacket")
+val packet = java_new(SetCameraPacket, camera_npc.java())
+sendPacket(player, packet)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-database"></i> Полный пример</h2>
+                    <pre><code># Работа со случайными числами
+val RandomClass = java_class("java.util.Random")
+val randomObj = java_new(RandomClass)
+val randomInt = randomObj.nextInt(100)
+chat("Случайное число: " + wholeStr(randomInt))
+
+# Работа с Math
+val Math = java_class("java.lang.Math")
+chat("Максимум из 1 и 5: " + wholeStr(Math.max(1, 5)))
+
+# Работа с сервером
+val Lifecycle = java_class("net.minecraftforge.server.ServerLifecycleHooks")
+val server = Lifecycle.getCurrentServer()
+
+# Отправка пакета смены камеры
+val SetCameraPacket = java_class("net.minecraft.network.protocol.game.ClientboundSetCameraPacket")
+val packet = java_new(SetCameraPacket, camera_npc.java())
+sendPacket(player, packet)</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

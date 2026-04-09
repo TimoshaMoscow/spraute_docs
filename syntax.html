@@ -31,10 +31,16 @@
                                 <tr><td><code>val</code></td><td>Локальная переменная</td></tr>
                                 <tr><td><code>global val</code></td><td>Глобальная переменная (в рамках скрипта)</td></tr>
                                 <tr><td><code>world val</code></td><td>Переменная мира (сохраняется между перезапусками)</td></tr>
-                                <tr><td><code>include "name"</code></td><td>Вставляет код из другого скрипта name.spr</td></tr>
+                                <tr><td><code>import("name")</code></td><td>Импортирует функции из уже запущенного скрипта</td></tr>
                                 <tr><td><code>await</code></td><td>Ожидание события / времени / задачи</td></tr>
                                 <tr><td><code>create npc</code></td><td>Блок создания NPC</td></tr>
                                 <tr><td><code>create ui</code></td><td>Блок описания UI</td></tr>
+                                <tr><td><code>create command</code></td><td>Создание кастомной команды</td></tr>
+                                <tr><td><code>create block</code></td><td>Создание кастомного блока</td></tr>
+                                <tr><td><code>create item</code></td><td>Создание кастомного предмета</td></tr>
+                                <tr><td><code>create particle</code></td><td>Создание кастомного партикла</td></tr>
+                                <tr><td><code>create craft</code></td><td>Создание рецепта крафта</td></tr>
+                                <tr><td><code>create tab</code></td><td>Создание творческой вкладки</td></tr>
                                 <tr><td><code>if / else / else if</code></td><td>Условные конструкции</td></tr>
                                 <tr><td><code>while</code></td><td>Цикл</td></tr>
                                 <tr><td><code>for (i in range(...))</code></td><td>Цикл по range()</td></tr>
@@ -101,8 +107,17 @@ dict["name"] = "Readix"
 # Литерал словаря
 val data = {"name": "Guard", "hp": 50}
 
-# Цепочки индексов
-val value = matrix[0][1]</code></pre>
+# Цепочки индексов и свойств
+val value = matrix[0][1]
+val uuid = player.java().getUUID().toString()</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-link"></i> Цепочки вызовов (Chaining)</h2>
+                    <pre><code># Неограниченная вложенность вызовов
+val uuid = player.java().getUUID().toString()
+val value = some_list[0].property.my_method()
+my_obj.nested_obj.x = 10</code></pre>
                 </section>
             </div>
         </main>

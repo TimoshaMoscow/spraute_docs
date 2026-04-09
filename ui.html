@@ -49,6 +49,10 @@
         scale = 1.05
         crop = [0, 0.0, 0.0, 0.4]
         anchor_y = 2.1
+        nameTag = false
+        noLookAt = true
+        noFollowCursor = true
+        noHurtAnim = true
     }
 }</code></pre>
                 </section>
@@ -56,32 +60,35 @@
                 <section class="doc-section">
                     <h2><i class="fas fa-window-restore"></i> Открытие и закрытие UI</h2>
                     <pre><code># Открыть UI
-ui_open(player, dialog_panel)
+uiOpen(player, dialog_panel)
 
 # Закрыть UI
-ui_close(player)
+uiClose(player)
 
 # Открыть как HUD (без паузы)
-overlay_open(player, hud_template)
-overlay_close(player)</code></pre>
+overlayOpen(player, hud_template)
+overlayClose(player)
+
+# Открыть UI, привязанный к блоку (сохраняет предметы в слотах)
+openBlockUi(player, x, y, z, block_ui)</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-sync-alt"></i> Обновление виджетов</h2>
                     <pre><code># Обновление текста
-ui_update(player, "my_text", "text", "Новый текст")
+uiUpdate(player, "my_text", "text", "Новый текст")
 
 # Обновление цвета кнопки
-ui_update(player, "my_btn", "color", "#FF0000")
+uiUpdate(player, "my_btn", "color", "#FF0000")
 
 # Обновление ширины
-ui_update(player, "xp_fill", "w", "30%")</code></pre>
+uiUpdate(player, "xp_fill", "w", "30%")</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-chart-line"></i> Анимации</h2>
                     <pre><code># Плавное перемещение кнопки
-ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
+uiAnimate(player, "my_btn", "y", 150, 1.5, "bounce_out")
 
 # Типы easing:
 # linear, ease_in, ease_out, ease_in_out, bounce_out, elastic_out</code></pre>
@@ -92,14 +99,48 @@ ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
                     <div class="grid-cards">
                         <div class="card"><code>text</code><p>Текст с wrap, max_lines, anchor</p></div>
                         <div class="card"><code>input</code><p>Поле ввода с placeholder, password</p></div>
-                        <div class="card"><code>button</code><p>Кнопка с onClick, color, hover</p></div>
-                        <div class="card"><code>image</code><p>Изображение по текстуре</p></div>
-                        <div class="card"><code>entity</code><p>3D модель с crop, anchor</p></div>
+                        <div class="card"><code>button</code><p>Кнопка с onClick, color, hover, texture</p></div>
+                        <div class="card"><code>image</code><p>Изображение с поддержкой 9-slice</p></div>
+                        <div class="card"><code>entity</code><p>3D модель с crop, anchor, nameTag, noLookAt</p></div>
                         <div class="card"><code>item/block</code><p>Иконка предмета/блока</p></div>
                         <div class="card"><code>rect/panel</code><p>Прямоугольник с цветом</p></div>
                         <div class="card"><code>scroll</code><p>Область с прокруткой</p></div>
                         <div class="card"><code>clip</code><p>Обрезка дочерних виджетов</p></div>
                         <div class="card"><code>grid_bg</code><p>Фоновая сетка (h/v/hv)</p></div>
+                        <div class="card"><code>slot</code><p>Слот для предметов (в контейнере)</p></div>
+                        <div class="card"><code>player_inventory</code><p>Инвентарь игрока</p></div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-box"></i> Контейнеры (Container UI)</h2>
+                    <pre><code>create ui my_workbench {
+    type = "container"
+    size = [176, 166]
+    background = "#00000000"
+    
+    image("bg") {
+        pos = [0, 0]
+        size = [176, 166]
+        texture = "minecraft:textures/gui/container/dispenser.png"
+    }
+    
+    player_inventory {
+        pos = [8, 84]
+    }
+    
+    slot(0) { pos = [62, 20] }
+    slot(1) { pos = [80, 20] }
+    slot(2) { pos = [98, 20] }
+    
+    button("craft_btn", "Скрафтить") {
+        pos = [62, 50]
+        size = [54, 20]
+    }
+}</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>В контейнерных UI предметы в слотах сохраняются в инвентарь блока. Используйте <code>openBlockUi</code> для открытия.</p>
                     </div>
                 </section>
 
@@ -110,7 +151,7 @@ ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
     background = "#FF000000"
     
     var i = 0
-    while (i < list_size(items)) {
+    while (i < listSize(items)) {
         val item = list_get(items, i)
         button("btn_" + i, item["name"]) {
             pos = [10, i * 24]
@@ -122,15 +163,23 @@ ui_animate(player, "my_btn", "y", 150, 1.5, "bounce_out")
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-percent"></i> Проценты в позиционировании</h2>
-                    <pre><code>text("centered", "По центру") {
+                    <h2><i class="fas fa-percent"></i> Проценты и позиционирование</h2>
+                    <pre><code># Панель на весь экран
+create ui fullscreen {
+    size = ["100%", "100%"]
+    pos = [0, 0]
+}
+
+# По центру
+text("centered", "По центру") {
     pos = ["50%", "50%"]
     anchor = "center"
 }
 
-text("bottom_right", "Справа внизу") {
-    pos = ["98%", "95%"]
-    anchor = ["1.0", "1.0"]
+# Снизу по центру (оверлей)
+create ui bottom_hud {
+    size = [300, 80]
+    pos = ["center", -40]
 }</code></pre>
                 </section>
             </div>

@@ -23,16 +23,16 @@
                 <section class="doc-section">
                     <h2><i class="fas fa-shapes"></i> Базовые фигуры</h2>
                     <pre><code># Спавн частиц в точке
-particle_spawn("minecraft:flame", x, y, z, 10, 0.5, 0.5, 0.5, 0.1)
+particleSpawn("minecraft:flame", x, y, z, 10, 0.5, 0.5, 0.5, 0.1)
 
 # Линия из частиц
-particle_line("minecraft:soul", 0, 64, 0, 10, 64, 10, 20, 0, 0, 0, 0)
+particleLine("minecraft:soul", 0, 64, 0, 10, 64, 10, 20, 0, 0, 0, 0)
 
 # Круг из частиц
-particle_circle("minecraft:soul_fire_flame", x, y, z, 3.0, 40, 0, 0, 0, 0)
+particleCircle("minecraft:soul_fire_flame", x, y, z, 3.0, 40, 0, 0, 0, 0)
 
 # Спираль частиц
-particle_spiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)</code></pre>
+particleSpiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
                         <p>Параметры <code>dx, dy, dz</code> задают разброс (spread), параметр <code>speed</code> — скорость разлета. Если speed > 0, то dx, dy, dz работают как направление.</p>
@@ -43,7 +43,7 @@ particle_spiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)
                     <h2><i class="fas fa-infinity"></i> Постоянные эффекты</h2>
                     <pre><code>async "magic_circle" {
     while (true) {
-        particle_circle("minecraft:soul", x, y, z, 2.0, 20, 0, 0, 0, 0)
+        particleCircle("minecraft:soul", x, y, z, 2.0, 20, 0, 0, 0, 0)
         await time(1)
     }
 }
@@ -53,10 +53,10 @@ stop_task("magic_circle")</code></pre>
                 <section class="doc-section">
                     <h2><i class="fas fa-bone"></i> Привязка к костям NPC</h2>
                     <pre><code># Непрерывный спавн частиц из кости NPC (на клиенте)
-particle_start_bone("fire_hands", knight, "right_hand", "minecraft:flame", 5, 0.1, 0.1, 0.1, 0.05)
+particleStartBone("fire_hands", knight, "right_hand", "minecraft:flame", 5, 0.1, 0.1, 0.1, 0.05)
 
 # Остановка
-particle_stop_bone("fire_hands")</code></pre>
+particleStopBone("fire_hands")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-lightbulb"></i>
                         <p>Кости NPC: <code>"head"</code>, <code>"right_hand"</code>, <code>"left_hand"</code>, <code>"body"</code> и другие в зависимости от модели.</p>
@@ -85,14 +85,14 @@ particle_stop_bone("fire_hands")</code></pre>
     val z = 0
     
     while (true) {
-        particle_circle("minecraft:soul_fire_flame", x, y, z, 3.0, 40, 0, 0, 0, 0)
-        particle_spiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)
+        particleCircle("minecraft:soul_fire_flame", x, y, z, 3.0, 40, 0, 0, 0, 0)
+        particleSpiral("minecraft:end_rod", x, y, z, 2.0, 5.0, 30, 0.1, 0.2, 0.1, 0.05)
         await time(2)
     }
 }
 
 on position(player, 0, 64, 0, 3) -> in_circle {
-    particle_spawn("minecraft:totem_of_undying", player.x, player.y + 1, player.z, 20, 0.5, 0.5, 0.5, 0.1)
+    particleSpawn("minecraft:totem_of_undying", player.x, player.y + 1, player.z, 20, 0.5, 0.5, 0.5, 0.1)
     chat("Ты вошел в магический круг!")
 }</code></pre>
                 </section>

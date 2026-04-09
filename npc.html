@@ -31,6 +31,7 @@
     speed = 0.2
     hp = 20
     collision = true
+    dimension = "minecraft:overworld"
 }</code></pre>
                 </section>
 
@@ -41,12 +42,16 @@
                             <li><code>name</code> — отображаемое имя</li>
                             <li><code>hp</code> — здоровье и максимальное HP</li>
                             <li><code>speed</code> — скорость движения</li>
+                            <li><code>dimension</code> — измерение для спавна (<code>"minecraft:overworld"</code>, <code>"minecraft:the_nether"</code>, <code>"minecraft:the_end"</code>)</li>
                             <li><code>pos</code> — координаты [x, y, z]</li>
                             <li><code>rotate</code> — углы [yaw, pitch]</li>
                             <li><code>show_name</code> — показывать имя (по умолчанию true)</li>
                             <li><code>collision</code> — наличие коллизии (по умолчанию true)</li>
                             <li><code>model</code>, <code>texture</code> — ресурсы модели и текстуры</li>
                             <li><code>idle_anim</code>, <code>walk_anim</code> — анимации</li>
+                            <li><code>drop_item</code> — ID предмета, выпадающего при смерти</li>
+                            <li><code>drop_min</code>, <code>drop_max</code> — мин/макс количество дропа</li>
+                            <li><code>drop_chance</code> — шанс выпадения (0-100)</li>
                         </ul>
                     </div>
                 </section>
@@ -96,7 +101,7 @@ npc.lookAt(player)
 
 # Постоянное слежение
 npc.alwaysLookAt(player)
-npc.stopLook()
+npc.stopLookAt()
 
 # Установка кости головы
 npc.setHeadBone("head")</code></pre>
@@ -106,11 +111,20 @@ npc.setHeadBone("head")</code></pre>
                     <h2><i class="fas fa-hand-paper"></i> Предметы в руках</h2>
                     <pre><code># Установка предмета
 npc.setItem("right", "minecraft:iron_sword")
-npc.setItem("left", "minecraft:shield")
+npc.setItem("left", "minecraft:shield", "{CustomModelData:1}")
 
 # Очистка
 npc.removeItem("right")
 npc.removeItem()  # обе руки</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-box"></i> Кастомный дроп</h2>
+                    <pre><code># Добавление предмета в лут при смерти
+npc.addDrop("minecraft:iron_ingot", 1, 3, 50)
+
+# Выброс предмета из NPC в мир
+npc.drop("minecraft:apple", 5, true)</code></pre>
                 </section>
 
                 <section class="doc-section">

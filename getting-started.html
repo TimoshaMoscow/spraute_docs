@@ -45,7 +45,7 @@ on interact(greeter) {
 }</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
-                        <p>Поместите скрипт в папку <code>scripts/</code> на сервере. После перезагрузки или выполнения команды <code>/spraute reload</code> NPC появится в мире.</p>
+                        <p>Поместите скрипт в папку <code>.minecraft/spraute_engine/scripts/</code> на сервере. После перезагрузки или выполнения команды <code>/spraute reload</code> NPC появится в мире.</p>
                     </div>
                 </section>
 
@@ -70,18 +70,25 @@ on interact(greeter) {
                         <div class="card">
                             <i class="fas fa-database"></i>
                             <h3>Сохранение</h3>
-                            <p>world и player.saved_data для постоянных данных</p>
+                            <p>world и player.savedData для постоянных данных</p>
                         </div>
                     </div>
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-plug"></i> Подключение библиотек</h2>
-                    <pre><code># Подключение встроенной библиотеки
-include "spraute_chat"
+                    <h2><i class="fas fa-plug"></i> Импорт функций из другого скрипта</h2>
+                    <pre><code># Запускаем скрипт в фоне
+startScript("spraute_chat")
 
-# Использование
+# Импортируем его функции
+import("spraute_chat")
+
+# Используем
 npc_chat(player, my_guard, "Проход закрыт!", "#FF5555")</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i>
+                        <p><code>startScript</code> запускает скрипт, регистрируя его обработчики. <code>import</code> только импортирует функции, не запуская скрипт повторно.</p>
+                    </div>
                 </section>
 
                 <section class="doc-section">
