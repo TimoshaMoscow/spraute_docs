@@ -89,6 +89,9 @@
                     <a href="ui.html" class="nav-link">UI система</a>
                     <a href="chat-library.html" class="nav-link">Кастомный чат</a>
                     
+                    <div class="nav-category"><i class="fas fa-camera"></i> Камера</div>
+                    <a href="camera.html" class="nav-link">Кинематографическая камера</a>
+                    
                     <div class="nav-category"><i class="fas fa-bolt"></i> Программирование</div>
                     <a href="events.html" class="nav-link">События (on)</a>
                     <a href="functions.html" class="nav-link">Функции и await</a>
@@ -127,8 +130,8 @@
                 return {
                     name: 'Spraute Script',
                     keywords: {
-                        keyword: 'val global world await create if else while for fun return on every stop async true false include import startScript stopScript cancelEvent',
-                        built_in: 'chat say getNearestPlayer getPlayer giveItem setBlock random playSound stopSound uiOpen uiClose uiUpdate uiAnimate overlayOpen overlayClose stopTask taskDone intStr wholeStr strLen strWidth strNewlineCount replace getHeldItem getSlot hasItem countItem execute spawnOrb removeOrbs addMobDrop addBlockDrop startScript stopScript save_snapshot load_snapshot setColor getVar java_class java_new sendPacket particleSpawn particleLine particleCircle particleSpiral particleStartBone particleStopBone openBlockUi getBlockSlot setBlockDisplay setBlockDisplayModel setBlockDisplayBlock removeBlockDisplay'
+                        keyword: 'val global world await create if else while for fun return on every stop async true false include import startScript stopScript cancelEvent camera',
+                        built_in: 'chat say getNearestPlayer getPlayer giveItem setBlock random playSound stopSound uiOpen uiClose uiUpdate uiAnimate overlayOpen overlayClose stopTask taskDone intStr wholeStr strLen strWidth strNewlineCount replace getHeldItem getSlot hasItem countItem execute spawnOrb removeOrbs addMobDrop addBlockDrop startScript stopScript save_snapshot load_snapshot setColor getVar java_class java_new sendPacket particleSpawn particleLine particleCircle particleSpiral particleStartBone particleStopBone openBlockUi getBlockSlot setBlockDisplay setBlockDisplayModel setBlockDisplayBlock removeBlockDisplay healEntity heal playersInRadius entitiesInRadius getPlayerMotion setPlayerMotion getPlayerMovementSpeed setPlayerMovementSpeed getPlayerJumpStrength setPlayerJumpStrength getPlayerStepHeight setPlayerStepHeight getPlayerAttackDamage setPlayerAttackDamage getPlayerDigSpeed setPlayerDigSpeed setCamera setCameraLookAt animateCamera animateCameraLookAt stopCamera resetCamera playCameraRoute cameraRoute getPlayerInventory getItemInSlot isSlotEmpty hasItemInSlot findItemSlot setItemInSlot setItemCount clearItemSlot removeItem getItemName setItemName getItemLore setItemLore getItemAttackDamage setItemAttackDamage getItemNbt setItemNbt setBlockSlot setChestLoot clearChestLoot'
                     },
                     contains: [
                         // Комментарии для визуальных блоков (#\)
@@ -184,7 +187,7 @@
                         // Ключевые слова в обычном коде
                         {
                             className: 'keyword',
-                            begin: /\b(val|global|world|await|create|if|else|while|for|fun|return|on|every|stop|async|true|false|include|import|startScript|stopScript|cancelEvent)\b/,
+                            begin: /\b(val|global|world|await|create|if|else|while|for|fun|return|on|every|stop|async|true|false|include|import|startScript|stopScript|cancelEvent|camera)\b/,
                             relevance: 10
                         }
                     ]
@@ -290,6 +293,69 @@
         }
     }
     
+    // Функция для баннера релиза (по МСК)
+    function setupReleaseBanner() {
+        var banner = document.getElementById('releaseBanner');
+        if (!banner) return;
+        
+        // 9 июля 2025, 00:00:00 по московскому времени (UTC+3)
+        var targetDate = new Date('2025-07-09T00:00:00+03:00');
+        var now = new Date();
+        
+        // Если дата уже прошла
+        if (now >= targetDate) {
+            banner.classList.add('released');
+            var titleEl = document.getElementById('releaseTitle');
+            var msgEl = document.getElementById('releaseMessage');
+            var timerEl = document.getElementById('releaseTimer');
+            var dateEl = document.querySelector('.release-date');
+            
+            if (titleEl) titleEl.textContent = '🎉 Релиз Spraute Engine состоялся!';
+            if (msgEl) msgEl.innerHTML = 'Скачать язык можно в Telegram: <a href="https://t.me/spraute_esd" target="_blank">@spraute_esd</a>';
+            if (timerEl) timerEl.style.display = 'none';
+            if (dateEl) dateEl.textContent = '🎉 Доступен для всех!';
+            return;
+        }
+        
+        // Обновление таймера
+        function updateTimer() {
+            var now = new Date();
+            var diff = targetDate - now;
+            
+            if (diff <= 0) {
+                banner.classList.add('released');
+                var titleEl = document.getElementById('releaseTitle');
+                var msgEl = document.getElementById('releaseMessage');
+                var timerEl = document.getElementById('releaseTimer');
+                var dateEl = document.querySelector('.release-date');
+                
+                if (titleEl) titleEl.textContent = '🎉 Релиз Spraute Engine состоялся!';
+                if (msgEl) msgEl.innerHTML = 'Скачать язык можно в Telegram: <a href="https://t.me/spraute_esd" target="_blank">@spraute_esd</a>';
+                if (timerEl) timerEl.style.display = 'none';
+                if (dateEl) dateEl.textContent = '🎉 Доступен для всех!';
+                return;
+            }
+            
+            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            
+            var daysEl = document.getElementById('days');
+            var hoursEl = document.getElementById('hours');
+            var minutesEl = document.getElementById('minutes');
+            var secondsEl = document.getElementById('seconds');
+            
+            if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
+            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
+            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
+            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
+        }
+        
+        updateTimer();
+        setInterval(updateTimer, 1000);
+    }
+    
     // Инициализация
     function init() {
         fixLinks();
@@ -299,6 +365,7 @@
         setupCodeCopy();
         setupMobileMenu();
         highlightActivePage();
+        setupReleaseBanner();  // баннер с таймером
     }
     
     if (document.readyState === 'loading') {
