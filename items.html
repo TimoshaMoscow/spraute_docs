@@ -32,11 +32,10 @@ giveItem(player, "minecraft:diamond", 1, "§6Королевский алмаз",
 
                     <div class="api-item">
                         <div class="api-signature"><code>getHeldItem(player)</code><span class="api-tag">функция</span></div>
-                        <p>Возвращает словарь с предметом в руке: "id", "count", "name", "slot", "lore", "attack_damage", "durability"/"max_durability", "nbt".</p>
+                        <p>Возвращает словарь с предметом в руке. Ключи: <code>"id"</code>, <code>"count"</code>, <code>"name"</code>, <code>"slot"</code>, <code>"lore"</code> (список), <code>"attack_damage"</code>, <code>"durability"</code> / <code>"max_durability"</code>, <code>"nbt"</code>.</p>
                         <pre><code>val held = getHeldItem(player)
 if (held != null && held.id == "minecraft:stick") {
-    chat("У тебя палка!")
-    chat("Урон: " + held.attack_damage)
+    chat("У тебя палка! Урон: " + held.attack_damage)
 }</code></pre>
                     </div>
 
@@ -48,8 +47,7 @@ if (held != null && held.id == "minecraft:stick") {
 
                     <div class="api-item">
                         <div class="api-signature"><code>player.slot(n)</code><span class="api-tag">метод</span></div>
-                        <p>Registry id предмета в слоте.</p>
-                        <p>Слоты: 0-8 хотбар, 9-35 инвентарь, 36-39 броня, 40 оффхенд.</p>
+                        <p>Registry id предмета в слоте. Слоты: 0-8 хотбар, 9-35 инвентарь, 36-39 броня, 40 оффхенд.</p>
                         <pre><code>val item = player.slot(0)</code></pre>
                     </div>
                 </section>
@@ -73,39 +71,110 @@ val nbt = player.slotNbt(0)</code></pre>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-tools"></i> Полная работа с инвентарём</h2>
-                    <pre><code># Получить весь инвентарь
-val items = getPlayerInventory(player)
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>getItemInSlot(player, slot)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает словарь предмета в слоте или <code>null</code>.</p>
+                        <pre><code>val item = getItemInSlot(player, 0)
+if (item != null) {
+    chat("В слоте: " + item.id)
+}</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>getPlayerInventory(player)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает список словарей всех непустых слотов.</p>
+                        <pre><code>val items = getPlayerInventory(player)
 for item in items {
-    chat(item.id + " x" + item.count + " slot " + item.slot)
-}
+    chat(item.id + " x" + item.count + " слот " + item.slot)
+}</code></pre>
+                    </div>
 
-# Найти слот с предметом
-val slot = findItemSlot(player, "minecraft:diamond_sword")
-if (slot >= 0) {
-    setItemName(player, slot, "&6Легендарный меч")
-    setItemLore(player, slot, ["&7Очень острый", "&c+урон"])
-    setItemAttackDamage(player, slot, 12)
-    setItemNbt(player, slot, {"CustomModelData": 1})
-}
-
-# Удалить предметы
-removeItem(player, "minecraft:dirt", 64)
-
-# Проверить слот
-if (isSlotEmpty(player, 0)) {
+                    <div class="api-item">
+                        <div class="api-signature"><code>isSlotEmpty(player, slot)</code><span class="api-tag">функция</span></div>
+                        <p>Проверяет, пуст ли слот.</p>
+                        <pre><code>if (isSlotEmpty(player, 0)) {
     chat("Слот пуст")
-}
+}</code></pre>
+                    </div>
 
-if (hasItemInSlot(player, 0, "minecraft:stick")) {
+                    <div class="api-item">
+                        <div class="api-signature"><code>hasItemInSlot(player, slot, item_id)</code><span class="api-tag">функция</span></div>
+                        <p>Проверяет, совпадает ли ID предмета в слоте.</p>
+                        <pre><code>if (hasItemInSlot(player, 0, "minecraft:stick")) {
     chat("В слоте палка")
 }</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>findItemSlot(player, item_id)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает первый слот с предметом или <code>-1</code>.</p>
+                        <pre><code>val slot = findItemSlot(player, "minecraft:diamond_sword")
+if (slot >= 0) {
+    chat("Меч в слоте " + slot)
+}</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setItemInSlot(player, slot, item_id, [count], [name], [lore], [nbt])</code><span class="api-tag">функция</span></div>
+                        <p>Положить или заменить предмет в слоте.</p>
+                        <pre><code>setItemInSlot(player, 0, "minecraft:diamond_sword", 1, "&6Легендарный меч", ["&7Очень острый"])</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setItemCount(player, slot, count)</code><span class="api-tag">функция</span></div>
+                        <p>Изменить количество предметов в слоте. <code>0</code> — очистить.</p>
+                        <pre><code>setItemCount(player, 0, 10)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>clearItemSlot(player, slot)</code><span class="api-tag">функция</span></div>
+                        <p>Очистить слот.</p>
+                        <pre><code>clearItemSlot(player, 0)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>removeItem(player, item_id, [count])</code><span class="api-tag">функция</span></div>
+                        <p>Забрать предметы у игрока. Возвращает сколько забрали.</p>
+                        <pre><code>removeItem(player, "minecraft:dirt", 64)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setItemName(player, slot, name)</code><span class="api-tag">функция</span></div>
+                        <p>Установить отображаемое название предмета.</p>
+                        <pre><code>setItemName(player, 0, "&6Легендарный меч")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setItemLore(player, slot, lore)</code><span class="api-tag">функция</span></div>
+                        <p>Установить описание предмета (список строк).</p>
+                        <pre><code>setItemLore(player, 0, ["&7Очень острый", "&c+урон"])</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setItemAttackDamage(player, slot, damage)</code><span class="api-tag">функция</span></div>
+                        <p>Установить бонус урона предмета.</p>
+                        <pre><code>setItemAttackDamage(player, 0, 12)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setItemNbt(player, slot, nbt_dict)</code><span class="api-tag">функция</span></div>
+                        <p>Записать NBT-теги предмета.</p>
+                        <pre><code>setItemNbt(player, 0, {"CustomModelData": 1})</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>getItemNbt(player, slot)</code><span class="api-tag">функция</span></div>
+                        <p>Прочитать NBT-теги предмета.</p>
+                        <pre><code>val nbt = getItemNbt(player, 0)</code></pre>
+                    </div>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-lock"></i> NBT-тег spraute_no_drop</h2>
                     <div class="info-block">
                         <i class="fas fa-lock"></i>
-                        <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря (кнопкой Q или перетаскиванием).</p>
+                        <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря.</p>
                     </div>
                     <pre><code>giveItem(player, "minecraft:quest_item", 1, null, null, {"spraute_no_drop": true})</code></pre>
                 </section>
