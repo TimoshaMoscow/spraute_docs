@@ -330,7 +330,7 @@
                 var dateEl = document.querySelector('.release-date');
                 
                 if (titleEl) titleEl.textContent = '🎉 Релиз Spraute Engine состоялся!';
-                if (msgEl) msgEl.innerHTML = 'Скачать язык можно в Telegram: <a href="https://t.me/spraute_esd" target="_blank">@spraute_esd</a>';
+                if (msgEl) msgEl.innerHTML = 'Скачать движок можно в Telegram: <a href="https://t.me/spraute_esd" target="_blank">@spraute_esd</a>';
                 if (timerEl) timerEl.style.display = 'none';
                 if (dateEl) dateEl.textContent = '🎉 Доступен для всех!';
                 return;
