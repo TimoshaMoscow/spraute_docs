@@ -112,13 +112,17 @@ val uuid = player.uuid()
 # Java-объект
 val javaEntity = player.java()
 
+# Направление взгляда игрока
+val facing = player.facing()
+# Возвращает: yaw, pitch, direction (north/south/east/west/up/down),
+# horizontal, dx/dy/dz, hx/hz
+
 # Методы игрока
 player.hasItem("minecraft:iron_ingot")
 player.countItem("minecraft:iron_ingot")
 player.raycast(50)
 player.damage(5.0)
-player.teleport(100, 64, 200)
-player.facing()  # направление взгляда (yaw, pitch, direction, dx/dy/dz)</code></pre>
+player.teleport(100, 64, 200)</code></pre>
                 </section>
             </div>
         </main>
