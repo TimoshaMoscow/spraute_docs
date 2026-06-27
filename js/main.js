@@ -293,13 +293,13 @@
         }
     }
     
-    // Функция для баннера релиза (по МСК)
+    // Функция для баннера релиза (по МСК, 9 июля 2026)
     function setupReleaseBanner() {
         var banner = document.getElementById('releaseBanner');
         if (!banner) return;
         
-        // 9 июля 2025, 00:00:00 по московскому времени (UTC+3)
-        var targetDate = new Date('2025-07-09T00:00:00+03:00');
+        // 9 июля 2026, 00:00:00 по московскому времени (UTC+3)
+        var targetDate = new Date('2026-07-09T00:00:00+03:00');
         var now = new Date();
         
         // Если дата уже прошла
@@ -365,7 +365,7 @@
         setupCodeCopy();
         setupMobileMenu();
         highlightActivePage();
-        setupReleaseBanner();  // баннер с таймером
+        setupReleaseBanner();  // баннер с таймером до 9 июля 2026
     }
     
     if (document.readyState === 'loading') {
