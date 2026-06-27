@@ -32,6 +32,71 @@ val result = name(1, 2)</code></pre>
                 </section>
 
                 <section class="doc-section">
+                    <h2><i class="fas fa-heart"></i> Работа с сущностями</h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>healEntity(entity, amount)</code><span class="api-tag">функция</span></div>
+                        <p>Лечит сущность, <strong>не меняя</strong> max HP (в отличие от <code>entity.hp = ...</code>, которое выставляет и max, и текущее).</p>
+                        <pre><code>healEntity(player, 5)   # вылечить на 5 HP
+heal(knight, 10)        # алиас</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>getPlayerFacing(entity)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает словарь направления взгляда (см. <code>player.facing()</code>). Работает для игрока и НИПа.</p>
+                        <pre><code>val facing = getPlayerFacing(player)
+chat("Смотрит на: " + facing.direction)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>getPlayerMotion(player)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает вектор движения (скорость) игрока в блоках за тик — список <code>[vx, vy, vz]</code> или <code>null</code>.</p>
+                        <pre><code>val motion = getPlayerMotion(player)
+chat("Скорость по X: " + motion[0])</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setPlayerMotion(player, vx, vy, vz)</code><span class="api-tag">функция</span></div>
+                        <p>Задаёт скорость игрока в блоках за тик. Можно передать список.</p>
+                        <pre><code>setPlayerMotion(player, 0, 0.5, 0)   # подбросить вверх
+setPlayerMotion(player, [0.5, 0.2, -0.3])
+# Алиасы: setPlayerMoveVector, set_player_motion</code></pre>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-users"></i> Поиск сущностей в радиусе</h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>playersInRadius(x, y, z, radius)</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает список игроков в сфере.</p>
+                        <pre><code>val players = playersInRadius(0, 64, 0, 10)
+for p in players {
+    chat(p.name + " рядом!")
+}</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>playersNear(anchor, radius)</code><span class="api-tag">функция</span></div>
+                        <p>То же, но в качестве якоря — сущность, id NPC или строка.</p>
+                        <pre><code>val players = playersNear(readix_avatar, 5)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>entitiesInRadius(x, y, z, radius, [filter])</code><span class="api-tag">функция</span></div>
+                        <p>Возвращает список сущностей в сфере. Фильтр: <code>"any"</code>, <code>"player"</code>, <code>"npc"</code>, <code>"mob"</code>, <code>"living"</code>.</p>
+                        <pre><code>val entities = entitiesInRadius(0, 64, 0, 10, "npc")
+val mobs = entitiesInRadius(0, 64, 0, 20, "mob")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>entitiesNear(anchor, radius, [filter])</code><span class="api-tag">функция</span></div>
+                        <p>То же, но с якорем.</p>
+                        <pre><code>val entities = entitiesNear(player, 5, "living")</code></pre>
+                    </div>
+                </section>
+
+                <section class="doc-section">
                     <h2><i class="fas fa-hourglass-half"></i> Await — ожидание событий</h2>
                     <div class="grid-cards">
                         <div class="card"><code>await time(seconds)</code><p>Пауза на секунды</p></div>
