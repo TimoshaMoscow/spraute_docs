@@ -6,7 +6,7 @@
     <title>UI система — Spraute Engine</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -39,6 +39,7 @@
         size = [158, 22]
         color = "#55336688"
         hover = "#66447799"
+        tooltip = "Нажми, чтобы помочь"  # подсказка
         onClick {
             chat("Выбрана помощь!")
         }
@@ -54,6 +55,7 @@
         noLookAt = true
         noFollowCursor = true
         noHurtAnim = true
+        renderBones = ["Head", "RightArm"]  # рендерить только эти кости
     }
 }</code></pre>
                 </section>
@@ -98,13 +100,13 @@ uiAnimate(player, "my_btn", "y", 150, 1.5, "bounce_out")
                 <section class="doc-section">
                     <h2><i class="fas fa-th-large"></i> Виджеты</h2>
                     <div class="grid-cards">
-                        <div class="card"><code>text</code><p>Текст с wrap, max_lines, anchor</p></div>
-                        <div class="card"><code>input</code><p>Поле ввода с placeholder, password</p></div>
-                        <div class="card"><code>button</code><p>Кнопка с onClick, color, hover, texture</p></div>
-                        <div class="card"><code>image</code><p>Изображение с поддержкой 9-slice</p></div>
-                        <div class="card"><code>entity</code><p>3D модель с crop, anchor, nameTag, noLookAt</p></div>
-                        <div class="card"><code>item/block</code><p>Иконка предмета/блока</p></div>
-                        <div class="card"><code>rect/panel</code><p>Прямоугольник с цветом</p></div>
+                        <div class="card"><code>text</code><p>Текст с wrap, max_lines, anchor, tooltip</p></div>
+                        <div class="card"><code>input</code><p>Поле ввода с placeholder, password, tooltip</p></div>
+                        <div class="card"><code>button</code><p>Кнопка с onClick, color, hover, texture, tooltip</p></div>
+                        <div class="card"><code>image</code><p>Изображение с поддержкой 9-slice, tooltip</p></div>
+                        <div class="card"><code>entity</code><p>3D модель с crop, anchor, nameTag, noLookAt, renderBones, tooltip</p></div>
+                        <div class="card"><code>item/block</code><p>Иконка предмета/блока с tooltip</p></div>
+                        <div class="card"><code>rect/panel</code><p>Прямоугольник с цветом, tooltip</p></div>
                         <div class="card"><code>scroll</code><p>Область с прокруткой</p></div>
                         <div class="card"><code>clip</code><p>Обрезка дочерних виджетов</p></div>
                         <div class="card"><code>grid_bg</code><p>Фоновая сетка (h/v/hv)</p></div>

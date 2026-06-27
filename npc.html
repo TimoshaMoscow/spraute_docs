@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NPC — Spraute Engine</title>
-    <link rel="icon" href="logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -48,6 +48,9 @@
                             <li><code>rotate</code> — углы yaw, pitch (числа через запятую)</li>
                             <li><code>show_name</code> — показывать имя (по умолчанию true)</li>
                             <li><code>collision</code> — наличие коллизии (по умолчанию true)</li>
+                            <li><code>hitbox</code> — <code>[ширина, высота]</code> или <code>[ширина, высота, ox, oy, oz]</code></li>
+                            <li><code>hitbox_preset</code> — <code>"player"</code>, <code>"small"</code> или <code>"large"</code></li>
+                            <li><code>bone_hitboxes</code> — список костных хитбоксов</li>
                             <li><code>model</code>, <code>texture</code> — ресурсы модели и текстуры</li>
                             <li><code>idle_anim</code>, <code>walk_anim</code> — анимации</li>
                             <li><code>drop_item</code> — ID предмета, выпадающего при смерти</li>
@@ -75,7 +78,10 @@ npc.stop("animName")
 npc.stopOverlay()
 
 # Процедурные анимации (дыхание, дрожание)
-npc.setAdditiveWeight(1)</code></pre>
+npc.setAdditiveWeight(1)
+
+# Анимация смерти
+npc.setDeathAnim("death")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
                         <p>Второй аргумент анимации: <code>true/"additive"</code> — накопительное смешивание, <code>false/"replace"</code> — замена.</p>
@@ -96,6 +102,32 @@ await npc.followUntil(player, 2.0)</code></pre>
                 </section>
 
                 <section class="doc-section">
+                    <h2><i class="fas fa-fish"></i> Плавание</h2>
+                    <pre><code># Включить режим амфибии
+npc.setSwimming(true)
+npc.setSwimIdleAnim("swim_idle")
+npc.setSwimWalkAnim("swim_walk")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-plane"></i> Полёт</h2>
+                    <pre><code># Включить полёт
+npc.setFlying(true)
+npc.flyTo(10, 80, 10, 1.2)
+await npc.flyTo(20, 90, 5)
+npc.alwaysFlyTo(player, 1.0)
+npc.setFlying(false)
+
+# Анимации полёта
+npc.setFlyIdleAnim("fly_idle")
+npc.setFlyWalkAnim("fly_walk")</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i>
+                        <p><code>flyTo</code> автоматически включает полёт. С <code>await</code> блокирует до прибытия.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
                     <h2><i class="fas fa-eye"></i> Взгляд</h2>
                     <pre><code># Разовый поворот головы
 npc.lookAt(player)
@@ -106,6 +138,25 @@ npc.stopLookAt()
 
 # Установка кости головы
 npc.setHeadBone("head")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-cube"></i> Хитбоксы</h2>
+                    <pre><code># Основной хитбокс
+npc.setHitbox(0.6, 1.8)
+npc.setHitbox(0.6, 1.8, 0, 0.9, 0)
+npc.setHitboxOffset(0, 0.9, 0)
+npc.resetHitbox()
+npc.setHitboxPreset("player")  # "player", "small", "large"
+
+# Костные хитбоксы (следуют за анимацией)
+npc.addBoneHitbox("Head", 0.4, 0.4, 0.4)
+npc.addBoneHitbox("hand_hit", "RightArm", 0.3, 0.5, 0.3, 0.5, 0, 0)
+npc.removeBoneHitbox("hand_hit")
+npc.clearBoneHitboxes()
+
+# Отладка
+npc.showHitboxDebug(true)  # подсветка хитбоксов в мире</code></pre>
                 </section>
 
                 <section class="doc-section">

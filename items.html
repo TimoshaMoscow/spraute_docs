@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Предметы и инвентарь — Spraute Engine</title>
-    <link rel="icon" href="logo.png" type="image/png">
     <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -32,10 +32,11 @@ giveItem(player, "minecraft:diamond", 1, "§6Королевский алмаз",
 
                     <div class="api-item">
                         <div class="api-signature"><code>getHeldItem(player)</code><span class="api-tag">функция</span></div>
-                        <p>Возвращает словарь с предметом в руке: "id", "count", "name", "nbt".</p>
+                        <p>Возвращает словарь с предметом в руке: "id", "count", "name", "slot", "lore", "attack_damage", "durability"/"max_durability", "nbt".</p>
                         <pre><code>val held = getHeldItem(player)
 if (held != null && held.id == "minecraft:stick") {
     chat("У тебя палка!")
+    chat("Урон: " + held.attack_damage)
 }</code></pre>
                     </div>
 
@@ -71,7 +72,58 @@ val nbt = player.slotNbt(0)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-store"></i> Магазин на кнопку J (полный пример)</h2>
+                    <h2><i class="fas fa-tools"></i> Полная работа с инвентарём</h2>
+                    <pre><code># Получить весь инвентарь
+val items = getPlayerInventory(player)
+for item in items {
+    chat(item.id + " x" + item.count + " slot " + item.slot)
+}
+
+# Найти слот с предметом
+val slot = findItemSlot(player, "minecraft:diamond_sword")
+if (slot >= 0) {
+    setItemName(player, slot, "&6Легендарный меч")
+    setItemLore(player, slot, ["&7Очень острый", "&c+урон"])
+    setItemAttackDamage(player, slot, 12)
+    setItemNbt(player, slot, {"CustomModelData": 1})
+}
+
+# Удалить предметы
+removeItem(player, "minecraft:dirt", 64)
+
+# Проверить слот
+if (isSlotEmpty(player, 0)) {
+    chat("Слот пуст")
+}
+
+if (hasItemInSlot(player, 0, "minecraft:stick")) {
+    chat("В слоте палка")
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-lock"></i> NBT-тег spraute_no_drop</h2>
+                    <div class="info-block">
+                        <i class="fas fa-lock"></i>
+                        <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря (кнопкой Q или перетаскиванием).</p>
+                    </div>
+                    <pre><code>giveItem(player, "minecraft:quest_item", 1, null, null, {"spraute_no_drop": true})</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-arrow-up"></i> Кастомные орбы</h2>
+                    <pre><code># Спавн орба
+val orbUuid = spawnOrb("textures/item/diamond.png", 5, x, y, z, "minecraft:overworld")
+
+# Ожидание подбора орба игроком
+await orbPickup(player, 5, "textures/item/diamond.png")
+
+# Удаление всех орбов с текстурой
+removeOrbs("textures/item/diamond.png")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-store"></i> Магазин на кнопку J</h2>
                     <pre><code>on keybind("j") -> shopKey {
     val player = _event_player
     
@@ -101,7 +153,6 @@ val nbt = player.slotNbt(0)</code></pre>
             size = [260, 130]
             contentH = 340
             
-            # Яблоко
             item("icoApple") {
                 pos = [4, 3]
                 w = 16
@@ -142,27 +193,6 @@ val nbt = player.slotNbt(0)</code></pre>
     
     uiOpen(player, shopui)
 }</code></pre>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-lock"></i> NBT-тег spraute_no_drop</h2>
-                    <div class="info-block">
-                        <i class="fas fa-lock"></i>
-                        <p>Если указать NBT-тег <code>"spraute_no_drop": true</code>, игрок не сможет выкинуть этот предмет из инвентаря (кнопкой Q или перетаскиванием).</p>
-                    </div>
-                    <pre><code>giveItem(player, "minecraft:quest_item", 1, null, null, {"spraute_no_drop": true})</code></pre>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-arrow-up"></i> Кастомные орбы</h2>
-                    <pre><code># Спавн орба
-val orbUuid = spawnOrb("textures/item/diamond.png", 5, x, y, z, "minecraft:overworld")
-
-# Ожидание подбора орба игроком
-await orbPickup(player, 5, "textures/item/diamond.png")
-
-# Удаление всех орбов с текстурой
-removeOrbs("textures/item/diamond.png")</code></pre>
                 </section>
             </div>
         </main>

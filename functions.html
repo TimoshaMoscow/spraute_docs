@@ -6,7 +6,7 @@
     <title>Функции и Await — Spraute Engine</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -38,17 +38,25 @@ val result = name(1, 2)</code></pre>
                         <div class="card"><code>await interact(entity)</code><p>Ожидание взаимодействия</p></div>
                         <div class="card"><code>await keybind("key")</code><p>Ожидание клавиши (g, f, space, shift)</p></div>
                         <div class="card"><code>await death(target)</code><p>Смерть сущности</p></div>
+                        <div class="card"><code>await kill(killer, victim)</code><p>Убийство сущности (возвращает жертву)</p></div>
                         <div class="card"><code>await uiClick(player)</code><p>Клик в UI (возвращает id или "__close__")</p></div>
                         <div class="card"><code>await uiInput(player, widget_id)</code><p>Ввод текста в input</p></div>
                         <div class="card"><code>await uiClose(player)</code><p>Закрытие UI</p></div>
+                        <div class="card"><code>await uiTouch(player, id1, id2)</code><p>Пересечение двух виджетов</p></div>
                         <div class="card"><code>await pickup(npc, amount, item_id)</code><p>Подбор предметов NPC</p></div>
                         <div class="card"><code>await orbPickup(player, amount, texture)</code><p>Подбор кастомных орбов</p></div>
                         <div class="card"><code>await position(player, x, y, z, radius)</code><p>Вход в радиус</p></div>
+                        <div class="card"><code>await inventory(player, item_id, count)</code><p>Появление предмета у игрока</p></div>
                         <div class="card"><code>await chat(player, message)</code><p>Сообщение в чат</p></div>
                         <div class="card"><code>await clickBlock(player, target)</code><p>Клик по блоку</p></div>
                         <div class="card"><code>await breakBlock(player, target)</code><p>Разрушение блока</p></div>
                         <div class="card"><code>await placeBlock(player, target)</code><p>Установка блока</p></div>
+                        <div class="card"><code>await openChest(player, target)</code><p>Открытие сундука</p></div>
+                        <div class="card"><code>await openDoor(player, target)</code><p>Открытие двери</p></div>
+                        <div class="card"><code>await jump(player)</code><p>Прыжок игрока</p></div>
+                        <div class="card"><code>await action(player, type, target)</code><p>Действие игрока (eat, fish, hoe, jump, sleep, craft, drop)</p></div>
                         <div class="card"><code>await task("task_id")</code><p>Завершение асинхронной задачи</p></div>
+                        <div class="card"><code>await cameraRoute(player, routeName)</code><p>Пролёт по маршруту камеры</p></div>
                     </div>
                 </section>
 

@@ -34,7 +34,7 @@ every(seconds) -> handler_id {
 # Остановка обработчика
 stop(handler_id)
 
-# Отмена события (например, отмена установки блока)
+# Отмена события
 cancelEvent()</code></pre>
                 </section>
 
@@ -52,6 +52,14 @@ cancelEvent()</code></pre>
                         <div class="card">
                             <code>on death(target) -> id { }</code>
                             <p>Смерть сущности. <code>_event_entity</code>, <code>_event_killer</code></p>
+                        </div>
+                        <div class="card">
+                            <code>on kill(killer, victim) -> id { }</code>
+                            <p>Убийство сущности. <code>_event_entity</code> (жертва), <code>_event_killer</code></p>
+                        </div>
+                        <div class="card">
+                            <code>on jump([player]) -> id { }</code>
+                            <p>Прыжок игрока. <code>_event_player</code></p>
                         </div>
                     </div>
                 </section>
@@ -71,6 +79,10 @@ cancelEvent()</code></pre>
                             <code>on orbPickup(player, texture) -> id { }</code>
                             <p>Подбор кастомного орба. <code>_event_player</code>, <code>_event_texture</code>, <code>_event_amount</code></p>
                         </div>
+                        <div class="card">
+                            <code>on action([player], type) -> id { }</code>
+                            <p>Действие игрока (eat, fish, hoe, jump, sleep, craft, drop). <code>_event_player</code>, <code>_event_target</code></p>
+                        </div>
                     </div>
                 </section>
 
@@ -88,6 +100,10 @@ cancelEvent()</code></pre>
                         <div class="card">
                             <code>on uiInput([player], [widget_id]) -> id { }</code>
                             <p>Ввод в input. <code>_event_player</code>, <code>_event_widget</code>, <code>_event_input</code></p>
+                        </div>
+                        <div class="card">
+                            <code>on uiTouch(player, id1, id2) -> id { }</code>
+                            <p>Пересечение двух виджетов. <code>_event_player</code></p>
                         </div>
                     </div>
                 </section>
@@ -110,6 +126,14 @@ cancelEvent()</code></pre>
                         <div class="card">
                             <code>on placeBlock([target]) -> id { }</code>
                             <p>Установка блока. Можно отменить через <code>cancelEvent()</code>. <code>_event_player</code>, <code>_event_x</code>, <code>_event_y</code>, <code>_event_z</code>, <code>_event_block</code></p>
+                        </div>
+                        <div class="card">
+                            <code>on openChest([target]) -> id { }</code>
+                            <p>Открытие сундука/бочки/шалкера. <code>_eventPlayer</code>, <code>_eventX</code>, <code>_eventY</code>, <code>_eventZ</code>, <code>_eventBlock</code></p>
+                        </div>
+                        <div class="card">
+                            <code>on openDoor([target]) -> id { }</code>
+                            <p>Открытие двери/люка/калитки. <code>_eventPlayer</code>, <code>_eventX</code>, <code>_eventY</code>, <code>_eventZ</code>, <code>_eventBlock</code></p>
                         </div>
                     </div>
                 </section>
@@ -144,6 +168,12 @@ every(5) -> timer {
 on placeBlock("minecraft:tnt") -> cancel_tnt {
     cancelEvent()
     chat("§cНельзя ставить динамит!")
+}
+
+# Отмена открытия сундука
+on openChest() -> no_chest {
+    cancelEvent()
+    chat("§cСундуки запрещены!")
 }
 
 # Обработка клика по кнопке в магазине

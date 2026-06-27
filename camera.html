@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Камера — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1><i class="fas fa-camera"></i> Кинематографическая камера</h1>
+                
+                <section class="doc-section">
+                    <h2><i class="fas fa-info-circle"></i> Общее описание</h2>
+                    <p>Управляет видом <strong>конкретного игрока</strong> (клиентская камера, не привязка к НИПу). После сцены вызывайте <code>stopCamera(player)</code>.</p>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-code"></i> Основные функции</h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>setCamera(player, x, y, z)</code><span class="api-tag">функция</span></div>
+                        <p>Камера в точке; yaw/pitch — текущие у игрока.</p>
+                        <pre><code>setCamera(player, 10, 80, 10)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setCamera(player, x, y, z, yaw, pitch, holdTime, smoothTime)</code><span class="api-tag">функция</span></div>
+                        <p>Позиция и поворот (градусы). <code>smoothTime = 0</code> — мгновенно.</p>
+                        <pre><code>setCamera(player, 10, 80, 10, 90, 0, 3, 0.8)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setCamera(player, x, y, z, yaw, pitch, holdTime, smoothTime, lockMovement, hideGui)</code><span class="api-tag">функция</span></div>
+                        <p>С блокировкой движения и скрытием HUD.</p>
+                        <pre><code>setCamera(player, 10, 80, 10, 90, 0, 3, 0.8, true, "minecraft")</code></pre>
+                        <p>Параметры: <code>lockMovement</code> (true/false), <code>hideGui</code> ("none", "minecraft", "all").</p>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setCameraLookAt(player, camX, camY, camZ, lookX, lookY, lookZ, hold, smooth, track, lockMovement, hideGui)</code><span class="api-tag">функция</span></div>
+                        <p>Камера смотрит на координаты.</p>
+                        <pre><code>setCameraLookAt(player, 10, 80, 10, 0, 64, 0, 5, 1.0, true, true, "minecraft")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>setCameraLookAt(player, camX, camY, camZ, entity, hold, smooth, track, lockMovement, hideGui)</code><span class="api-tag">функция</span></div>
+                        <p>Камера смотрит на сущность (игрока/НИПа/моба). <code>track=true</code> — слежение.</p>
+                        <pre><code>setCameraLookAt(player, 10, 80, 10, knight, 5, 1.0, true, true, "minecraft")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>animateCamera(player, x, y, z, yaw, pitch, smoothTime, lockMovement, hideGui)</code><span class="api-tag">функция</span></div>
+                        <p>Плавно переместить активную камеру.</p>
+                        <pre><code>animateCamera(player, 20, 85, 15, 120, -10, 1.5)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>animateCameraLookAt(player, x, y, z, target, smoothTime, track, lockMovement, hideGui)</code><span class="api-tag">функция</span></div>
+                        <p>Плавный перелёт + взгляд на цель.</p>
+                        <pre><code>animateCameraLookAt(player, 15, 85, 15, knight, 1.5, true)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>stopCamera(player, smoothTime)</code><span class="api-tag">функция</span></div>
+                        <p>Плавно вернуть вид игроку. <code>0</code> — мгновенно.</p>
+                        <pre><code>stopCamera(player)      # за 0.5 сек
+stopCamera(player, 0)   # мгновенно</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>resetCamera(player)</code><span class="api-tag">функция</span></div>
+                        <p>Мгновенно отключить камеру и вернуть управление.</p>
+                        <pre><code>resetCamera(player)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>playCameraRoute(player, routeName, lockMovement, hideGui, returnSmooth)</code><span class="api-tag">функция</span></div>
+                        <p>Пролёт по сохранённому маршруту из <code>spraute_engine/routes/</code>. Возвращает длительность в секундах.</p>
+                        <pre><code>playCameraRoute(player, "intro")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>await cameraRoute(player, routeName, lockMovement, hideGui, returnSmooth)</code><span class="api-tag">await</span></div>
+                        <p>То же, но скрипт ждёт окончания пролёта.</p>
+                        <pre><code>await cameraRoute(player, "intro", true, "minecraft", 0.8)</code></pre>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-code-branch"></i> Декларативный синтаксис (camera id { ... })</h2>
+                    <pre><code>camera intro {
+    target = player
+    pos = 100, 80, 200
+    rotate = 45, -15
+    lookAt = knight
+    track = true
+    time = 5
+    smooth = true
+    smoothTime = 1.0
+    lockMovement = true
+    hideGui = "minecraft"
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-terminal"></i> Команды маршрута</h2>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <code>/spraute route preview &lt;имя&gt;</code>
+                            <p>Предпросмотр маршрута для себя</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute route list</code>
+                            <p>Список сохранённых маршрутов</p>
+                        </div>
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i>
+                        <p>Маршруты создаются предметом <strong>Камера</strong> в креативе и сохраняются в <code>spraute_engine/routes/&lt;имя&gt;.json</code>.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-examples"></i> Полный пример</h2>
+                    <pre><code># Установка камеры с плавным переходом
+setCamera(player, 10, 80, 10, 90, 0, 3, 0.8, true, "minecraft")
+
+# Камера смотрит на NPC с слежением
+setCameraLookAt(player, 10, 80, 10, knight, 5, 1.0, true, true, "minecraft")
+
+# Анимация перелёта
+animateCamera(player, 20, 85, 15, 120, -10, 1.5)
+
+# Проигрывание маршрута
+playCameraRoute(player, "intro")
+
+# Ожидание маршрута
+await cameraRoute(player, "intro", true, "minecraft", 0.8)
+
+# Возврат камеры
+stopCamera(player)
+resetCamera(player)</code></pre>
+                </section>
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>

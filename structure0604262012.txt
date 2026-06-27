@@ -6,6 +6,7 @@ spraute-docs/
 ├── npc.html
 ├── ui.html
 ├── chat-library.html
+├── camera.html              # НОВЫЙ ФАЙЛ
 ├── events.html
 ├── functions.html
 ├── items.html
@@ -16,8 +17,8 @@ spraute-docs/
 ├── 404.html
 ├── comp/
 │   ├── header.html
-│   └── sidebar.html
+│   └── sidebar.html         # ОБНОВЛЁН
 ├── css/
 │   └── style.css
 └── js/
-    └── main.js
+    └── main.js              # ОБНОВЛЁН

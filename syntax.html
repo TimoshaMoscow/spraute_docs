@@ -6,7 +6,7 @@
     <title>Синтаксис — Spraute Engine</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -31,7 +31,7 @@
                             <tbody>
                                 <tr><td><code>val</code></td><td>Локальная переменная</td></tr>
                                 <tr><td><code>global val</code></td><td>Глобальная переменная (в рамках скрипта)</td></tr>
-                                <tr><td><code>world val</code></td><td>Переменная мира (сохраняется между перезапусками)</td></tr>
+                                <tr><td><code>world val</code></td><td>Переменная сейва (общая для всех измерений)</td></tr>
                                 <tr><td><code>import("name")</code></td><td>Импортирует функции из уже запущенного скрипта</td></tr>
                                 <tr><td><code>await</code></td><td>Ожидание события / времени / задачи</td></tr>
                                 <tr><td><code>create npc</code></td><td>Блок создания NPC</td></tr>
@@ -42,6 +42,7 @@
                                 <tr><td><code>create particle</code></td><td>Создание кастомного партикла</td></tr>
                                 <tr><td><code>create craft</code></td><td>Создание рецепта крафта</td></tr>
                                 <tr><td><code>create tab</code></td><td>Создание творческой вкладки</td></tr>
+                                <tr><td><code>camera id { ... }</code></td><td>Декларативный блок камеры</td></tr>
                                 <tr><td><code>if / else / else if</code></td><td>Условные конструкции</td></tr>
                                 <tr><td><code>while</code></td><td>Цикл</td></tr>
                                 <tr><td><code>for (i in range(...))</code></td><td>Цикл по range()</td></tr>
@@ -64,6 +65,7 @@
                         <div class="card"><code>*</code><p>Умножение</p></div>
                         <div class="card"><code>/</code><p>Деление</p></div>
                         <div class="card"><code>//</code><p>Целочисленное деление (floor)</p></div>
+                        <div class="card"><code>%</code><p>Остаток от деления</p></div>
                         <div class="card"><code>**</code><p>Возведение в степень</p></div>
                         <div class="card"><code>==</code><p>Равно</p></div>
                         <div class="card"><code>!=</code><p>Не равно</p></div>

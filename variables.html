@@ -6,7 +6,7 @@
     <title>Переменные — Spraute Engine</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -31,7 +31,7 @@
                             <tbody>
                                 <tr><td><code>val</code></td><td>Локальная переменная</td><td><code>val x = 10</code></td></tr>
                                 <tr><td><code>global val</code></td><td>Глобальная в рамках скрипта</td><td><code>global counter = 0</code></td></tr>
-                                <tr><td><code>world val</code></td><td>Сохраняется между перезапусками</td><td><code>world server_started = true</code></td></tr>
+                                <tr><td><code>world val</code></td><td>Общая для всего сейва (overworld + nether + end)</td><td><code>world server_started = true</code></td></tr>
                                 <tr><td><code>player.data</code></td><td>Сессионные данные игрока</td><td><code>player.data["in_dialogue"] = true</code></td></tr>
                                 <tr><td><code>player.savedData</code></td><td>Постоянные данные игрока</td><td><code>player.savedData["deaths"] = 0</code></td></tr>
                             </tbody>
@@ -47,7 +47,7 @@ val local_var = 10
 # Глобальная для скрипта
 global global_var = "доступна везде"
 
-# Сохраняется между перезапусками сервера
+# Сохраняется между перезапусками (общая для всех измерений)
 world saved_var = 42
 
 # Сессионные данные игрока (до перезапуска сервера)
@@ -58,7 +58,15 @@ val p = getPlayer("Steve")
 if (p.savedData["deaths"] == null) {
     p.savedData["deaths"] = 0
 }
-p.savedData["deaths"] = p.savedData["deaths"] + 1</code></pre>
+p.savedData["deaths"] = p.savedData["deaths"] + 1
+
+# Состояния игрока
+if (player.onGround) {
+    chat("Стою на земле!")
+}
+if (player.isSneaking || player.isCrouching) {
+    chat("Крадусь...")
+}</code></pre>
                 </section>
 
                 <section class="doc-section">
@@ -71,7 +79,9 @@ player.max_hp
 player.pitch, player.yaw
 player.look_x, player.look_y, player.look_z  # вектор взгляда
 player.uuid
-player.java  # Java-объект ServerPlayer</code></pre>
+player.java  # Java-объект ServerPlayer
+player.onGround  # стоит ли на земле
+player.isSneaking / player.isCrouching  # приседание</code></pre>
                     
                     <h3><i class="fas fa-robot"></i> NPC:</h3>
                     <pre><code>npc.name
@@ -107,7 +117,8 @@ player.hasItem("minecraft:iron_ingot")
 player.countItem("minecraft:iron_ingot")
 player.raycast(50)
 player.damage(5.0)
-player.teleport(100, 64, 200)</code></pre>
+player.teleport(100, 64, 200)
+player.facing()  # направление взгляда (yaw, pitch, direction, dx/dy/dz)</code></pre>
                 </section>
             </div>
         </main>
