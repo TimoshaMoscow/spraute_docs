@@ -840,3 +840,237 @@ kbd {
 .how-it-works li:last-child {
     margin-bottom: 0;
 }
+
+/* Блок авторов */
+.authors-section {
+    margin: 48px 0 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--border);
+}
+
+.authors-section h3 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    color: var(--text-primary);
+}
+
+.authors-section h3 i {
+    color: var(--accent);
+    margin-right: 12px;
+}
+
+.authors-grid {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.author-card {
+    background-color: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px 32px;
+    text-align: center;
+    min-width: 220px;
+    transition: all 0.2s;
+}
+
+.author-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-4px);
+}
+
+.author-avatar {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: var(--bg-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    border: 2px solid var(--accent);
+}
+
+.author-avatar i {
+    font-size: 28px;
+    color: var(--accent);
+}
+
+.author-card h4 {
+    font-size: 1.1rem;
+    color: var(--text-primary);
+    margin-bottom: 4px;
+}
+
+.author-role {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 12px;
+}
+
+.author-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #26A5E4;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: opacity 0.2s;
+}
+
+.author-link:hover {
+    opacity: 0.7;
+}
+
+.author-link i {
+    font-size: 16px;
+}
+
+@media (max-width: 768px) {
+    .authors-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+    .author-card {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+/* Баннер релиза */
+.release-banner {
+    background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-tertiary) 100%);
+    border: 1px solid var(--accent);
+    border-radius: 16px;
+    padding: 24px 32px;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+}
+
+.release-banner::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(209, 230, 94, 0.05) 0%, transparent 60%);
+    pointer-events: none;
+}
+
+.release-content {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    position: relative;
+    z-index: 1;
+    flex-wrap: wrap;
+}
+
+.release-icon {
+    font-size: 2.5rem;
+    color: var(--accent);
+    flex-shrink: 0;
+}
+
+.release-text {
+    flex: 1;
+    min-width: 200px;
+}
+
+.release-text h3 {
+    font-size: 1.3rem;
+    color: var(--accent);
+    margin: 0 0 4px 0;
+}
+
+.release-text p {
+    color: var(--text-secondary);
+    margin: 0 0 12px 0;
+}
+
+.release-text p a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.release-text p a:hover {
+    text-decoration: underline;
+}
+
+.release-timer {
+    display: flex;
+    gap: 16px;
+    margin: 12px 0;
+    flex-wrap: wrap;
+}
+
+.timer-block {
+    text-align: center;
+    background-color: var(--bg-primary);
+    border-radius: 8px;
+    padding: 6px 14px;
+    min-width: 60px;
+    border: 1px solid var(--border);
+}
+
+.timer-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-family: 'JetBrains Mono', monospace;
+    color: var(--accent);
+    display: block;
+    line-height: 1.2;
+}
+
+.timer-label {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    letter-spacing: 1px;
+}
+
+.release-date {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.release-date strong {
+    color: var(--text-primary);
+}
+
+/* Состояние "Релиз состоялся" */
+.release-banner.released {
+    border-color: #6bcf7f;
+}
+
+.release-banner.released .release-icon {
+    color: #6bcf7f;
+}
+
+.release-banner.released .release-text h3 {
+    color: #6bcf7f;
+}
+
+.release-banner.released .timer-number {
+    color: #6bcf7f;
+}
+
+/* Адаптив */
+@media (max-width: 768px) {
+    .release-content {
+        flex-direction: column;
+        text-align: center;
+    }
+    .release-timer {
+        justify-content: center;
+    }
+    .release-banner {
+        padding: 20px;
+    }
+}
