@@ -3,8 +3,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spraute Engine — Документация</title>
+
+    <!-- ===== БАЗОВЫЕ МЕТА-ТЕГИ ===== -->
+    <title>Spraute Engine — язык скриптов для Minecraft | Документация</title>
+    <meta name="description" content="Spraute Engine — мощный язык скриптов для Minecraft. Создавайте NPC, квесты, UI, кастомные блоки и предметы без Java. Полная документация.">
+    <meta name="keywords" content="Spraute, Spraute Engine, Minecraft скрипты, язык скриптов, NPC, квесты, UI, кастомные блоки, Minecraft моды, Sprite Engine">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="ReadixGG, Timosha_Moscow">
+    <link rel="canonical" href="https://timoshamoscow.github.io/spraute_docs/">
+
+    <!-- ===== FAVICON ===== -->
     <link rel="icon" href="logo.png" type="image/png">
+    <link rel="apple-touch-icon" href="logo.png">
+
+    <!-- ===== OPEN GRAPH (для соцсетей) ===== -->
+    <meta property="og:title" content="Spraute Engine — язык скриптов для Minecraft">
+    <meta property="og:description" content="Мощная система скриптов для Minecraft: NPC, квесты, UI, кастомные блоки и предметы. Полная документация.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://timoshamoscow.github.io/spraute_docs/">
+    <meta property="og:image" content="https://timoshamoscow.github.io/spraute_docs/logo.png">
+    <meta property="og:image:width" content="512">
+    <meta property="og:image:height" content="512">
+    <meta property="og:site_name" content="Spraute Engine">
+    <meta property="og:locale" content="ru_RU">
+
+    <!-- ===== TWITTER CARDS ===== -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Spraute Engine — язык скриптов для Minecraft">
+    <meta name="twitter:description" content="Создавайте NPC, квесты, UI и кастомные блоки на языке скриптов Spraute. Полная документация.">
+    <meta name="twitter:image" content="https://timoshamoscow.github.io/spraute_docs/logo.png">
+    <meta name="twitter:site" content="@spraute_esd">
+
+    <!-- ===== СТРУКТУРИРОВАННЫЕ ДАННЫЕ (JSON-LD) ===== -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "SoftwareApplication",
+        "name": "Spraute Engine",
+        "description": "Язык скриптов для Minecraft для создания NPC, квестов, UI, кастомных блоков и предметов.",
+        "author": {
+            "@type": "Person",
+            "name": "ReadixGG"
+        },
+        "contributor": {
+            "@type": "Person",
+            "name": "Timosha_Moscow"
+        },
+        "applicationCategory": "Game",
+        "operatingSystem": "Minecraft 1.20+",
+        "url": "https://timoshamoscow.github.io/spraute_docs/",
+        "image": "https://timoshamoscow.github.io/spraute_docs/logo.png",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+
+    <!-- ===== СТИЛИ И ШРИФТЫ ===== -->
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -17,19 +74,20 @@
             <div class="logo-container"></div>
             <div class="nav-container"></div>
         </aside>
+
         <main class="content">
             <div class="docs-container">
 
                 <!-- Баннер с обратным отсчётом -->
-                <div class="release-banner" id="releaseBanner">
+                <section class="release-banner" id="releaseBanner" aria-label="Баннер обратного отсчёта до релиза">
                     <div class="release-content">
                         <div class="release-icon">
-                            <i class="fas fa-rocket"></i>
+                            <i class="fas fa-rocket" aria-hidden="true"></i>
                         </div>
                         <div class="release-text">
                             <h3 id="releaseTitle">Скоро релиз Spraute Engine!</h3>
-                            <p id="releaseMessage">Движок можно скачать по подписке на <a href="https://boosty.to/readixgg" target="_blank">Boosty</a></p>
-                            <div class="release-timer" id="releaseTimer">
+                            <p id="releaseMessage">Движок можно скачать по подписке на <a href="https://boosty.to/readixgg" target="_blank" rel="noopener noreferrer">Boosty</a></p>
+                            <div class="release-timer" id="releaseTimer" role="timer" aria-label="Таймер до релиза">
                                 <div class="timer-block">
                                     <span class="timer-number" id="days">00</span>
                                     <span class="timer-label">дней</span>
@@ -50,99 +108,114 @@
                             <div class="release-date">Релиз: <strong>9 июля 2026</strong></div>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <h1><i class="fas fa-cube"></i> Spraute Engine</h1>
-                <p class="subtitle">Язык скриптов <code>Spraute</code> — полная документация</p>
+                <!-- Заголовок страницы -->
+                <header>
+                    <h1><i class="fas fa-cube" aria-hidden="true"></i> Spraute Engine</h1>
+                    <p class="subtitle">Язык скриптов <code>Spraute</code> — полная документация</p>
+                </header>
 
-                <div class="hero">
+                <!-- Hero-блок -->
+                <section class="hero" aria-labelledby="hero-title">
                     <div class="hero-content">
-                        <i class="fas fa-cube"></i>
-                        <h2>Создавайте миры с помощью скриптов</h2>
+                        <i class="fas fa-cube" aria-hidden="true"></i>
+                        <h2 id="hero-title">Создавайте миры с помощью скриптов</h2>
                         <p>Spraute Engine — мощная система скриптов для Minecraft, позволяющая создавать интерактивных NPC, сложные диалоги, квесты, кастомные интерфейсы, новые блоки, предметы и многое другое.</p>
                         <div class="hero-buttons">
                             <a href="getting-started.html" class="btn-primary">Начать изучение</a>
                             <a href="examples.html" class="btn-secondary">Смотреть примеры</a>
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <i class="fas fa-robot"></i>
+                <!-- Сетка возможностей -->
+                <section class="features-grid" aria-labelledby="features-title">
+                    <h2 id="features-title" class="visually-hidden">Возможности Spraute Engine</h2>
+
+                    <article class="feature-card">
+                        <i class="fas fa-robot" aria-hidden="true"></i>
                         <h3>Интерактивные NPC</h3>
                         <p>Создавайте NPC с моделями, текстурами, анимациями и сложным поведением</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-window-maximize"></i>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fas fa-window-maximize" aria-hidden="true"></i>
                         <h3>Динамический UI</h3>
                         <p>Создавайте интерфейсы на серверной стороне с анимациями и обработчиками</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-cube"></i>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fas fa-cube" aria-hidden="true"></i>
                         <h3>Кастомные блоки и предметы</h3>
                         <p>Создавайте свои блоки, предметы, руды и рецепты крафта прямо в скриптах</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-code-branch"></i>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fas fa-code-branch" aria-hidden="true"></i>
                         <h3>Java API</h3>
                         <p>Взаимодействуйте с Java-кодом Minecraft напрямую из скриптов</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-tasks"></i>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fas fa-tasks" aria-hidden="true"></i>
                         <h3>Квестовая система</h3>
                         <p>Отслеживание прогресса, сбор предметов, диалоги с выбором ответов</p>
-                    </div>
-                    <div class="feature-card">
-                        <i class="fas fa-save"></i>
+                    </article>
+
+                    <article class="feature-card">
+                        <i class="fas fa-save" aria-hidden="true"></i>
                         <h3>Сохранение данных</h3>
                         <p>Постоянное хранение данных игроков и мира между перезапусками</p>
-                    </div>
-                </div>
+                    </article>
+                </section>
 
-                <div class="telegram-buttons">
-                    <a href="https://t.me/spraute_esd" target="_blank" class="tg-btn">
-                        <i class="fab fa-telegram"></i>
+                <!-- Telegram-кнопки -->
+                <aside class="telegram-buttons" aria-label="Ссылки на Telegram">
+                    <a href="https://t.me/spraute_esd" target="_blank" rel="noopener noreferrer" class="tg-btn">
+                        <i class="fab fa-telegram" aria-hidden="true"></i>
                         <span>Telegram канал движка</span>
                     </a>
-                    <a href="https://t.me/spraute_community" target="_blank" class="tg-btn">
-                        <i class="fab fa-telegram"></i>
+                    <a href="https://t.me/spraute_community" target="_blank" rel="noopener noreferrer" class="tg-btn">
+                        <i class="fab fa-telegram" aria-hidden="true"></i>
                         <span>Сообщество разработчиков</span>
                     </a>
-                </div>
+                </aside>
 
                 <!-- Блок авторов -->
-                <div class="authors-section">
-                    <h3><i class="fas fa-users"></i> Разработчики</h3>
+                <section class="authors-section" aria-labelledby="authors-title">
+                    <h3 id="authors-title"><i class="fas fa-users" aria-hidden="true"></i> Разработчики</h3>
                     <div class="authors-grid">
-                        <div class="author-card">
+                        <article class="author-card" itemscope itemtype="https://schema.org/Person">
                             <div class="author-avatar">
-                                <i class="fas fa-code"></i>
+                                <i class="fas fa-code" aria-hidden="true"></i>
                             </div>
-                            <h4>ReadixGG</h4>
-                            <p class="author-role">Создатель Spraute Engine</p>
-                            <a href="https://t.me/spraute_esd" target="_blank" class="author-link">
-                                <i class="fab fa-telegram"></i>
+                            <h4 itemprop="name">ReadixGG</h4>
+                            <p class="author-role" itemprop="jobTitle">Создатель Spraute Engine</p>
+                            <a href="https://t.me/spraute_esd" target="_blank" rel="noopener noreferrer" class="author-link" itemprop="url">
+                                <i class="fab fa-telegram" aria-hidden="true"></i>
                                 @spraute_esd
                             </a>
-                        </div>
-                        <div class="author-card">
+                        </article>
+
+                        <article class="author-card" itemscope itemtype="https://schema.org/Person">
                             <div class="author-avatar">
-                                <i class="fas fa-book"></i>
+                                <i class="fas fa-book" aria-hidden="true"></i>
                             </div>
-                            <h4>Timosha_Moscow</h4>
-                            <p class="author-role">Автор документации</p>
-                            <a href="https://t.me/MinecraftWithTimosha" target="_blank" class="author-link">
-                                <i class="fab fa-telegram"></i>
+                            <h4 itemprop="name">Timosha_Moscow</h4>
+                            <p class="author-role" itemprop="jobTitle">Автор документации</p>
+                            <a href="https://t.me/MinecraftWithTimosha" target="_blank" rel="noopener noreferrer" class="author-link" itemprop="url">
+                                <i class="fab fa-telegram" aria-hidden="true"></i>
                                 @MinecraftWithTimosha
                             </a>
-                        </div>
+                        </article>
                     </div>
-                </div>
+                </section>
 
             </div>
         </main>
     </div>
+
     <script src="js/main.js"></script>
 </body>
 </html>
