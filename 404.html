@@ -31,16 +31,74 @@
                         Начать изучение
                     </a>
                 </div>
-                <div class="error-suggestion">
+                <div class="error-suggestion" id="suggestions">
                     <i class="fas fa-lightbulb"></i>
                     Возможно, вы искали: 
-                    <a href="getting-started.html">Начало работы</a>, 
-                    <a href="npc.html">Создание NPC</a>, 
-                    <a href="ui.html">UI система</a>, 
-                    <a href="custom-resources.html">Кастомные ресурсы</a>
+                    <span id="suggestion-links"></span>
                 </div>
             </div>
         </main>
     </div>
+
+    <script>
+        (function() {
+            // Список всех страниц документации
+            var pages = [
+                { name: "Начало работы", url: "getting-started.html" },
+                { name: "Синтаксис", url: "syntax.html" },
+                { name: "Переменные", url: "variables.html" },
+                { name: "Создание NPC", url: "npc.html" },
+                { name: "UI система", url: "ui.html" },
+                { name: "Кастомный чат", url: "chat-library.html" },
+                { name: "Кинематографическая камера", url: "camera.html" },
+                { name: "События (on)", url: "events.html" },
+                { name: "Функции и await", url: "functions.html" },
+                { name: "Предметы и инвентарь", url: "items.html" },
+                { name: "Частицы", url: "particles.html" },
+                { name: "Блоки, предметы, крафты", url: "custom-resources.html" },
+                { name: "Визуальные блоки", url: "visual-blocks.html" },
+                { name: "Java API", url: "java-api.html" },
+                { name: "Полные примеры", url: "examples.html" }
+            ];
+
+            // Функция для перемешивания массива (алгоритм Фишера-Йетса)
+            function shuffleArray(arr) {
+                var shuffled = arr.slice();
+                for (var i = shuffled.length - 1; i > 0; i--) {
+                    var j = Math.floor(Math.random() * (i + 1));
+                    var temp = shuffled[i];
+                    shuffled[i] = shuffled[j];
+                    shuffled[j] = temp;
+                }
+                return shuffled;
+            }
+
+            // Выбираем 4 случайные страницы
+            var shuffledPages = shuffleArray(pages);
+            var selectedPages = shuffledPages.slice(0, 4);
+
+            // Строим ссылки
+            var linksHtml = [];
+            for (var i = 0; i < selectedPages.length; i++) {
+                var page = selectedPages[i];
+                var link = '<a href="' + page.url + '">' + page.name + '</a>';
+                linksHtml.push(link);
+            }
+
+            // Вставляем в HTML через запятую с "и" перед последней
+            var resultHtml = '';
+            for (var i = 0; i < linksHtml.length; i++) {
+                if (i === linksHtml.length - 1 && i > 0) {
+                    resultHtml += ' и ' + linksHtml[i];
+                } else if (i > 0) {
+                    resultHtml += ', ' + linksHtml[i];
+                } else {
+                    resultHtml += linksHtml[i];
+                }
+            }
+
+            document.getElementById('suggestion-links').innerHTML = resultHtml;
+        })();
+    </script>
 </body>
 </html>
