@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    
+    <!-- Главная -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>1.0</priority>
+    </url>
+    
+    <!-- Основы -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/getting-started.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/syntax.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/variables.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- NPC -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/npc.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.9</priority>
+    </url>
+    
+    <!-- Интерфейсы -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/ui.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/chat-library.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Камера -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/camera.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Программирование -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/events.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/functions.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- Игровая механика -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/items.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/particles.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Кастомные ресурсы -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/custom-resources.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/visual-blocks.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/java-api.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.7</priority>
+    </url>
+    
+    <!-- Примеры -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/examples.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    
+    <!-- 404 -->
+    <url>
+        <loc>https://timoshamoscow.github.io/spraute_docs/404.html</loc>
+        <lastmod>2026-06-28</lastmod>
+        <changefreq>yearly</changefreq>
+        <priority>0.1</priority>
+    </url>
+    
+</urlset>
