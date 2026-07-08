@@ -28,74 +28,38 @@
 
                 <section class="doc-section">
                     <h2><i class="fas fa-code"></i> Первый скрипт</h2>
-                    <p>Создайте файл <code>hello.spr</code> и напишите:</p>
-                    <pre><code># Простой скрипт приветствия
-create npc greeter {
-    name = "Приветственный NPC"
+                    <p>Создайте файл <code>test.spr</code> и напишите:</p>
+                    <pre><code># Простой скрипт
+create npc readix {
+    name = "ReadixGG"
+    hp = 20
+    speed = 0.3
     model = "geo/defolt.geo.json"
-    texture = "textures/entity/greeter.png"
+    texture = "textures/entity/defolt.png"
+    animation = "animations/npc_classic.animation.json"
+    idleAnim = "idle"
+    walkAnim = "idle"
     pos = 0, 64, 0
-    speed = 0.2
-    show_name = true
-}
-
-on interact(greeter) {
-    val player = _event_player
-    say(greeter, "Привет, " + player.name + "!")
-    chat("§aДобро пожаловать на сервер!")
+    rotate = 0, 0
+    showName = true
+    collision = true
 }</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
-                        <p>Поместите скрипт в папку <code>.minecraft/spraute_engine/scripts/</code> на сервере. После перезагрузки или выполнения команды <code>/spraute reload</code> NPC появится в мире.</p>
-                    </div>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-cubes"></i> Основные концепции</h2>
-                    <div class="grid-cards">
-                        <div class="card">
-                            <i class="fas fa-robot"></i>
-                            <h3>NPC</h3>
-                            <p>Неигровые персонажи с моделями, анимациями, хитбоксами и поведением</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-hourglass-half"></i>
-                            <h3>Await</h3>
-                            <p>Асинхронное ожидание событий без блокировки</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-desktop"></i>
-                            <h3>UI</h3>
-                            <p>Серверные интерфейсы с анимациями, контейнерами и слотами</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-camera"></i>
-                            <h3>Кинематографическая камера</h3>
-                            <p>Плавные перелёты, маршруты и слежение за целями</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-database"></i>
-                            <h3>Сохранение</h3>
-                            <p>world и player.savedData для постоянных данных</p>
-                        </div>
-                        <div class="card">
-                            <i class="fas fa-cube"></i>
-                            <h3>Кастомные блоки и предметы</h3>
-                            <p>Создание своих блоков, предметов, руд и рецептов</p>
-                        </div>
+                        <p>Поместите скрипт в папку <code>Ваша_Папка_Майнкрафт/spraute_engine/scripts/</code> и после перезагрузки или выполнения команды <code>/spraute reload</code> NPC появится в мире.</p>
                     </div>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-plug"></i> Импорт функций из другого скрипта</h2>
                     <pre><code># Запускаем скрипт в фоне
-startScript("spraute_chat")
+startScript("economy")
 
 # Импортируем его функции
-import("spraute_chat")
+import("economy")
 
 # Используем
-npc_chat(player, my_guard, "Проход закрыт!", "#FF5555")</code></pre>
+ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-lightbulb"></i>
                         <p><code>startScript</code> запускает скрипт, регистрируя его обработчики. <code>import</code> только импортирует функции, не запуская скрипт повторно.</p>
