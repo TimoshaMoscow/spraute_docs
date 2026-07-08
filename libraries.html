@@ -28,6 +28,16 @@
                 </div>
 
                 <section class="doc-section">
+                    <h2><i class="fas fa-keyboard"></i> Клавиши управления</h2>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <code>H</code>
+                            <p>Открыть/закрыть журнал квестов</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
                     <h2><i class="fas fa-coins"></i> Библиотека экономики — <code>economy.spr</code></h2>
                     
                     <div class="api-item">
@@ -184,87 +194,6 @@ append_quest_desc("my_quest", "Дополнительная информация
         say(readix, "Ты выбрал Да!")
     }
 }</code></pre>
-                    </div>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-cube"></i> Полный пример использования</h2>
-                    <pre><code>import("economy")
-import("spraute_quests")
-
-# Настройка экономики
-ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")
-
-val player = getFirstPlayer()
-ecoShowCoinsHud(player, "minecraft:textures/item/gold_nugget.png")
-
-# Поиск безопасной точки для спавна NPC
-val spawn = findSafeBlock(player, 7, 1)
-val spawn_x = listGet(spawn, 0)
-val spawn_y = listGet(spawn, 1)
-val spawn_z = listGet(spawn, 2)
-
-global val zemlya = 0
-
-# Товары для магазина
-val shop_ITEMS = list(
-    dict("id", "minecraft:bread", "name", "Хлеб", "buy", 5, "sell", 2, "canBuy", true, "canSell", true)
-)
-val shop_TITLE = "Лавка"
-
-# Создание NPC
-create npc readix {
-    name = "ReadixGG"
-    hp = 20
-    speed = 0.3
-    model = "geo/defolt.geo.json"
-    texture = "textures/entity/defolt.png"
-    animation = "animations/npc_classic.animation.json"
-    idleAnim = "idle"
-    walkAnim = "idle"
-    pos = spawn_x, spawn_y, spawn_z
-    rotate = 0, 0
-    showName = false
-    collision = true
-}
-
-# Диалог с NPC
-await interact(readix)
-readix.alwaysLookAt(player)
-say(readix, "Привет!")
-
-# Создание квеста
-add_quest_with_goals("kvest", "ZEMLYAA", readix.name, "зачем ему земля", list(quest_goal("земля?")))
-readix.playOnce("happy")
-
-await interact(readix)
-say(player, "Привет!")
-readix.stop("happy")
-
-# Открытие магазина
-on interact(readix) -> h_interact {
-    ecoOpenTrade(player, shop_ITEMS, shop_TITLE, "")
-}
-
-# Сбор земли и квест
-on breakBlock("minecraft:dirt") -> h_break {
-    zemlya = zemlya + 1
-    if (zemlya >= 5) {
-        complete_quest_goal("kvest", 0)
-        set_quest_completed("kvest")
-    }
-    # Спавн монет при ломании земли
-    spawnOrb("minecraft:textures/item/gold_nugget.png", 2, _eventX, _eventY, _eventZ)
-}</code></pre>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-keyboard"></i> Клавиши управления</h2>
-                    <div class="grid-cards">
-                        <div class="card">
-                            <code>H</code>
-                            <p>Открыть/закрыть журнал квестов</p>
-                        </div>
                     </div>
                 </section>
 

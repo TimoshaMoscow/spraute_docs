@@ -6,7 +6,7 @@
     <title>Примеры кода — Spraute Engine</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -19,164 +19,92 @@
         </aside>
         <main class="content">
             <div class="docs-container">
-                <h1><i class="fas fa-file-code"></i> Полные примеры кода</h1>
-                
+                <h1><i class="fas fa-file-code"></i> Полный пример кода</h1>
+                <p class="subtitle">Готовый скрипт с экономикой, квестами и NPC</p>
+
                 <section class="doc-section">
-                    <h2><i class="fas fa-comments"></i> Пример 1: Диалог с NPC и квест на сбор ресурсов</h2>
-                    <pre><code>create npc readix_avatar {
+                    <h2><i class="fas fa-cube"></i> Пример: Экономика, квесты и NPC</h2>
+                    <p>Этот пример показывает, как использовать встроенные библиотеки <code>economy.spr</code> и <code>spraute_quests.spr</code> для создания полноценного игрового сценария.</p>
+
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Для работы примера необходимо, чтобы библиотеки <code>economy.spr</code> и <code>spraute_quests.spr</code> находились в папке <code>spraute_engine/scripts/</code>.</p>
+                    </div>
+
+                    <pre><code>import("economy")
+import("spraute_quests")
+ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")
+val player = getFirstPlayer()
+
+ecoShowCoinsHud(player, "minecraft:textures/item/gold_nugget.png")
+val spawn = findSafeBlock(player, 7, 1)
+
+val spawn_x = listGet(spawn, 0)
+val spawn_y = listGet(spawn, 1)
+val spawn_z = listGet(spawn, 2)
+global val zemlya = 0
+val shop_ITEMS = list(dict("id", "minecraft:bread", "name", "Хлеб", "buy", 5, "sell", 2, "canBuy", true, "canSell", true))
+val shop_TITLE = "Лавка"
+create npc readix {
     name = "ReadixGG"
+    hp = 20
+    speed = 0.3
     model = "geo/defolt.geo.json"
     texture = "textures/entity/defolt.png"
-    pos = 8, -60, 7
-    show_name = false
-    speed = 0.2
+    animation = "animations/npc_classic.animation.json"
+    idleAnim = "idle"
+    walkAnim = "idle"
+    pos = spawn_x, spawn_y, spawn_z
+    rotate = 0, 0
+    showName = false
+    collision = true
 }
-
-create npc knight {
-    name = "Верный Рыцарь"
-    model = "geo/defolt.geo.json"
-    texture = "textures/entity/knight.png"
-    pos = 8, -60, 9
-    show_name = false
-    speed = 0.2
+await interact(readix)
+readix.alwaysLookAt(player)
+say(readix, "Привет!")
+add_quest_with_goals("kvest", "ZEMLYAA", "readix.name", "зачем ему земля", list(quest_goal("земля?")))
+readix.playOnce("happy")
+await interact(readix)
+say(player, "Привет!")
+readix.stop("happy")
+on interact(readix) -> h_interact {
+  ecoOpenTrade(player, shop_ITEMS, shop_TITLE, "")
 }
+on breakBlock("minecraft:dirt") -> h_break {
+  zemlya = zemlya + 1
+  if (zemlya >= 5) {
+    complete_quest_goal("kvest", 0)
+    set_quest_completed("kvest")
+  }
+  ecoSetCoinTexture("minecraft:textures/item/gold_nugget.png")
+  var __eco_oi = 0
+  while (__eco_oi < 1) {
+      spawnOrb("minecraft:textures/item/gold_nugget.png", 2, _eventX, _eventY, _eventZ)
+      __eco_oi = __eco_oi + 1
+  }
+}</code></pre>
 
-async "readix_idle" {
-    readix_avatar.alwaysLookAt(knight)
-}
+                    <h3><i class="fas fa-list"></i> Что делает этот скрипт:</h3>
+                    <div class="property-list">
+                        <ul>
+                            <li><strong>Импортирует библиотеки</strong> — экономику и квесты</li>
+                            <li><strong>Настраивает экономику</strong> — текстура монет и ключ сохранения</li>
+                            <li><strong>Показывает HUD</strong> — отображение монет на экране</li>
+                            <li><strong>Создаёт NPC</strong> — ReadixGG в безопасной точке</li>
+                            <li><strong>Запускает диалог</strong> — приветствие и анимация</li>
+                            <li><strong>Создаёт квест</strong> — "ZEMLYAA" с целью "земля?"</li>
+                            <li><strong>Открывает магазин</strong> — при взаимодействии с NPC</li>
+                            <li><strong>Следит за копкой земли</strong> — прогресс квеста и спавн монет</li>
+                        </ul>
+                    </div>
 
-async "knight_idle" {
-    knight.alwaysLookAt(readix_avatar)
-}
-
-readix_avatar.setAdditiveWeight(1)
-knight.setAdditiveWeight(1)
-
-val player = getNearestPlayer(readix_avatar)
-chat("§7[!] Подойди к ReadixGG и нажми ПКМ")
-val interactor = await interact(readix_avatar)
-
-readix_avatar.alwaysLookAt(interactor)
-knight.alwaysLookAt(interactor)
-readix_avatar.playOnce("hello")
-say(readix_avatar, "Привет, " + interactor.name + "! Нажми §e[F]")
-await keybind("f")
-
-create ui dialog_panel {
-    size = [300, 128]
-    background = "#F0181828"
-    text("q_text", "Нужна твоя помощь с железом. Что скажешь?") {
-        pos = [12, 14]
-        color = "#EAEAEA"
-    }
-    button("ans_help", "Помогу, сколько нужно") {
-        pos = [12, 48]
-        size = [158, 22]
-        color = "#55336688"
-        hover = "#66447799"
-    }
-    button("ans_later", "Позже") {
-        pos = [12, 78]
-        size = [158, 22]
-        color = "#55336688"
-        hover = "#66447799"
-    }
-    entity("npc:readix_avatar") {
-        pos = [188, 30]
-        size = [96, 98]
-        scale = 1.05
-        crop = [0, 0.0, 0.0, 0.4]
-        anchor_y = 2.1
-    }
-}
-
-uiOpen(interactor, dialog_panel)
-val dialog_pick = await uiClick(interactor)
-uiClose(interactor)
-
-if (dialog_pick == "ans_help") {
-    readix_avatar.playOnce("happy")
-    say(readix_avatar, "Тогда по рукам — жду слитки!")
-} else {
-    readix_avatar.playOnce("sad")
-    say(readix_avatar, "Ладно, зайди, когда будет время.")
-}
-await keybind("f")
-
-knight.alwaysLookAt(readix_avatar)
-knight.playLoop("sad")
-say(knight, "Readix, у нас в кузнице закончилось железо.")
-await keybind("f")
-
-readix_avatar.alwaysLookAt(interactor)
-knight.alwaysLookAt(interactor)
-knight.stop("sad")
-readix_avatar.playLoop("hint")
-
-say(readix_avatar, interactor.name + ", выручишь нас? Нужно 30 слитков железа. Кидай их мне (Q).")
-await keybind("f")
-readix_avatar.stop("hint")
-
-say(knight, "Мы будем ждать тебя у тех скал. Поторопись!")
-await keybind("f")
-
-async "readix_run" {
-    readix_avatar.moveTo(5, -60, 15)
-}
-async "knight_run" {
-    knight.moveTo(7, -60, 17)
-}
-await task("readix_run")
-await task("knight_run")
-
-readix_avatar.stopLookAt()
-knight.stopLookAt()
-readix_avatar.alwaysLookAt(knight)
-knight.alwaysLookAt(readix_avatar)
-
-val need = 30
-var iron_quest_active = false
-
-on pickup(readix_avatar, "minecraft:iron_ingot") -> iron_progress {
-    val have = readix_avatar.countItem("minecraft:iron_ingot")
-    val left = need - have
-    if (iron_quest_active && left > 0) {
-        say(readix_avatar, "Осталось " + intStr(left) + ", принёс " + intStr(have))
-    }
-}
-
-var quest_done = false
-while (!quest_done) {
-    val checker = await interact(readix_avatar)
-    
-    readix_avatar.alwaysLookAt(checker)
-    knight.alwaysLookAt(checker)
-    
-    readix_avatar.pickupOnlyFrom(checker)
-    readix_avatar.playLoop("question")
-    say(readix_avatar, "Кидай железо сюда (Q)! Нужно 30.")
-    
-    iron_quest_active = true
-    await pickup(readix_avatar, 30, "minecraft:iron_ingot")
-    iron_quest_active = false
-    readix_avatar.stop("question")
-    readix_avatar.playOnce("happy")
-    
-    readix_avatar.pickupAny()
-    stop(iron_progress)
-    say(readix_avatar, "О, ты принёс всё вовремя!")
-    await keybind("f")
-    quest_done = true
-}
-
-say(readix_avatar, "Работа кипит! Ты лучший помощник.")
-await keybind("f")
-
-knight.playOnce("laughter")
-say(knight, "ЕЕЕЕ! ПОГНАЛИ!")
-await keybind("f")
-
-say(readix_avatar, "Удачи в приключениях! Еще увидимся.")</code></pre>
+                    <h3><i class="fas fa-keyboard"></i> Управление:</h3>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <code>H</code>
+                            <p>Открыть/закрыть журнал квестов</p>
+                        </div>
+                    </div>
                 </section>
             </div>
         </main>
