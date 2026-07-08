@@ -298,7 +298,7 @@
         if (!banner) return;
         
         // 9 июля 2026, 00:00:00 по московскому времени (UTC+3)
-        var targetDate = new Date('2026-07-09T00:00:00+03:00');
+        var targetDate = new Date('2026-07-09T15:00:00+03:00');
         var now = new Date();
         
         // Если дата уже прошла
