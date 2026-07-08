@@ -6,7 +6,7 @@
     <title>Визуальные блоки — Spraute Engine</title>
     <link rel="stylesheet" href="css/style.css">
     <link rel="icon" href="logo.png" type="image/png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
@@ -24,7 +24,7 @@
 
                 <div class="info-block">
                     <i class="fas fa-star"></i>
-                    <p>В Spraute Engine встроен мощный Конструктор блоков. Он позволяет пользователям <strong>без знаний API Blockly</strong> создавать красивые динамические визуальные блоки для своих плагинов. Конструктор читает и генерирует специальный синтаксис на основе комментариев <code>#\</code>.</p>
+                    <p>В Spraute Engine встроен мощный Конструктор блоков. Он позволяет пользователям <strong>без знаний API Blockly</strong> создавать красивые динамические визуальные блоки для своих плагинов. Конструктор читает и генерирует специальный синтаксис.</p>
                 </div>
 
                 <div class="info-block">
@@ -63,25 +63,25 @@
                     </div>
 
                     <h3>Пример базового блока</h3>
-                    <pre><code>#\ row: [npc: dropdown_npc] "сказать" (msg: text: "Привет!")
-#\ template: {npc}.say("{msg}")</code></pre>
+                    <pre><code>row: [npc: dropdown_npc] "сказать" (msg: text: "Привет!")
+template: {npc}.say("{msg}")</code></pre>
 
                     <h3>Пример с выпадающим списком</h3>
-                    <pre><code>#\ row: [npc: dropdown_npc] "Сказать" (msg: text: "Привет!") "игроку" [player: dropdown(всем: all, случайному: random, ближайшему: nearest)]
-#\ if player == "all":
-#\   template: for (p in players()) {{ {npc}.say(p, "{msg}") }}
-#\ if player == "random":
-#\   template: {npc}.say(randomPlayer(), "{msg}")
-#\ if player == "nearest":
-#\   template: {npc}.say(getNearestPlayer(), "{msg}")</code></pre>
+                    <pre><code>row: [npc: dropdown_npc] "Сказать" (msg: text: "Привет!") "игроку" [player: dropdown(всем: all, случайному: random, ближайшему: nearest)]
+if player == "all":
+  template: for (p in players()) {{ {npc}.say(p, "{msg}") }}
+if player == "random":
+  template: {npc}.say(randomPlayer(), "{msg}")
+if player == "nearest":
+  template: {npc}.say(getNearestPlayer(), "{msg}")</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-code"></i> Генерация и парсинг — template:</h2>
                     <p>Чтобы блок генерировал код (и умел парсить его обратно!), просто используйте ключевое слово <code>template:</code>.</p>
 
-                    <pre><code>#\ row: [npc: dropdown_npc] "сказать" (msg: text: "Привет!")
-#\ template: {npc}.say("{msg}")</code></pre>
+                    <pre><code>row: [npc: dropdown_npc] "сказать" (msg: text: "Привет!")
+template: {npc}.say("{msg}")</code></pre>
 
                     <div class="how-it-works">
                         <h4><i class="fas fa-cogs"></i> Как это работает?</h4>
@@ -102,28 +102,28 @@
                     </div>
 
                     <h3><i class="fas fa-eye"></i> Комплексный пример — блок "Смотреть"</h3>
-                    <pre><code>#\ block: look_at
-#\ category: Движения
-#\ color: #38bdf8
-#\ shape: statement
-#\ 
-#\ row: [npc: dropdown_npc] "Смотреть" [mode: dropdown(один раз: lookat, всегда: alwayslookat, перестать: stoplookat)] "на" [target_type: dropdown(НИПа: npc, игрока: player, моба: mob)]
-#\ 
-#\ if mode == "stoplookat":
-#\   template: {npc}.stoplookat()
-#\ 
-#\ if mode == "lookat" or mode == "alwayslookat":
-#\   if target_type == "npc":
-#\     row: "по имени" [target_npc: dropdown_npc]
-#\     template: {npc}.{mode}("{target_npc}")
-#\   
-#\   if target_type == "player":
-#\     input: target_player (type: value) "переменная игрока"
-#\     template: {npc}.{mode}({target_player})
-#\   
-#\   if target_type == "mob":
-#\     row: "моб" (target_mob: text: "zombie")
-#\     template: {npc}.{mode}("{target_mob}")</code></pre>
+                    <pre><code>block: look_at
+category: Движения
+color: #38bdf8
+shape: statement
+
+row: [npc: dropdown_npc] "Смотреть" [mode: dropdown(один раз: lookat, всегда: alwayslookat, перестать: stoplookat)] "на" [target_type: dropdown(НИПа: npc, игрока: player, моба: mob)]
+
+if mode == "stoplookat":
+  template: {npc}.stoplookat()
+
+if mode == "lookat" or mode == "alwayslookat":
+  if target_type == "npc":
+    row: "по имени" [target_npc: dropdown_npc]
+    template: {npc}.{mode}("{target_npc}")
+  
+  if target_type == "player":
+    input: target_player (type: value) "переменная игрока"
+    template: {npc}.{mode}({target_player})
+  
+  if target_type == "mob":
+    row: "моб" (target_mob: text: "zombie")
+    template: {npc}.{mode}("{target_mob}")</code></pre>
 
                     <div class="how-it-works">
                         <h4><i class="fas fa-info-circle"></i> Разбор примера:</h4>
@@ -151,39 +151,39 @@
                     <h3>Дополнительные примеры</h3>
                     
                     <h4>Блок с вложенными блоками (input)</h4>
-                    <pre><code>#\ row: "Установить переменную" (var_name: text: "x") "равной"
-#\ input: value (type: value) "значение"
-#\ template: val {var_name} = {value}</code></pre>
+                    <pre><code>row: "Установить переменную" (var_name: text: "x") "равной"
+input: value (type: value) "значение"
+template: val {var_name} = {value}</code></pre>
 
                     <h4>Блок условия (if/else)</h4>
-                    <pre><code>#\ block: if_statement
-#\ category: Логика
-#\ color: #10b981
-#\ shape: statement
-#\ 
-#\ row: "Если" input: condition (type: value)
-#\ row: "то"
-#\ input: then_do (type: statement)
-#\ row: "иначе"
-#\ input: else_do (type: statement)
-#\ 
-#\ template: if ({condition}) {{ "\n" }} {then_do} {{ "\n" }} else {{ "\n" }} {else_do}</code></pre>
+                    <pre><code>block: if_statement
+category: Логика
+color: #10b981
+shape: statement
+
+row: "Если" input: condition (type: value)
+row: "то"
+input: then_do (type: statement)
+row: "иначе"
+input: else_do (type: statement)
+
+template: if ({condition}) {{ "\n" }} {then_do} {{ "\n" }} else {{ "\n" }} {else_do}</code></pre>
 
                     <h4>Блок цикла (while)</h4>
-                    <pre><code>#\ block: while_loop
-#\ category: Циклы
-#\ color: #f59e0b
-#\ shape: statement
-#\ 
-#\ row: "Пока" input: condition (type: value)
-#\ row: "выполнять"
-#\ input: body (type: statement)
-#\ 
-#\ template: while ({condition}) {{ "\n" }} {body}</code></pre>
+                    <pre><code>block: while_loop
+category: Циклы
+color: #f59e0b
+shape: statement
+
+row: "Пока" input: condition (type: value)
+row: "выполнять"
+input: body (type: statement)
+
+template: while ({condition}) {{ "\n" }} {body}</code></pre>
 
                     <h4>Блок с числовым полем и слайдером</h4>
-                    <pre><code>#\ row: "Подождать" (seconds: number: 1) "секунд"
-#\ template: await time({seconds})</code></pre>
+                    <pre><code>row: "Подождать" (seconds: number: 1) "секунд"
+template: await time({seconds})</code></pre>
                 </section>
 
                 <section class="doc-section">
@@ -244,7 +244,7 @@
                     <h2><i class="fas fa-shield-alt"></i> Совместимость со старым форматом</h2>
                     <div class="info-block">
                         <i class="fas fa-history"></i>
-                        <p>Старый формат с секциями <code>[UI]</code>, <code>[DYNAMIC_UI]</code>, <code>[CODE_GEN]</code> и <code>[CODE_PARSE]</code> с сырым JS всё ещё поддерживается для обратной совместимости и особо сложных кастомных блоков, но <strong>использовать его не рекомендуется</strong>. Используйте новый единый синтаксис <code>#\</code>!</p>
+                        <p>Старый формат с секциями <code>[UI]</code>, <code>[DYNAMIC_UI]</code>, <code>[CODE_GEN]</code> и <code>[CODE_PARSE]</code> с сырым JS всё ещё поддерживается для обратной совместимости и особо сложных кастомных блоков, но <strong>использовать его не рекомендуется</strong>. Используйте новый единый синтаксис!</p>
                     </div>
 
                     <h3>Старый формат (не рекомендуется):</h3>
@@ -260,36 +260,36 @@ return `${npc}.say("${msg}")`;</code></pre>
                     
                     <div class="grid-cards">
                         <div class="card">
-                            <code>#\ block: my_block</code>
+                            <code>block: my_block</code>
                             <p>Уникальный ID блока</p>
                         </div>
                         <div class="card">
-                            <code>#\ category: Моя категория</code>
+                            <code>category: Моя категория</code>
                             <p>Категория в панели блоков</p>
                         </div>
                         <div class="card">
-                            <code>#\ color: #38bdf8</code>
+                            <code>color: #38bdf8</code>
                             <p>Цвет блока (HEX)</p>
                         </div>
                         <div class="card">
-                            <code>#\ shape: statement</code>
+                            <code>shape: statement</code>
                             <p>Форма блока (statement/value)</p>
                         </div>
                     </div>
 
-                    <pre><code>#\ block: example_block
-#\ category: Примеры
-#\ color: #d1e65e
-#\ shape: statement
-#\ 
-#\ row: [npc: dropdown_npc] "выполнить действие" [action: dropdown(привет: hello, пока: wave)]
-#\ 
-#\ if action == "hello":
-#\   row: "с силой" (power: number: 1)
-#\   template: {npc}.hello({power})
-#\ 
-#\ if action == "wave":
-#\   template: {npc}.wave()</code></pre>
+                    <pre><code>block: example_block
+category: Примеры
+color: #d1e65e
+shape: statement
+
+row: [npc: dropdown_npc] "выполнить действие" [action: dropdown(привет: hello, пока: wave)]
+
+if action == "hello":
+  row: "с силой" (power: number: 1)
+  template: {npc}.hello({power})
+
+if action == "wave":
+  template: {npc}.wave()</code></pre>
                 </section>
             </div>
         </main>
