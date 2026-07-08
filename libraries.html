@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Библиотеки — Spraute Engine</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="icon" href="logo.png" type="image/png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+</head>
+<body>
+    <div class="app">
+        <aside class="sidebar">
+            <div class="logo-container"></div>
+            <div class="nav-container"></div>
+        </aside>
+        <main class="content">
+            <div class="docs-container">
+                <h1><i class="fas fa-book"></i> Встроенные библиотеки</h1>
+                <p class="subtitle">Готовые решения для экономики, квестов и диалогов</p>
+
+                <div class="info-block">
+                    <i class="fas fa-info-circle"></i>
+                    <p>Библиотеки достаточно положить в папку <code>spraute_engine/scripts/</code> — они автоматически подхватываются. Импорт нужен только для использования функций в других скриптах.</p>
+                </div>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-coins"></i> Библиотека экономики — <code>economy.spr</code></h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>import("economy")</code><span class="api-tag">импорт</span></div>
+                        <p>Импортирует функции экономики.</p>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>ecoConfigure(texture, key)</code><span class="api-tag">функция</span></div>
+                        <p>Настраивает текстуру монет и ключ для сохранения.</p>
+                        <pre><code>ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>ecoShowCoinsHud(player, texture)</code><span class="api-tag">функция</span></div>
+                        <p>Показывает HUD с количеством монет.</p>
+                        <pre><code>ecoShowCoinsHud(player, "minecraft:textures/item/gold_nugget.png")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>ecoAddCoins(player, amount)</code><span class="api-tag">функция</span></div>
+                        <p>Добавляет монеты игроку.</p>
+                        <pre><code>ecoAddCoins(player, 5)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>ecoOpenTrade(player, items, title, npcId)</code><span class="api-tag">функция</span></div>
+                        <p>Открывает окно торговли с NPC.</p>
+                        <pre><code>ecoOpenTrade(player, shop_ITEMS, "Лавка", "")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>ecoSetCoinTexture(texture)</code><span class="api-tag">функция</span></div>
+                        <p>Меняет текстуру монет.</p>
+                        <pre><code>ecoSetCoinTexture("minecraft:textures/item/gold_nugget.png")</code></pre>
+                    </div>
+
+                    <h3>Формат товаров для торговли</h3>
+                    <pre><code>val shop_ITEMS = list(
+    dict("id", "minecraft:bread", "name", "Хлеб", "buy", 5, "sell", 2, "canBuy", true, "canSell", true)
+)</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-tasks"></i> Библиотека квестов — <code>spraute_quests.spr</code></h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>import("spraute_quests")</code><span class="api-tag">импорт</span></div>
+                        <p>Импортирует функции квестовой системы.</p>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>add_quest_with_goals(id, name, author, desc, goal_list)</code><span class="api-tag">функция</span></div>
+                        <p>Создаёт квест со списком целей.</p>
+                        <pre><code>add_quest_with_goals("kvest", "ZEMLYAA", "readix.name", "зачем ему земля", list(quest_goal("земля?")))</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>quest_goal(text)</code><span class="api-tag">функция</span></div>
+                        <p>Создаёт цель квеста.</p>
+                        <pre><code>quest_goal("Принести 30 слитков железа")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>complete_quest_goal(id, index)</code><span class="api-tag">функция</span></div>
+                        <p>Отмечает цель квеста как выполненную (по индексу).</p>
+                        <pre><code>complete_quest_goal("kvest", 0)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>set_quest_completed(id)</code><span class="api-tag">функция</span></div>
+                        <p>Отмечает весь квест как выполненный.</p>
+                        <pre><code>set_quest_completed("kvest")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>set_quest_status(id, status)</code><span class="api-tag">функция</span></div>
+                        <p>Меняет статус квеста. Доступные статусы: <code>QS_AVAILABLE</code>, <code>QS_PROGRESS</code>, <code>QS_COMPLETED</code>, <code>QS_FAILED</code>, <code>QS_FROZEN</code>, <code>QS_HIDDEN</code>.</p>
+                        <pre><code>set_quest_status("kvest", QS_PROGRESS)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>remove_quest(id)</code><span class="api-tag">функция</span></div>
+                        <p>Удаляет квест.</p>
+                        <pre><code>remove_quest("kvest")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>has_quest(id)</code><span class="api-tag">функция</span></div>
+                        <p>Проверяет, существует ли квест с таким ID.</p>
+                        <pre><code>if (has_quest("kvest")) { ... }</code></pre>
+                    </div>
+
+                    <h3>Управление целями</h3>
+                    <pre><code># Добавить цель
+add_quest_goal("kvest", "Собрать 5 блоков земли")
+
+# Отметить цель как выполненную (по индексу)
+complete_quest_goal("kvest", 0)
+
+# Отметить цель как выполненную (по тексту)
+complete_quest_goal_by_text("kvest", "земля")
+
+# Провалить цель
+fail_quest_goal("kvest", 0)
+
+# Сбросить цель
+reset_quest_goal("kvest", 0)</code></pre>
+
+                    <h3>Работа с квестами</h3>
+                    <pre><code># Создать квест
+add_quest("my_quest", "Мой квест", "Автор", "Описание", "Цель 1\nЦель 2\nЦель 3")
+
+# Или с целями как список
+add_quest_with_goals("my_quest", "Мой квест", "Автор", "Описание", list(quest_goal("Цель 1"), quest_goal("Цель 2")))
+
+# Добавить описание
+append_quest_desc("my_quest", "Дополнительная информация")</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-comment-dots"></i> Библиотека диалогов — <code>dialog_classic.spr</code></h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>import("dialog_classic")</code><span class="api-tag">импорт</span></div>
+                        <p>Импортирует функции классического диалога.</p>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>dialogClassic(player, npc, question, answers)</code><span class="api-tag">функция</span></div>
+                        <p>Открывает диалоговое окно с вариантами ответов (до 3 вариантов). Возвращает ID выбранной кнопки.</p>
+                        <pre><code>val pick = dialogClassic(player, readix, "Что скажешь?", list("Да", "Нет", "Может"))</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>dialogPickIndex(pick)</code><span class="api-tag">функция</span></div>
+                        <p>Получает индекс выбранного ответа (0, 1, 2).</p>
+                        <pre><code>val idx = dialogPickIndex(pick)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>dialogPickText(pick, answers)</code><span class="api-tag">функция</span></div>
+                        <p>Получает текст выбранного ответа.</p>
+                        <pre><code>val text = dialogPickText(pick, answers)</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>async</code><span class="api-tag">использование</span></div>
+                        <p>Диалог рекомендуется использовать внутри <code>async</code> блока для ожидания выбора.</p>
+                        <pre><code>async {
+    val pick = dialogClassic(player, readix, "Что скажешь?", list("Да", "Нет"))
+    val idx = dialogPickIndex(pick)
+    if (idx == 0) {
+        say(readix, "Ты выбрал Да!")
+    }
+}</code></pre>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-cube"></i> Полный пример использования</h2>
+                    <pre><code>import("economy")
+import("spraute_quests")
+
+# Настройка экономики
+ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")
+
+val player = getFirstPlayer()
+ecoShowCoinsHud(player, "minecraft:textures/item/gold_nugget.png")
+
+# Поиск безопасной точки для спавна NPC
+val spawn = findSafeBlock(player, 7, 1)
+val spawn_x = listGet(spawn, 0)
+val spawn_y = listGet(spawn, 1)
+val spawn_z = listGet(spawn, 2)
+
+global val zemlya = 0
+
+# Товары для магазина
+val shop_ITEMS = list(
+    dict("id", "minecraft:bread", "name", "Хлеб", "buy", 5, "sell", 2, "canBuy", true, "canSell", true)
+)
+val shop_TITLE = "Лавка"
+
+# Создание NPC
+create npc readix {
+    name = "ReadixGG"
+    hp = 20
+    speed = 0.3
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/defolt.png"
+    animation = "animations/npc_classic.animation.json"
+    idleAnim = "idle"
+    walkAnim = "idle"
+    pos = spawn_x, spawn_y, spawn_z
+    rotate = 0, 0
+    showName = false
+    collision = true
+}
+
+# Диалог с NPC
+await interact(readix)
+readix.alwaysLookAt(player)
+say(readix, "Привет!")
+
+# Создание квеста
+add_quest_with_goals("kvest", "ZEMLYAA", readix.name, "зачем ему земля", list(quest_goal("земля?")))
+readix.playOnce("happy")
+
+await interact(readix)
+say(player, "Привет!")
+readix.stop("happy")
+
+# Открытие магазина
+on interact(readix) -> h_interact {
+    ecoOpenTrade(player, shop_ITEMS, shop_TITLE, "")
+}
+
+# Сбор земли и квест
+on breakBlock("minecraft:dirt") -> h_break {
+    zemlya = zemlya + 1
+    if (zemlya >= 5) {
+        complete_quest_goal("kvest", 0)
+        set_quest_completed("kvest")
+    }
+    # Спавн монет при ломании земли
+    spawnOrb("minecraft:textures/item/gold_nugget.png", 2, _eventX, _eventY, _eventZ)
+}</code></pre>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-keyboard"></i> Клавиши управления</h2>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <code>H</code>
+                            <p>Открыть/закрыть журнал квестов</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-folder-open"></i> Список библиотек</h2>
+                    <div class="grid-cards">
+                        <div class="card">
+                            <code>economy.spr</code>
+                            <p>Экономика: монеты, HUD, торговля</p>
+                        </div>
+                        <div class="card">
+                            <code>spraute_quests.spr</code>
+                            <p>Квестовая система: журнал, цели, статусы</p>
+                        </div>
+                        <div class="card">
+                            <code>dialog_classic.spr</code>
+                            <p>Классические диалоги с выбором ответов</p>
+                        </div>
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Библиотеки находятся в папке <code>spraute_engine/scripts/</code>. Они подхватываются автоматически, импорт нужен только для использования их функций в других скриптах.</p>
+                    </div>
+                </section>
+
+            </div>
+        </main>
+    </div>
+    <script src="js/main.js"></script>
+</body>
+</html>
