@@ -20,7 +20,20 @@
         <main class="content">
             <div class="docs-container">
                 <h1><i class="fas fa-rocket"></i> Начало работы</h1>
-                
+
+                <!-- ===== ВИДЕО-ГАЙД ===== -->
+                <section class="doc-section video-section">
+                    <h2><i class="fab fa-youtube"></i> Видео-гайд</h2>
+                    <p>Полный гайд по установке и созданию сюжетного сезона на Spraute Engine:</p>
+                    <div class="video-wrapper">
+                        <iframe width="100%" height="500" src="https://www.youtube.com/embed/kMY_9WlFkcQ?si=qIGeKWU3CqFEpN6y" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i>
+                        <p><strong>Совет:</strong> Если вы предпочитаете текстовую версию, ниже приведены все основные шаги из видео.</p>
+                    </div>
+                </section>
+
                 <section class="doc-section">
                     <h2><i class="fas fa-question-circle"></i> Что такое Spraute Engine?</h2>
                     <p>Spraute Engine — это система скриптов для Minecraft, написанная на языке <code>.spr</code>. Она позволяет создавать сложные интерактивные элементы без необходимости писать Java-код.</p>
@@ -58,7 +71,7 @@ create npc readix {
                 <section class="doc-section">
                     <h2><i class="fas fa-puzzle-piece"></i> Визуальное программирование</h2>
                     <p>Spraute — это не только язык скриптов, но и полноценная среда визуальной разработки.</p>
-                    
+
                     <div class="grid-cards">
                         <div class="card">
                             <i class="fas fa-desktop"></i>
@@ -100,31 +113,39 @@ ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-terminal"></i> Команды сервера</h2>
+                    <h2><i class="fas fa-terminal"></i> Команды</h2>
                     <div class="grid-cards">
                         <div class="card">
-                            <code>/spraute reload</code>
-                            <p>Перезагрузить все скрипты</p>
-                        </div>
-                        <div class="card">
-                            <code>/spraute run &lt;script&gt;</code>
-                            <p>Запустить скрипт</p>
-                        </div>
-                        <div class="card">
-                            <code>/spraute stop &lt;script&gt;</code>
-                            <p>Остановить скрипт</p>
+                            <code>/spraute debug</code>
+                            <p>Режим разработки</p>
                         </div>
                         <div class="card">
                             <code>/spraute list</code>
                             <p>Список активных скриптов</p>
                         </div>
                         <div class="card">
-                            <code>/spraute route preview &lt;имя&gt;</code>
-                            <p>Предпросмотр маршрута камеры</p>
+                            <code>/spraute load_screen &lt;on/off&gt;</code>
+                            <p>Включить или отключить загрузочный экран Spraute при заходе в мир</p>
                         </div>
                         <div class="card">
-                            <code>/spraute route list</code>
-                            <p>Список сохранённых маршрутов</p>
+                            <code>/spraute reload</code>
+                            <p>Перезагрузить скрипты</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute route</code>
+                            <p>Команды связанные с камерой для катсцен</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute run &lt;script&gt;</code>
+                            <p>Запустить скрипт</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute settings</code>
+                            <p>Настройки мода</p>
+                        </div>
+                        <div class="card">
+                            <code>/spraute stop &lt;script&gt;</code>
+                            <p>Остановить скрипт</p>
                         </div>
                     </div>
                 </section>
