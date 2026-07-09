@@ -264,6 +264,17 @@ pre code {
     gap: 12px;
 }
 
+.info-block a,
+.info-block a:visited {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.info-block a:hover {
+    text-decoration: underline;
+}
+
 .info-block i {
     color: var(--accent);
     font-size: 1.2rem;
