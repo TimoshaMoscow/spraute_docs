@@ -30,25 +30,24 @@
                     </div>
                     <div class="info-block">
                         <i class="fas fa-lightbulb"></i>
-                        <p><strong>Совет:</strong> Если вы предпочитаете текстовую версию, ниже приведены все основные шаги из видео.</p>
+                        <p><strong>Совет:</strong> Если вы предпочитаете текстовую версию, ниже приведены все основные шаги из видео в виде документации. Полный код из видео можно посмотреть в разделе <a href="examples.html"><strong>Полные примеры</strong></a>.</p>
                     </div>
                 </section>
 
+                <!-- ===== ТЕКСТОВАЯ ВЕРСИЯ ГАЙДА ===== -->
                 <section class="doc-section">
-                    <h2><i class="fas fa-question-circle"></i> Что такое Spraute Engine?</h2>
-                    <p>Spraute Engine — это система скриптов для Minecraft, написанная на языке <code>.spr</code>. Она позволяет создавать сложные интерактивные элементы без необходимости писать Java-код.</p>
+                    <h2><i class="fas fa-list-ol"></i> Пошаговая инструкция</h2>
+                    <p>Текстовая версия гайда.</p>
 
-                    <div class="info-block">
-                        <i class="fas fa-puzzle-piece"></i>
-                        <p><strong>Spraute — это визуальное программирование!</strong> Вместе с движком поставляется <strong>IDE приложение Spraute Studio</strong> и плагин <strong>ProCode</strong> для расширенных визуальных блоков. Вы можете создавать сценарии <strong>без написания кода</strong> — буквально перетаскивая блоки, как в Scratch. Дизайн блоков выполнен в том же стиле, что и в Scratch.</p>
-                    </div>
-                </section>
+                    <h3>1. Установка и настройка</h3>
+                    <p>После установки движка в папку <code>Ваша_Папка_Майнкрафт/spraute_engine/</code> запустите игру.</p>
+                    <p>Для работы в скриптах используйте библиотеки. Например, импорт экономики:</p>
+                    <pre><code>import("economy")
+ecoConfigure("minecraft:textures/item/gold_nugget.png", "coins")</code></pre>
 
-                <section class="doc-section">
-                    <h2><i class="fas fa-code"></i> Первый скрипт</h2>
-                    <p>Создайте файл <code>test.spr</code> и напишите:</p>
-                    <pre><code># Простой скрипт
-create npc readix {
+                    <h3>2. Создание NPC</h3>
+                    <p>Создайте файл <code>test.spr</code> с таким содержимым:</p>
+                    <pre><code>create npc readix {
     name = "ReadixGG"
     hp = 20
     speed = 0.3
@@ -62,9 +61,44 @@ create npc readix {
     showName = true
     collision = true
 }</code></pre>
+
+                    <h3>3. Работа с игроком и безопасной точкой</h3>
+                    <p>Для получения первого игрока и поиска безопасной точки используйте:</p>
+                    <pre><code>val player = getFirstPlayer()
+val spawn = findSafeBlock("player", 3, 1)</code></pre>
+
+                    <h3>4. Настройка NPC</h3>
+                    <p>Заставьте NPC смотреть на игрока и отвечать на взаимодействие:</p>
+                    <pre><code>await interact(readix)
+readix.alwaysLookAt(player)
+say(readix, "Привет!")</code></pre>
+
+                    <h3>5. Создание квеста</h3>
+                    <p>Создайте квест с целями:</p>
+                    <pre><code>add_quest_with_goals("kvest", "ZEMLYAA", readix.name, "зачем ему земля", list(quest_goal("земля?")))</code></pre>
+                    <p>При разрушении блока земли выполняется цель и спавнятся монеты:</p>
+                    <pre><code>on breakBlock("minecraft:dirt") -> h_break {
+    zemlya = zemlya + 1
+    if (zemlya >= 5) {
+        complete_quest_goal("kvest", 0)
+        set_quest_completed("kvest")
+    }
+    spawnOrb("minecraft:textures/item/gold_nugget.png", 2, _eventX, _eventY, _eventZ)
+}</code></pre>
+
+                    <div class="info-block" style="margin-top: 20px;">
+                        <i class="fas fa-file-code"></i>
+                        <p><strong>Полный код из видео:</strong> Все шаги объединены в один готовый скрипт в разделе <a href="examples.html"><strong>Полные примеры</strong></a>.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-question-circle"></i> Что такое Spraute Engine?</h2>
+                    <p>Spraute Engine — это система скриптов для Minecraft, написанная на языке <code>.spr</code>. Она позволяет создавать сложные интерактивные элементы без необходимости писать Java-код.</p>
+
                     <div class="info-block">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Поместите скрипт в папку <code>Ваша_Папка_Майнкрафт/spraute_engine/scripts/</code> и после перезагрузки или выполнения команды <code>/spraute reload</code> NPC появится в мире.</p>
+                        <i class="fas fa-puzzle-piece"></i>
+                        <p><strong>Spraute — это визуальное программирование!</strong> Вместе с движком поставляется <strong>IDE приложение Spraute Studio</strong> и плагин <strong>ProCode</strong> для расширенных визуальных блоков. Вы можете создавать сценарии <strong>без написания кода</strong> — буквально перетаскивая блоки, как в Scratch. Дизайн блоков выполнен в том же стиле, что и в Scratch.</p>
                     </div>
                 </section>
 
