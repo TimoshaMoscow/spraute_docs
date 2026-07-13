@@ -43,7 +43,7 @@
                             <li><code>name</code> — отображаемое имя</li>
                             <li><code>hp</code> — здоровье и максимальное HP</li>
                             <li><code>speed</code> — скорость движения</li>
-                            <li><code>dimension</code> — измерение для спавна (<code>"minecraft:overworld"</code>, <code>"minecraft:the_nether"</code>, <code>"minecraft:the_end"</code>)</li>
+                            <li><code>dimension</code> — измерение для спавна</li>
                             <li><code>pos</code> — координаты x, y, z (числа через запятую, БЕЗ скобок)</li>
                             <li><code>rotate</code> — углы yaw, pitch (числа через запятую)</li>
                             <li><code>show_name</code> — показывать имя (по умолчанию true)</li>
@@ -57,6 +57,31 @@
                             <li><code>drop_min</code>, <code>drop_max</code> — мин/макс количество дропа</li>
                             <li><code>drop_chance</code> — шанс выпадения (0-100)</li>
                         </ul>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-clone"></i> Префабы NPC</h2>
+                    <p>Префаб — шаблон НИПа без спавна. Один раз описываете внешность и статы, потом спавните копии с разными id и позициями.</p>
+                    
+                    <h3>Создание префаба</h3>
+                    <pre><code>create npc_prefab goblin {
+    name = "Гоблин"
+    hp = 30
+    model = "geo/defolt.geo.json"
+    texture = "textures/entity/goblin.png"
+    animation = "animations/npc_classic.animation.json"
+    speed = 0.35
+    dropItem = "minecraft:emerald"
+    dropChance = 50
+}</code></pre>
+
+                    <h3>Спавн экземпляра по префабу</h3>
+                    <pre><code>spawnNpcPrefab("goblin", "mob_01", 10, 64, 20)
+spawnNpcPrefab("goblin", "mob_02", 12, 64, 22, dict("hp", 50, "name", "Берсерк"))</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-lightbulb"></i>
+                        <p><code>spawnNpcPrefab(prefabId, instanceId, x, y, z, [overrides])</code> — <code>instanceId</code> — уникальный id в <code>NpcManager</code>. <code>overrides</code> — словарь полей для подстройки.</p>
                     </div>
                 </section>
 
@@ -81,7 +106,7 @@ npc.stopOverlay()
 npc.setAdditiveWeight(1)
 
 # Кастомная анимация смерти
-npc.setDeathAnim("death")  # по умолчанию "death"</code></pre>
+npc.setDeathAnim("death")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
                         <p>Второй аргумент анимации: <code>true/"additive"</code> — накопительное смешивание, <code>false/"replace"</code> — замена.</p>
@@ -103,91 +128,65 @@ await npc.followUntil(player, 2.0)</code></pre>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-fish"></i> Плавание</h2>
-                    <pre><code># Включить режим амфибии
-npc.setSwimming(true)
+                    <pre><code>npc.setSwimming(true)
 npc.setSwimIdleAnim("swim_idle")
 npc.setSwimWalkAnim("swim_walk")</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-plane"></i> Полёт</h2>
-                    <pre><code># Включить полёт
-npc.setFlying(true)
+                    <pre><code>npc.setFlying(true)
 npc.flyTo(10, 80, 10, 1.2)
 await npc.flyTo(20, 90, 5)
 npc.alwaysFlyTo(player, 1.0)
 npc.setFlying(false)
 
-# Анимации полёта
 npc.setFlyIdleAnim("fly_idle")
 npc.setFlyWalkAnim("fly_walk")</code></pre>
-                    <div class="info-block">
-                        <i class="fas fa-lightbulb"></i>
-                        <p><code>flyTo</code> автоматически включает полёт. С <code>await</code> блокирует до прибытия.</p>
-                    </div>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-eye"></i> Взгляд</h2>
-                    <pre><code># Разовый поворот головы
-npc.lookAt(player)
-
-# Постоянное слежение
+                    <pre><code>npc.lookAt(player)
 npc.alwaysLookAt(player)
 npc.stopLookAt()
-
-# Установка кости головы
 npc.setHeadBone("head")</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-cube"></i> Хитбоксы</h2>
-                    <pre><code># Основной хитбокс
-npc.setHitbox(0.6, 1.8)
+                    <pre><code>npc.setHitbox(0.6, 1.8)
 npc.setHitbox(0.6, 1.8, 0, 0.9, 0)
 npc.setHitboxOffset(0, 0.9, 0)
 npc.resetHitbox()
-npc.setHitboxPreset("player")  # "player", "small", "large"
+npc.setHitboxPreset("player")
 
-# Костные хитбоксы (следуют за анимацией)
 npc.addBoneHitbox("Head", 0.4, 0.4, 0.4)
 npc.addBoneHitbox("hand_hit", "RightArm", 0.3, 0.5, 0.3, 0.5, 0, 0)
 npc.removeBoneHitbox("hand_hit")
 npc.clearBoneHitboxes()
 
-# Отладка
-npc.showHitboxDebug(true)  # подсветка хитбоксов в мире</code></pre>
+npc.showHitboxDebug(true)</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-hand-paper"></i> Предметы в руках</h2>
-                    <pre><code># Установка предмета
-npc.setItem("right", "minecraft:iron_sword")
+                    <pre><code>npc.setItem("right", "minecraft:iron_sword")
 npc.setItem("left", "minecraft:shield", "{CustomModelData:1}")
-
-# Очистка
 npc.removeItem("right")
-npc.removeItem()  # обе руки</code></pre>
+npc.removeItem()</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-box"></i> Кастомный дроп</h2>
-                    <pre><code># Добавление предмета в лут при смерти
-npc.addDrop("minecraft:iron_ingot", 1, 3, 50)
-
-# Выброс предмета из NPC в мир
+                    <pre><code>npc.addDrop("minecraft:iron_ingot", 1, 3, 50)
 npc.drop("minecraft:apple", 5, true)</code></pre>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-magnet"></i> Подбор предметов</h2>
-                    <pre><code># Подбирать только от указанного игрока
-npc.pickupOnlyFrom(player)
-
-# Снять фильтр
+                    <pre><code>npc.pickupOnlyFrom(player)
 npc.pickupAny()
-
-# Количество предметов
 val iron = npc.countItem("minecraft:iron_ingot")</code></pre>
                 </section>
 

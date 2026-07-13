@@ -26,8 +26,6 @@
                     <pre><code>fun name(a, b) {
     return a + b
 }
-
-# Вызов
 val result = name(1, 2)</code></pre>
                 </section>
 
@@ -36,31 +34,26 @@ val result = name(1, 2)</code></pre>
                     
                     <div class="api-item">
                         <div class="api-signature"><code>healEntity(entity, amount)</code><span class="api-tag">функция</span></div>
-                        <p>Лечит сущность, <strong>не меняя</strong> max HP (в отличие от <code>entity.hp = ...</code>, которое выставляет и max, и текущее).</p>
-                        <pre><code>healEntity(player, 5)   # вылечить на 5 HP
-heal(knight, 10)        # алиас</code></pre>
+                        <p>Лечит сущность, <strong>не меняя</strong> max HP.</p>
+                        <pre><code>healEntity(player, 5)</code></pre>
                     </div>
 
                     <div class="api-item">
                         <div class="api-signature"><code>getPlayerFacing(entity)</code><span class="api-tag">функция</span></div>
-                        <p>Возвращает словарь направления взгляда (см. <code>player.facing()</code>). Работает для игрока и НИПа.</p>
-                        <pre><code>val facing = getPlayerFacing(player)
-chat("Смотрит на: " + facing.direction)</code></pre>
+                        <p>Возвращает словарь направления взгляда.</p>
+                        <pre><code>val facing = getPlayerFacing(player)</code></pre>
                     </div>
 
                     <div class="api-item">
                         <div class="api-signature"><code>getPlayerMotion(player)</code><span class="api-tag">функция</span></div>
-                        <p>Возвращает вектор движения (скорость) игрока в блоках за тик — список <code>[vx, vy, vz]</code> или <code>null</code>.</p>
-                        <pre><code>val motion = getPlayerMotion(player)
-chat("Скорость по X: " + motion[0])</code></pre>
+                        <p>Вектор движения игрока.</p>
+                        <pre><code>val motion = getPlayerMotion(player)</code></pre>
                     </div>
 
                     <div class="api-item">
                         <div class="api-signature"><code>setPlayerMotion(player, vx, vy, vz)</code><span class="api-tag">функция</span></div>
-                        <p>Задаёт скорость игрока в блоках за тик. Можно передать список.</p>
-                        <pre><code>setPlayerMotion(player, 0, 0.5, 0)   # подбросить вверх
-setPlayerMotion(player, [0.5, 0.2, -0.3])
-# Алиасы: setPlayerMoveVector, set_player_motion</code></pre>
+                        <p>Задаёт скорость игрока.</p>
+                        <pre><code>setPlayerMotion(player, 0, 0.5, 0)</code></pre>
                     </div>
                 </section>
 
@@ -69,30 +62,60 @@ setPlayerMotion(player, [0.5, 0.2, -0.3])
                     
                     <div class="api-item">
                         <div class="api-signature"><code>playersInRadius(x, y, z, radius)</code><span class="api-tag">функция</span></div>
-                        <p>Возвращает список игроков в сфере.</p>
-                        <pre><code>val players = playersInRadius(0, 64, 0, 10)
-for p in players {
-    chat(p.name + " рядом!")
-}</code></pre>
+                        <p>Список игроков в сфере.</p>
+                        <pre><code>val players = playersInRadius(0, 64, 0, 10)</code></pre>
                     </div>
 
                     <div class="api-item">
                         <div class="api-signature"><code>playersNear(anchor, radius)</code><span class="api-tag">функция</span></div>
-                        <p>То же, но в качестве якоря — сущность, id NPC или строка.</p>
+                        <p>То же, с якорем.</p>
                         <pre><code>val players = playersNear(readix_avatar, 5)</code></pre>
                     </div>
 
                     <div class="api-item">
-                        <div class="api-signature"><code>entitiesInRadius(x, y, z, radius, [filter])</code><span class="api-tag">функция</span></div>
-                        <p>Возвращает список сущностей в сфере. Фильтр: <code>"any"</code>, <code>"player"</code>, <code>"npc"</code>, <code>"mob"</code>, <code>"living"</code>.</p>
-                        <pre><code>val entities = entitiesInRadius(0, 64, 0, 10, "npc")
-val mobs = entitiesInRadius(0, 64, 0, 20, "mob")</code></pre>
+                        <div class="api-signature"><code>entitiesInRadius(x, y, z, radius, filter)</code><span class="api-tag">функция</span></div>
+                        <p>Список сущностей с фильтром: <code>"any"</code>, <code>"player"</code>, <code>"npc"</code>, <code>"mob"</code>, <code>"living"</code>.</p>
+                        <pre><code>val entities = entitiesInRadius(0, 64, 0, 10, "npc")</code></pre>
                     </div>
 
                     <div class="api-item">
-                        <div class="api-signature"><code>entitiesNear(anchor, radius, [filter])</code><span class="api-tag">функция</span></div>
-                        <p>То же, но с якорем.</p>
+                        <div class="api-signature"><code>entitiesNear(anchor, radius, filter)</code><span class="api-tag">функция</span></div>
+                        <p>То же, с якорем.</p>
                         <pre><code>val entities = entitiesNear(player, 5, "living")</code></pre>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-play"></i> Автозапуск скриптов</h2>
+                    
+                    <div class="api-item">
+                        <div class="api-signature"><code>autorun()</code><span class="api-tag">функция</span></div>
+                        <p>Автозапуск текущего скрипта при старте сервера. Можно писать директиву <code>autorun</code> (без скобок) в начале файла.</p>
+                        <pre><code>autorun()</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>autorun("name")</code><span class="api-tag">функция</span></div>
+                        <p>Автозапуск указанного скрипта при старте сервера.</p>
+                        <pre><code>autorun("economy")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>runOnJoin("script")</code><span class="api-tag">функция</span></div>
+                        <p>Запустить скрипт при входе любого игрока (замена <code>on_join</code> в <code>triggers.json</code>).</p>
+                        <pre><code>runOnJoin("greeter")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>runOnFirstJoin("script")</code><span class="api-tag">функция</span></div>
+                        <p>Запустить скрипт при первом входе игрока в мир.</p>
+                        <pre><code>runOnFirstJoin("starter_kit")</code></pre>
+                    </div>
+
+                    <div class="api-item">
+                        <div class="api-signature"><code>runAfter("finished", "next")</code><span class="api-tag">функция</span></div>
+                        <p>После завершения скрипта <code>finished</code> автоматически запустить <code>next</code>.</p>
+                        <pre><code>runAfter("prologue", "chapter_1")</code></pre>
                     </div>
                 </section>
 
@@ -104,12 +127,14 @@ val mobs = entitiesInRadius(0, 64, 0, 20, "mob")</code></pre>
                         <div class="card"><code>await keybind("key")</code><p>Ожидание клавиши (g, f, space, shift)</p></div>
                         <div class="card"><code>await death(target)</code><p>Смерть сущности</p></div>
                         <div class="card"><code>await kill(killer, victim)</code><p>Убийство сущности (возвращает жертву)</p></div>
+                        <div class="card"><code>await join(player)</code><p>Вход игрока в мир</p></div>
+                        <div class="card"><code>await firstJoin(player)</code><p>Первый вход игрока в этот мир</p></div>
                         <div class="card"><code>await uiClick(player)</code><p>Клик в UI (возвращает id или "__close__")</p></div>
                         <div class="card"><code>await uiInput(player, widget_id)</code><p>Ввод текста в input</p></div>
                         <div class="card"><code>await uiClose(player)</code><p>Закрытие UI</p></div>
-                        <div class="card"><code>await uiTouch(player, id1, id2)</code><p>Пересечение двух виджетов</p></div>
+                        <div class="card"><code>await uiTouch(player, id1, id2)</code><p>Пересечение виджетов</p></div>
                         <div class="card"><code>await pickup(npc, amount, item_id)</code><p>Подбор предметов NPC</p></div>
-                        <div class="card"><code>await orbPickup(player, amount, texture)</code><p>Подбор кастомных орбов</p></div>
+                        <div class="card"><code>await orbPickup(player, amount, texture)</code><p>Подбор орбов</p></div>
                         <div class="card"><code>await position(player, x, y, z, radius)</code><p>Вход в радиус</p></div>
                         <div class="card"><code>await inventory(player, item_id, count)</code><p>Появление предмета у игрока</p></div>
                         <div class="card"><code>await chat(player, message)</code><p>Сообщение в чат</p></div>
@@ -127,24 +152,15 @@ val mobs = entitiesInRadius(0, 64, 0, 20, "mob")</code></pre>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-tasks"></i> Async — асинхронные задачи</h2>
-                    <pre><code># Запуск с id
-async "readix_idle" {
+                    <pre><code>async "readix_idle" {
     readix_avatar.alwaysLookAt(knight)
     while (true) {
         await time(5)
-        # действие каждые 5 секунд
     }
 }
 
-# Остановка
 stop_task("readix_idle")
-
-# Проверка завершения
-if (taskDone("task_id")) {
-    chat("Задача выполнена!")
-}
-
-# Ожидание
+if (taskDone("task_id")) { chat("Готово!") }
 await task("readix_idle")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-exclamation-triangle"></i>

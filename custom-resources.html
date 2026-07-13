@@ -38,13 +38,14 @@
 }</code></pre>
                     <div class="info-block">
                         <i class="fas fa-info-circle"></i>
-                        <p>Команда регистрируется в сервере и доступна всем игрокам. Аргументы автоматически конвертируются: числа в <code>Double</code>, <code>true/false</code> в <code>Boolean</code>, остальное в строки.</p>
+                        <p>Команда регистрируется в сервере и доступна всем игрокам. Аргументы автоматически конвертируются: числа в <code>Double</code>, <code>true/false</code> в <code>Boolean</code>, остальное в строки. Код внутри выполняется асинхронно, можно использовать <code>await</code>.</p>
                     </div>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-palette"></i> Творческая вкладка</h2>
                     <pre><code>create tab my_tab {
+    name = "§dМагические предметы"
     icon = "minecraft:diamond"
 }</code></pre>
                 </section>
@@ -52,39 +53,174 @@
                 <section class="doc-section">
                     <h2><i class="fas fa-gem"></i> Кастомный предмет</h2>
                     <pre><code>create item magic_stick {
+    name = "§eМагическая палочка"
     model = "spraute_engine:item/stick"
     texture = "spraute_engine:item/stick"
     maxStackSize = 1
     tab = "my_tab"
+}
+
+# Меч
+create item iron_dagger {
+    texture = "textures/item/iron_dagger.png"
+    name = "§7Железный кинжал"
+    tool_type = "sword"
+    damage = 5
+    attack_speed = -2.4
+    durability = 200
+    tab = "weapons"
+}
+
+# Кирка
+create item copper_pick {
+    texture = "textures/item/copper_pick.png"
+    name = "Медная кирка"
+    pickaxe = true
+    damage = 3
+    mining_speed = 5
+    mining_level = 1
+    durability = 180
 }</code></pre>
+                    <div class="property-list">
+                        <h3>Свойства предметов</h3>
+                        <ul>
+                            <li><code>model</code> — путь к 3D-модели</li>
+                            <li><code>texture</code> — путь к текстуре</li>
+                            <li><code>name</code> — отображаемое имя (поддерживает <code>§</code>/<code>&amp;</code>)</li>
+                            <li><code>tab</code> — id вкладки креатива</li>
+                            <li><code>maxStackSize</code> — размер стака (1-64)</li>
+                            <li><code>tool_type</code> — <code>sword</code>, <code>pickaxe</code>, <code>axe</code>, <code>shovel</code>, <code>hoe</code></li>
+                            <li><code>damage</code> — бонус урона</li>
+                            <li><code>attack_speed</code> — модификатор скорости атаки</li>
+                            <li><code>durability</code> — прочность</li>
+                            <li><code>mining_speed</code> — скорость копания</li>
+                            <li><code>mining_level</code> — уровень добычи (0-3)</li>
+                        </ul>
+                    </div>
                 </section>
 
                 <section class="doc-section">
                     <h2><i class="fas fa-cube"></i> Кастомный блок</h2>
                     <pre><code>create block magic_stone {
-    model = "spraute_engine:block/stone"
-    texture = "spraute_engine:block/stone"
+    name = "§bМагический камень"
+    texture = "textures/block/magic_stone.png"
     collision = true
     hardness = 2.0
     light = 15
     drop = "spraute_engine:magic_stick"
     tab = "my_tab"
+}
+
+# Плита на половину высоты
+create block magic_slab {
+    texture = "textures/block/magic_slab.png"
+    hardness = 2.0
+    hitbox = [1, 0.5]
+    tab = "my_tab"
+}
+
+# Узкая колонна
+create block magic_pillar {
+    texture = "textures/block/pillar.png"
+    hitbox = [0.4, 0.4, 1.2]
+}</code></pre>
+                    <div class="property-list">
+                        <h3>Свойства блоков</h3>
+                        <ul>
+                            <li><code>model</code> — путь к модели</li>
+                            <li><code>texture</code> — путь к текстуре</li>
+                            <li><code>texture_up/down/north/south/west/east</code> — разные текстуры по сторонам</li>
+                            <li><code>collision</code> — есть ли хитбокс коллизии (true/false)</li>
+                            <li><code>hitbox</code> — форма коллизии: <code>[ширина, высота]</code>, <code>[ширина, глубина, высота]</code> или <code>[minX, minY, minZ, maxX, maxY, maxZ]</code></li>
+                            <li><code>directional</code> — поворачивать блок при установке (true/false)</li>
+                            <li><code>light</code> — уровень свечения (0-15)</li>
+                            <li><code>hardness</code> — прочность</li>
+                            <li><code>name</code> — отображаемое имя</li>
+                            <li><code>drop</code> — ID предмета при ломании</li>
+                            <li><code>drop_count</code> — количество дропа</li>
+                            <li><code>drop_replace</code> — не выпадать самому блоку</li>
+                            <li><code>drops</code> — массив нескольких дропов: <code>[["minecraft:coal", мин, макс, шанс_%], ...]</code></li>
+                            <li><code>is_ore</code> — генерировать руду в мире</li>
+                            <li><code>ore_vein</code> — размер жилы</li>
+                            <li><code>ore_min/max</code> — высота генерации</li>
+                            <li><code>ore_chances</code> — попыток на чанк</li>
+                            <li><code>ore_dimension</code> — измерение</li>
+                        </ul>
+                    </div>
+
+                    <h3>Блок-руда с генерацией</h3>
+                    <pre><code>create block magic_ore {
+    texture = "textures/block/magic_ore.png"
+    hardness = 3.0
+    is_ore = true
+    ore_vein = 7
+    ore_min = -16
+    ore_max = 64
+    ore_chances = 6
+    drop = "spraute_engine:magic_stick"
+    drop_replace = true
+    tab = "my_tab"
 }</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-chart-line"></i> Блок-руда с генерацией</h2>
-                    <pre><code>create block magic_ore {
-    model = "spraute_engine:block/magic_ore"
-    texture = "spraute_engine:block/magic_ore"
-    hardness = 3.0
-    is_ore = true
-    ore_vein = 8
-    ore_min = -64
-    ore_max = 64
-    ore_chances = 10
-    ore_dimension = "minecraft:overworld"
-    drop = "spraute_engine:magic_stick"
+                    <h2><i class="fas fa-pickaxe"></i> Кастомный дроп для любых блоков</h2>
+                    <pre><code>create drop stone_coal {
+    block   = "minecraft:stone"
+    item    = "minecraft:coal"
+    min     = 1
+    max     = 2
+    chance  = 5
+    replace = false
+}</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Работает для любых блоков — ванильных и кастомных. <code>replace = true</code> отменяет оригинальный дроп.</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-crafting"></i> Рецепты крафта</h2>
+                    
+                    <h3>Два режима крафта</h3>
+                    <ul>
+                        <li><code>type = "any"</code> (shapeless) — ингредиенты в любом порядке</li>
+                        <li><code>type = "slots"</code> (shaped/grid) — фиксированная схема в сетке 3x3</li>
+                    </ul>
+
+                    <h3>Замена предметов</h3>
+                    <ul>
+                        <li>Тег Minecraft: <code>"#minecraft:planks"</code>, <code>"#minecraft:logs"</code></li>
+                        <li>Свой список: <code>["minecraft:oak_planks", "minecraft:birch_planks"]</code></li>
+                    </ul>
+
+                    <h3>Крафт по слотам (shaped)</h3>
+                    <pre><code>create craft my_sword {
+    type = "slots"
+    pattern_1 = " I "
+    pattern_2 = " I "
+    pattern_3 = " S "
+    key_I = "minecraft:iron_ingot"
+    key_S = ["minecraft:stick", "minecraft:bamboo"]
+    result = "spraute_engine:magic_stick"
+    count = 1
+}</code></pre>
+
+                    <h3>Крафт без формы (shapeless)</h3>
+                    <pre><code>create craft my_shapeless {
+    type = "any"
+    ingredients = ["minecraft:iron_ingot", "#minecraft:planks"]
+    result = "minecraft:iron_sword"
+    count = 1
+}</code></pre>
+
+                    <h3>Переплавка</h3>
+                    <pre><code>create craft iron_ingot {
+    type = "smelting"
+    ingredient = "#minecraft:logs"
+    result = "minecraft:charcoal"
+    xp = 0.7
+    time = 200
 }</code></pre>
                 </section>
 
@@ -94,120 +230,40 @@
     texture = "textures/particle/spark.png"
 }
 
-# Использование
 particleSpawn("spraute_engine:my_magic_spark", x, y, z, 10, 0, 0, 0, 0)</code></pre>
                 </section>
 
                 <section class="doc-section">
-                    <h2><i class="fas fa-crafting"></i> Рецепты крафта</h2>
-                    
-                    <h3>Форменный крафт (shaped)</h3>
-                    <pre><code>create craft my_sword {
-    type = "shaped"
-    pattern_1 = " I "
-    pattern_2 = " I "
-    pattern_3 = " S "
-    key_I = "minecraft:iron_ingot"
-    key_S = "minecraft:stick"
-    result = "spraute_engine:magic_stick"
-    count = 1
-}</code></pre>
-
-                    <h3>Бесформенный крафт (shapeless)</h3>
-                    <pre><code>create craft my_shapeless {
-    type = "shapeless"
-    ingredients = ["minecraft:iron_ingot", "minecraft:stick"]
-    result = "minecraft:iron_sword"
-    count = 1
-}</code></pre>
-
-                    <h3>Переплавка (smelting)</h3>
-                    <pre><code>create craft iron_ingot {
-    type = "smelting"
-    ingredient = "minecraft:iron_ore"
-    result = "minecraft:iron_ingot"
-    xp = 0.7
-    time = 200
-}</code></pre>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-desktop"></i> Кастомный контейнер (UI с инвентарём)</h2>
-                    <pre><code>create ui my_workbench {
-    type = "container"
-    size = [176, 166]
-    background = "#00000000"
-    
-    image("bg") {
-        pos = [0, 0]
-        size = [176, 166]
-        texture = "minecraft:textures/gui/container/dispenser.png"
-    }
-    
-    player_inventory {
-        pos = [8, 84]
-    }
-    
-    slot(0) { pos = [62, 20] }
-    slot(1) { pos = [80, 20] }
-    slot(2) { pos = [98, 20] }
-    
-    button("craft_btn", "Скрафтить") {
-        pos = [62, 50]
-        size = [54, 20]
-        onClick {
-            val slot0 = getBlockSlot(bx, by, bz, 0)
-            val slot1 = getBlockSlot(bx, by, bz, 1)
-            if (slot0 == "minecraft:iron_ingot" && slot1 == "minecraft:stick") {
-                giveItem(_event_player, "minecraft:iron_sword", 1)
-                setBlockSlot(bx, by, bz, 0, "")
-                setBlockSlot(bx, by, bz, 1, "")
-            }
-        }
-    }
-}</code></pre>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-chest"></i> Кастомный лут сундуков</h2>
-                    <pre><code># Настроить лут ванильного сундука
-setChestLoot(x, y, z, 0, "minecraft:diamond", 1)
-setChestLoot(x, y, z, 1, "minecraft:iron_ingot", 5)
-setChestLoot(x, y, z, 2, "spraute_engine:magic_stick", 1)
-
-# Удалить настроенный лут
-clearChestLoot(x, y, z)</code></pre>
-                    <div class="info-block">
-                        <i class="fas fa-info-circle"></i>
-                        <p>Лут применяется при <strong>первом</strong> открытии сундука. Работает с ванильными сундуками, бочками и шалкерами.</p>
-                    </div>
-                </section>
-
-                <section class="doc-section">
-                    <h2><i class="fas fa-pickaxe"></i> Работа с блоками</h2>
-                    <pre><code># Сломать блок с дропом (учитывает инструмент игрока)
-breakBlockAt(x, y, z, player)
-
-# Положить предмет в слот блока без UI
-setBlockSlot(x, y, z, 0, "minecraft:diamond", 1)</code></pre>
-                </section>
-
-                <section class="doc-section">
                     <h2><i class="fas fa-cube"></i> Динамическое отображение на блоке</h2>
-                    <pre><code># Отобразить предмет на блоке
+                    <pre><code># Отобразить предмет
 setBlockDisplay(x, y, z, "monitor", "spraute_engine:monitor", 0.0, 1.2, 0.0, 0.0, 0.0, 0.0, 1.0)
 
-# Отобразить 3D-модель на блоке
+# Отобразить 3D-модель
 setBlockDisplayModel(x, y, z, "monitor", "geo/monitor.geo.json", "textures/entity/monitor.png", 0.0, 1.2, 0.0, 0.0, 0.0, 0.0, 1.0)
 
 # Отобразить блок на блоке
 setBlockDisplayBlock(x, y, z, "top", "minecraft:stone", 0.0, 0.5, 0.0, 0.0, 0.0, 0.0, 0.5)
 
-# Удалить отображение
+# Удалить
 removeBlockDisplay(x, y, z, "monitor")</code></pre>
                     <div class="info-block">
                         <i class="fas fa-lightbulb"></i>
                         <p>Кастомные блоки при установке <strong>автоматически поворачиваются</strong> в зависимости от того, куда смотрит игрок. Отображения на блоке тоже поворачиваются автоматически!</p>
+                    </div>
+                </section>
+
+                <section class="doc-section">
+                    <h2><i class="fas fa-chest"></i> Работа с инвентарём блоков и сундуков</h2>
+                    <pre><code># Положить предмет в слот блока без UI
+setBlockSlot(x, y, z, 0, "minecraft:diamond", 1)
+
+# Настроить лут ванильного сундука
+setChestLoot(x, y, z, 0, "minecraft:diamond", 1)
+setChestLoot(x, y, z, 1, "minecraft:iron_ingot", 5)
+clearChestLoot(x, y, z)</code></pre>
+                    <div class="info-block">
+                        <i class="fas fa-info-circle"></i>
+                        <p>Лут применяется при <strong>первом</strong> открытии сундука. Работает с ванильными сундуками, бочками и шалкерами.</p>
                     </div>
                 </section>
             </div>
