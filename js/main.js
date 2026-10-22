@@ -291,69 +291,7 @@
             }
         }
     }
-    
-    // Функция для баннера релиза (по МСК, 9 июля 2026)
-    function setupReleaseBanner() {
-        var banner = document.getElementById('releaseBanner');
-        if (!banner) return;
-        
-        // 9 июля 2026, 00:00:00 по московскому времени (UTC+3)
-        var targetDate = new Date('2026-07-09T15:00:00+03:00');
-        var now = new Date();
-        
-        // Если дата уже прошла
-        if (now >= targetDate) {
-            banner.classList.add('released');
-            var titleEl = document.getElementById('releaseTitle');
-            var msgEl = document.getElementById('releaseMessage');
-            var timerEl = document.getElementById('releaseTimer');
-            var dateEl = document.querySelector('.release-date');
-            
-            if (titleEl) titleEl.textContent = '🎉 Релиз Spraute Engine состоялся!';
-            if (msgEl) msgEl.innerHTML = 'Скачать язык можно в Telegram: <a href="https://t.me/spraute_esd" target="_blank">@spraute_esd</a>';
-            if (timerEl) timerEl.style.display = 'none';
-            if (dateEl) dateEl.textContent = '🎉 Доступен для всех!';
-            return;
-        }
-        
-        // Обновление таймера
-        function updateTimer() {
-            var now = new Date();
-            var diff = targetDate - now;
-            
-            if (diff <= 0) {
-                banner.classList.add('released');
-                var titleEl = document.getElementById('releaseTitle');
-                var msgEl = document.getElementById('releaseMessage');
-                var timerEl = document.getElementById('releaseTimer');
-                var dateEl = document.querySelector('.release-date');
-                
-                if (titleEl) titleEl.textContent = '🎉 Релиз Spraute Engine состоялся!';
-                if (msgEl) msgEl.innerHTML = 'Скачать движок можно в Telegram: <a href="https://t.me/spraute_esd" target="_blank">@spraute_esd</a>';
-                if (timerEl) timerEl.style.display = 'none';
-                if (dateEl) dateEl.textContent = '🎉 Доступен для всех!';
-                return;
-            }
-            
-            var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            var minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            var seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            
-            var daysEl = document.getElementById('days');
-            var hoursEl = document.getElementById('hours');
-            var minutesEl = document.getElementById('minutes');
-            var secondsEl = document.getElementById('seconds');
-            
-            if (daysEl) daysEl.textContent = String(days).padStart(2, '0');
-            if (hoursEl) hoursEl.textContent = String(hours).padStart(2, '0');
-            if (minutesEl) minutesEl.textContent = String(minutes).padStart(2, '0');
-            if (secondsEl) secondsEl.textContent = String(seconds).padStart(2, '0');
-        }
-        
-        updateTimer();
-        setInterval(updateTimer, 1000);
-    }
+
     
     // Инициализация
     function init() {
@@ -364,7 +302,6 @@
         setupCodeCopy();
         setupMobileMenu();
         highlightActivePage();
-        setupReleaseBanner();  // баннер с таймером до 9 июля 2026
     }
     
     if (document.readyState === 'loading') {
